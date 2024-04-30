@@ -1,0 +1,384 @@
+{
+  "head": {
+    "title": "Raw Rentals"
+  },
+  "home": "Home",
+  "about": "About",
+  "cart": {
+    "this": "Cart",
+    "empty": {
+      "this": "Cart is Empty",
+      "description": "There are no products at the moment. Add some products again"
+    },
+    "summary": {
+      "this": "Order Summary",
+      "discount_coupon": {
+        "this": "Discount Coupon",
+        "enter": "Enter Discount Coupon",
+        "apply": "Apply"
+      },
+      "payment_method": {
+        "this": "Payment Method",
+        "plural": "Payment Methods",
+        "methods": {
+          "e_payment": "Electronic Payment",
+          "wallet_payment": "Wallet Payment",
+          "recharge_value": "Recharge Value"
+        }
+      },
+      "list": {
+        "products_price": "Products Price",
+        "products_price_after_discount": "Products Price After Discount",
+        "product_price": "Product Price",
+        "insurance_price": "Insurance Price",
+        "tax_value": "Tax Value",
+        "discount_value": "Discount Value",
+        "delivery_value": "Delivery Value",
+        "delivery_tax": "Delivery Tax",
+        "total": "Total",
+        "total_price": "Total Price"
+      },
+      "delivery_address": {
+        "this": "Delivery Address",
+        "select": "Select Delivery Address"
+      },
+      "add_notes": {
+        "label": "Add Your Notes",
+        "placeholder": "Enter Your Notes"
+      },
+      "rent-terms": "Agreeing to the terms and conditions, preserving the value of the product, and agreeing to pay the insurance value in the event of any harm or damage"
+    },
+    "complete_order": "Complete Order",
+    "order_details": "Order Details",
+    "cancel_order": {
+      "this": "Cancel Order",
+      "reason": {
+        "label": "What is the reason for cancelling the order?",
+        "placeholder": "Write the reason",
+        "invalid": "Reason is required"
+      },
+      "cancelled": "Order Cancelled Successfully"
+    },
+    "report_order": {
+      "this": "Report",
+      "reason": {
+        "label": "Write Your Report",
+        "placeholder": "Write Your Notes Here",
+        "invalid": "Your report content is required"
+      },
+      "reported": "Report Sent Successfully"
+    },
+    "rate_order": {
+      "this": "Rating",
+      "title": "Product Rating",
+      "reason": {
+        "label": "Leave a Comment",
+        "invalid": "Your comment is required"
+      },
+      "rated": "Your Rating Has Been Submitted Successfully"
+    },
+    "order_invoice": {
+      "this": "Invoice",
+      "number": "Invoice Number"
+    },
+    "go_to_cart": "Go to Cart",
+    "added_to_cart": "Product Added to Cart Successfully",
+    "order_terms": "Agree to the terms and conditions, maintain the product value, and agree to pay the insurance amount in case of any damage or loss",
+    "pay": "Pay",
+    "checkedout": "Payment has been completed successfully, and your order is being processed"
+  },
+  "notifications": {
+    "this": "Notifications",
+    "empty": "No notifications"
+  },
+  "login_register": "Login / Register",
+
+  "my_order": {
+    "this": "My Order",
+    "plural": "My Orders",
+    "current": {
+      "this": "Current Orders",
+      "empty": {
+        "title": "No Current Orders",
+        "description": "Sorry, there are no current orders now. Please add orders and return."
+      }
+    },
+    "finished": {
+      "this": "Completed Orders",
+      "empty": {
+        "title": "No Completed Orders",
+        "description": "Sorry, there are no completed orders now. Please add orders and return."
+      }
+    },
+    "details": {
+      "this": "Order Details",
+      "number": "Order Number",
+      "date": "Order Date",
+      "time": "Order Time",
+      "status": {
+        "this": "Order Status",
+        "steps": {
+          "pending": "Being preparing",
+          "preparing": "Preparing",
+          "out_for_delivery": "Out for Delivery",
+          "shipped": "Shipped",
+          "delivered": "Delivered",
+          "refunding": "Refunding",
+          "completed": "Completed",
+          "cancelled": "Cancelled"
+        }
+      },
+      "products_count": "Products Count"
+    },
+    "invoice": {
+      "this": "Invoice",
+      "for": "Invoice to",
+      "number": "Invoice no"
+    }
+  },
+  "menu": "Menu",
+  "services": "Services",
+  "favourites": "Favourites",
+  "contact_us": "Contact Us",
+  "dress_occasion": "Dress for Occasion",
+  "title": "Title",
+  "latest_products": "Latest Products",
+  "product": {
+    "this": "Product",
+    "plural": "Products",
+    "name": "Product Name",
+    "add_to_cart": "Add to Cart",
+    "remove_from_cart": "Remove from Cart",
+    "add_to_favourites": "Add to Favourites",
+    "remove_from_favourites": "Remove from Favourites",
+    "no_favourites_title": "No Favourite Products",
+    "no_favourites_description": "Sorry, there are no favourite products now. Please add a product and return.",
+    "choose_first": "You should choose at least one product",
+    "price": "Price",
+    "color": "Color",
+    "size": "Size",
+    "brand": "Brand",
+    "quantity": "Quantity",
+    "rent_duration": "Rent Duration",
+    "details": "Product Details",
+    "search": {
+      "this": "Search",
+      "placeholder": "Search by Name"
+    },
+    "classification": {
+      "this": "Classification",
+      "show_according_to": "Display products according to"
+    },
+    "empty": {
+      "title": "No Products",
+      "description": "Sorry, there are no products in this category"
+    },
+    "description": "Product Description",
+    "rent": "Rent",
+    "important_instructions": "Important Instructions",
+    "rent_remember": "Remind me of the rental date a few days in advance",
+    "measurement_methods": "Illustrative pictures for the method of measuring the product",
+    "complete_look": "Complete your look with:",
+    "we_chose_for_you": "We chose for you",
+    "booking": {
+      "this": "Booking Date",
+      "subtitle": "Choose the duration you want and specify the start of the days",
+      "choose_start_day": "Choose a start day",
+      "start_date": "Start Date:",
+      "rent_days": "The rent days of the product are:",
+      "excuse_me": "Excuse me",
+      "product_not_available": "The product is not available at this time",
+      "day_not_available": "Sorry, this day is not available!"
+    }
+  },
+  "contact_social": "You can reach us via",
+  "offer": {
+    "this": "Offer",
+    "plural": "Offers"
+  },
+  "more": "More",
+  "show_more": "Show More",
+  "most_requested_products": "Most Requested Products",
+  "service": {
+    "this": "Service",
+    "plural": "Services"
+  },
+  "account": {
+    "links": {
+      "profile": {
+        "this": "Profile"
+      },
+      "my_bills": {
+        "this": "My Bills",
+        "empty": {
+          "title": "No invoices",
+          "description": "No products have been rented yet. Add requests and return"
+        }
+      },
+      "my_addresses": {
+        "this": "My Addresses",
+        "create": "Add New Address",
+        "edit": "Edit Address",
+        "search": "Search for an Address",
+        "confirmed": "Your address has been confirmed successfully",
+        "delete": {
+          "title": "Delete Address",
+          "sure": "Are you sure you want to delete the address?",
+          "deleted": "Address deleted successfully"
+        },
+        "empty": {
+          "title": "No Addresses",
+          "description": "You do not have any addresses added yet"
+        }
+      },
+      "wallet": {
+        "this": "Wallet",
+        "your_balance": "Your Balance",
+        "recharge": "Recharge Balance"
+      },
+      "settings": {
+        "this": "Settings"
+      }
+    },
+    "profile": {
+      "title": "Personal Information",
+      "edit": "Edit Profile"
+    },
+    "delete": {
+      "title": "Delete Account",
+      "sure": "Are you sure you want to delete the account?"
+    }
+  },
+  "about_us": "About Us",
+  "accept": "Accept",
+  "terms_and_conditions": "Terms and Conditions",
+  "vision_and_message": "Vision and Mission",
+  "vision": "Vision",
+  "complaints_and_suggestions": "Complaints and Suggestions",
+  "suggestion": "Suggestion",
+  "complaint": "Complaint",
+  "service_details": "Service Details",
+  "currency": "SAR",
+  "address": {
+    "this": "Address",
+    "plural": "Addresses"
+  },
+  "back": "Back",
+  "continue_shopping": "Continue Shopping",
+  "ok": "Ok",
+  "auth": {
+    "login": "Login",
+    "logout": "Logout",
+    "login_first": "You must login first",
+    "register": {
+      "this": "Register",
+      "title": "New Registration"
+    },
+    "username": {
+      "label": "Username",
+      "placeholder": "Enter username",
+      "invalid": "Username is required"
+    },
+    "phone": {
+      "label": "Mobile Number",
+      "placeholder": "Enter mobile number",
+      "invalid": "Mobile number is required",
+      "change": "Change mobile number",
+      "edit": "Edit mobile number",
+      "subtitle": "Enter your current mobile number to receive an activation code",
+      "changed": "Mobile number changed successfully",
+      "code": "Code..."
+    },
+    "email": {
+      "label": "Email",
+      "placeholder": "Enter email",
+      "invalid": "Email is required"
+    },
+    "city": {
+      "label": "City",
+      "placeholder": "Select city",
+      "invalid": "City is required"
+    },
+    "password": {
+      "label": "Password",
+      "placeholder": "Enter password",
+      "invalid": "Password is required",
+      "new_password": {
+        "this": "New Password",
+        "invalid": "New password is required"
+      },
+      "change": "Change password",
+      "confirm": {
+        "label": "Confirm Password",
+        "placeholder": "Re-enter password",
+        "invalid": "Passwords do not match"
+      },
+      "feedback": {
+        "weak": "Weak",
+        "medium": "Medium",
+        "strong": "Strong"
+      },
+      "current": {
+        "this": "Current Password",
+        "invalid": "Current password is required"
+      },
+      "changed": "Password changed successfully"
+    },
+    "accept_terms": "Accept terms and conditions",
+    "forgot_password": "Forgot password?",
+    "dont_have_account": "Don't have an account?",
+    "already_have_account": "Already have an account?",
+    "enter_as": "Enter as",
+    "visitor": "Visitor",
+    "problem_with_sign": "Having problems signing up?",
+    "change_password": "Change password",
+    "enter_phone_number_for_verification": "Please enter your mobile number to receive a verification code",
+    "verification_code": "Verification Code",
+    "enter_verification_code": "Please enter the verification code sent to your mobile",
+    "invalid_verification_code": "Verification code is required",
+    "didnt_receive_code": "Haven't received the code yet?",
+    "send_again": "Send again"
+  },
+  "name": {
+    "label": "Name",
+    "placeholder": "Enter your name",
+    "invalid": "Name is required"
+  },
+  "message_subject": {
+    "label": "Message Subject",
+    "placeholder": "Enter message subject",
+    "invalid": "Message subject is required"
+  },
+  "message": {
+    "label": "Message",
+    "placeholder": "Write your message",
+    "invalid": "Message is required"
+  },
+  "request_type": {
+    "label": "Request Type",
+    "invalid": "Request type is required"
+  },
+  "written_text": {
+    "label": "Written Text",
+    "placeholder": "Write the text of the request",
+    "invalid": "Text of the request is required"
+  },
+  "send": "Send",
+  "confirm": "Confirm",
+  "edit": "Edit",
+  "save": "Save",
+  "delete": "Delete",
+  "save_changes": "Save Changes",
+  "share": "Share",
+  "return_home": "Return Home",
+  "days": {
+    "sat": "Saturday",
+    "sun": "Sunday",
+    "mon": "Monday",
+    "tue": "Tuesday",
+    "wed": "Wednesday",
+    "thu": "Thursday",
+    "fri": "Friday",
+    "not_selected": "Unspecified Please specify the start date and number of rental days"
+  }
+}
