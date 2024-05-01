@@ -1,7 +1,27 @@
 body {
-  @apply bg-bodyColor;
+  @apply bg-bodyColor overflow-hidden;
 }
 
-.col {
+.col:not(.p-0) {
   @apply px-3;
+}
+
+/* width */
+*::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* Track */
+*::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+/* Handle */
+*::-webkit-scrollbar-thumb {
+  background: #1e1e1e;
+}
+
+/* Handle on hover */
+*::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

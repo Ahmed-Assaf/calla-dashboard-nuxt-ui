@@ -1,12 +1,12 @@
 <template>
   <Html :lang="head.htmlAttrs.lang" :dir="head.htmlAttrs.dir">
     <Body>
-      <div class="grid grid-cols-12 h-screen">
-        <div class="col col-span-4">
+      <div class="grid grid-cols-12">
+        <div class="col col-span-2 p-0 h-screen">
           <!-- sidebar -->
           <LayoutSidebar />
         </div>
-        <div class="col col-span-8 flex flex-col">
+        <div class="col col-span-10 flex flex-col h-screen">
           <!-- navbar -->
           <LayoutNavbar class="flex-shrink-0" />
 

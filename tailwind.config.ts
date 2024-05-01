@@ -6,6 +6,7 @@ export default <Partial<Config>>{
         primaryColor: "#00c2cb",
         secondaryColor: "#FF66C4",
         bodyColor: "#FAFAFA",
+        sidebarColor: "#272727",
       },
     },
     container: {

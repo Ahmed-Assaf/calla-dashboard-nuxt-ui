@@ -1,7 +1,13 @@
 <template>
-  <h5>Navbar</h5>
+  <nav class="navbar">
+    <LayoutNavbarNotifications />
+  </nav>
 </template>
 
 <script lang="ts" setup></script>
 
-<style></style>
+<style lang="scss">
+.navbar {
+  @apply flex items-center justify-end gap-4 py-6 bg-inherit;
+}
+</style>

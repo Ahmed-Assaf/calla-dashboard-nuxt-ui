@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ["@nuxt/ui", "@nuxtjs/i18n"],
-  css: ["~/assets/css/main.css", "~/assets/scss/main.scss"],
+  css: ["~/assets/scss/main.scss"],
   postcss: {
     plugins: {
       tailwindcss: {},
