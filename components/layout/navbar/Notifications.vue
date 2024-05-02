@@ -1,90 +1,148 @@
 <template>
-  <ClientOnly>
-    <UDropdown
-      :items="items"
-      :popper="{ arrow: true }"
-      :ui="{
-        base: 'border-2 border-solid border-primaryColor rounded-lg stroke-none',
-        ring: 'ring-0',
-        arrow: {
-          base: 'before:border-s-0 before:border-b-0 before:border-t-2 before:border-e-2 before:border-primaryColor before:w-3 before:h-3 z-[1]',
-          ring: 'before:ring-0',
-          shadow: 'before:shadow-none',
-        },
-      }"
+  <UDropdown
+    :items="items"
+    :popper="{ arrow: true }"
+    :ui="{
+      base: 'border-2 border-solid border-primaryColor rounded-lg stroke-none',
+      ring: 'ring-0',
+      rounded: 'rounded-lg',
+      width: 'min-w-[20%] max-w-[80%] w-auto',
+      divide: 'divide-transparent',
+      padding: 'px-0 py-0',
+      arrow: {
+        base: 'before:border-s-0 before:border-b-0 before:border-t-2 before:border-e-2 before:border-primaryColor before:w-4 before:h-4 z-[1]',
+        ring: 'before:ring-0',
+        shadow: 'before:shadow-none',
+        placement: `group-data-[popper-placement*='bottom']:-top-2`,
+      },
+      item: {
+        base: 'gap-2 bg-transparent hover:bg-transparent border-b border-solid border-strokeLightGray items-start text-start',
+        rounded: 'rounded-none',
+        padding: 'px-4 py-3',
+      },
+    }"
+  >
+    <UButton
+      square
+      size="md"
+      variant="link"
+      class="border border-solid border-strokeLightGray bg-white rounded-lg shadow-none relative"
     >
+      <template #leading>
+        <UBadge
+          color="red"
+          variant="solid"
+          class="flex aspect-square absolute -translate-y-1/2 rtl:translate-x-1/2 ltr:-translate-x-1/2 top-0 start-0 rounded-full text-[8px] w-fit h-fit px-[2px] py-0 leading-tight z-[1] font-bukra font-bold"
+          >5</UBadge
+        >
+        <UAvatar src="/images/icons/notifications-filled.svg" size="2xs" />
+      </template>
+    </UButton>
+
+    <template #item="{ item }">
+      <div class="flex flex-1 items-center gap-2">
+        <UChip
+          color="red"
+          position="top-center"
+          :show="item.new"
+          :ui="{
+            position: {
+              'top-center': 'top-0 inset-x-auto -translate-y-1/2',
+            },
+          }"
+        >
+          <div
+            class="icon bg-lightGray border border-solid border-strokeLightGray w-8 h-8 rounded-lg flex-shrink-0 flex items-center justify-center relative"
+          >
+            <img
+              src="/images/icons/notifications.svg"
+              alt="notification"
+              width="16"
+            />
+          </div>
+        </UChip>
+
+        <div class="flex-1">
+          <small class="flex leading-tight mb-1">{{ item.label }}</small>
+          <small class="flex leading-tight text-textLightColor">{{
+            item.time
+          }}</small>
+        </div>
+      </div>
+
       <UButton
-        square
-        size="md"
+        color="red"
+        size="sm"
         variant="link"
-        class="border border-solid border-[#E6E6E6] bg-white rounded-lg shadow-none relative"
+        :padded="false"
+        class="flex-shrink-0"
       >
         <template #leading>
-          <UBadge
-            color="red"
-            variant="solid"
-            class="flex aspect-square absolute -translate-y-1/2 rtl:translate-x-1/2 ltr:-translate-x-1/2 top-0 start-0 rounded-full text-[10px] w-fit h-fit px-[2px] py-0 leading-none z-[1]"
-            >5</UBadge
-          >
-          <UAvatar src="/images/icons/notifications-filled.svg" size="2xs" />
+          <UAvatar src="/images/icons/trash-filled.svg" size="3xs" />
         </template>
       </UButton>
+    </template>
 
-      <template #account="{ item }">
-        <div class="text-left">
-          <p>Signed in as</p>
-          <p class="truncate font-medium text-gray-900 dark:text-white">
-            {{ item.label }}
-          </p>
-        </div>
-      </template>
-
-      <template #item="{ item }">
-        <span class="truncate">{{ item.label }}</span>
-
-        <UIcon
-          :name="item.icon"
-          class="flex-shrink-0 h-4 w-4 text-gray-400 dark:text-gray-500 ms-auto"
-        />
-      </template>
-    </UDropdown>
-  </ClientOnly>
+    <template #more="{ item }">
+      <UButton
+        class="bg-primaryColor hover:bg-transparent hover:text-primaryColor shadow-none text-xs"
+        :to="localePath({ name: 'notifications' })"
+        :label="item.label"
+        block
+        size="lg"
+        :ui="{
+          rounded: 'rounded-lg',
+          font: 'font-bukra font-bold',
+        }"
+      >
+        <template #trailing>
+          <UAvatar
+            src="/images/icons/notifications-filled-white.svg"
+            size="2xs"
+          />
+        </template>
+      </UButton>
+    </template>
+  </UDropdown>
 </template>
 
 <script setup lang="ts">
-const items = [
+// i18n
+const { t } = useI18n();
+
+// locale path
+const localePath = useLocalePath();
+
+// items
+const items = computed(() => [
   [
     {
-      label: "ben@example.com",
-      slot: "account",
-      disabled: true,
-    },
-  ],
-  [
-    {
-      label: "Settings",
+      label: "تم تغيير حالة الطلب",
+      time: "منذ 1 ساعة",
       icon: "i-heroicons-cog-8-tooth",
+      new: false,
     },
-  ],
-  [
     {
       label: "Documentation",
       icon: "i-heroicons-book-open",
+      new: false,
     },
     {
       label: "Changelog",
       icon: "i-heroicons-megaphone",
+      new: false,
     },
     {
       label: "Status",
       icon: "i-heroicons-signal",
+      new: true,
     },
   ],
   [
     {
-      label: "Sign out",
-      icon: "i-heroicons-arrow-left-on-rectangle",
+      label: t("general.view_more"),
+      slot: "more",
     },
   ],
-];
+]);
 </script>

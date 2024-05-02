@@ -16,7 +16,7 @@
           base: 'z-[1] w-[33px] h-[33px] flex items-center justify-center bg-white/5 rounded-[10px]',
         },
         badge: {
-          base: 'flex-shrink-0 ml-auto absolute -translate-y-1/2 rtl:translate-x-1/2 ltr:-translate-x-1/2 top-2 start-3 rounded-full text-[10px] w-fit h-fit px-[2px] py-0 leading-none z-[1]',
+          base: 'flex-shrink-0 ml-auto absolute font-bold -translate-y-1/2 rtl:translate-x-1/2 ltr:-translate-x-1/2 top-2 start-3 rounded-full text-[10px] w-fit h-fit px-[2px] py-0 leading-none z-[1]',
           color: 'red',
           variant: 'solid',
         },
@@ -154,7 +154,7 @@ const links = computed(() => [
 
 <style lang="scss" scoped>
 aside {
-  @apply bg-sidebarColor h-full flex flex-col overflow-hidden;
+  @apply bg-sidebarColor h-full flex flex-col overflow-hidden font-bukra;
 
   .head {
     @apply p-5 flex-shrink-0;

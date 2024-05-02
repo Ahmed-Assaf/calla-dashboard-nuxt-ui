@@ -14,5 +14,8 @@
     "contact_us": "تواصل معنا",
     "settings": "الإعدادت",
     "logout": "تسجيل الخروج"
+  },
+  "general": {
+    "view_more": "عرض المزيد"
   }
 }

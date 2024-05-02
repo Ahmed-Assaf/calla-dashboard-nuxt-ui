@@ -10,7 +10,7 @@
           <!-- navbar -->
           <LayoutNavbar class="flex-shrink-0" />
 
-          <main class="flex-1">
+          <main class="flex-1 overflow-auto">
             <!-- page content -->
             <slot />
           </main>

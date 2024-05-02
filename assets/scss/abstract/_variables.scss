@@ -1,0 +1,58 @@
+@font-face {
+  font-family: "29LT Bukra";
+  src: url("~/assets/fonts/bukra/29LTBukra-Regular.eot");
+  src: url("~/assets/fonts/bukra/29LTBukra-Regular.eot?#iefix")
+      format("embedded-opentype"),
+    url("~/assets/fonts/bukra/29LTBukra-Regular.woff2") format("woff2"),
+    url("~/assets/fonts/bukra/29LTBukra-Regular.woff") format("woff"),
+    url("~/assets/fonts/bukra/29LTBukra-Regular.ttf") format("truetype"),
+    url("~/assets/fonts/bukra/29LTBukra-Regular.svg#29LTBukra-Regular")
+      format("svg");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "29LT Bukra";
+  src: url("~/assets/fonts/bukra/29LTBukra-Bold.eot");
+  src: url("~/assets/fonts/bukra/29LTBukra-Bold.eot?#iefix")
+      format("embedded-opentype"),
+    url("~/assets/fonts/bukra/29LTBukra-Bold.woff2") format("woff2"),
+    url("~/assets/fonts/bukra/29LTBukra-Bold.woff") format("woff"),
+    url("~/assets/fonts/bukra/29LTBukra-Bold.ttf") format("truetype"),
+    url("~/assets/fonts/bukra/29LTBukra-Bold.svg#29LTBukra-Bold") format("svg");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "URW DIN Arabic SemiCond";
+  src: url("~/assets/fonts/din/URWDINArabicSemiCond-Medium.eot");
+  src: url("~/assets/fonts/din/URWDINArabicSemiCond-Medium.eot?#iefix")
+      format("embedded-opentype"),
+    url("~/assets/fonts/din/URWDINArabicSemiCond-Medium.woff2") format("woff2"),
+    url("~/assets/fonts/din/URWDINArabicSemiCond-Medium.woff") format("woff"),
+    url("~/assets/fonts/din/URWDINArabicSemiCond-Medium.ttf") format("truetype"),
+    url("~/assets/fonts/din/URWDINArabicSemiCond-Medium.svg#URWDINArabicSemiCond-Medium")
+      format("svg");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "29LT Kaff";
+  src: url("/assets/fonts/lt-kaff/29LTKaff-Regular.eot");
+  src: url("/assets/fonts/lt-kaff/29LTKaff-Regular.eot?#iefix")
+      format("embedded-opentype"),
+    url("/assets/fonts/lt-kaff/29LTKaff-Regular.woff2") format("woff2"),
+    url("/assets/fonts/lt-kaff/29LTKaff-Regular.woff") format("woff"),
+    url("/assets/fonts/lt-kaff/29LTKaff-Regular.ttf") format("truetype"),
+    url("/assets/fonts/lt-kaff/29LTKaff-Regular.svg#29LTKaff-Regular")
+      format("svg");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
