@@ -8,9 +8,9 @@
       rounded: 'rounded-lg',
       width: 'min-w-[20%] max-w-[80%] w-auto',
       divide: 'divide-transparent',
-      padding: 'px-0 py-0',
+      padding: 'px-0 py-0 relative z-[1]',
       arrow: {
-        base: 'before:border-s-0 before:border-b-0 before:border-t-2 before:border-e-2 before:border-primaryColor before:w-4 before:h-4 z-[1]',
+        base: 'rtl:before:border-s-0 ltr:before:border-e-0 before:border-b-0 before:border-t-2 rtl:before:border-e-2 ltr:before:border-s-2 before:border-primaryColor before:w-4 before:h-4 z-[1]',
         ring: 'before:ring-0',
         shadow: 'before:shadow-none',
         placement: `group-data-[popper-placement*='bottom']:-top-2`,
@@ -85,15 +85,9 @@
 
     <template #more="{ item }">
       <UButton
-        class="bg-primaryColor hover:bg-transparent hover:text-primaryColor shadow-none text-xs"
         :to="localePath({ name: 'notifications' })"
         :label="item.label"
         block
-        size="lg"
-        :ui="{
-          rounded: 'rounded-lg',
-          font: 'font-bukra font-bold',
-        }"
       >
         <template #trailing>
           <UAvatar
@@ -107,42 +101,42 @@
 </template>
 
 <script setup lang="ts">
-// i18n
-const { t } = useI18n();
+  // i18n
+  const { t } = useI18n();
 
-// locale path
-const localePath = useLocalePath();
+  // locale path
+  const localePath = useLocalePath();
 
-// items
-const items = computed(() => [
-  [
-    {
-      label: "تم تغيير حالة الطلب",
-      time: "منذ 1 ساعة",
-      icon: "i-heroicons-cog-8-tooth",
-      new: false,
-    },
-    {
-      label: "Documentation",
-      icon: "i-heroicons-book-open",
-      new: false,
-    },
-    {
-      label: "Changelog",
-      icon: "i-heroicons-megaphone",
-      new: false,
-    },
-    {
-      label: "Status",
-      icon: "i-heroicons-signal",
-      new: true,
-    },
-  ],
-  [
-    {
-      label: t("general.view_more"),
-      slot: "more",
-    },
-  ],
-]);
+  // items
+  const items = computed(() => [
+    [
+      {
+        label: "تم تغيير حالة الطلب",
+        time: "منذ 1 ساعة",
+        icon: "i-heroicons-cog-8-tooth",
+        new: false,
+      },
+      {
+        label: "Documentation",
+        icon: "i-heroicons-book-open",
+        new: false,
+      },
+      {
+        label: "Changelog",
+        icon: "i-heroicons-megaphone",
+        new: false,
+      },
+      {
+        label: "Status",
+        icon: "i-heroicons-signal",
+        new: true,
+      },
+    ],
+    [
+      {
+        label: t("general.view_more"),
+        slot: "more",
+      },
+    ],
+  ]);
 </script>

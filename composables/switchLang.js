@@ -7,8 +7,6 @@ export const useSwitchLang = (code) => {
     return setLocaleCookie(locale);
   });
 
-  console.log("cookie", locale.value);
-
   // current locale
   const currentLocaleName = computed(() => {
     let obj = locales.value.find((l) => l.code === locale.value);

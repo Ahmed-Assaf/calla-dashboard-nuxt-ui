@@ -15,7 +15,24 @@
     "settings": "الإعدادت",
     "logout": "تسجيل الخروج"
   },
+  "sales": {
+    "this": "المبيعات",
+    "show_reports": "عرض التقارير"
+  },
+  "order": {
+    "percentage": "نسبة الطلبات",
+    "successful": "الطلبات الناجحة",
+    "unsuccessful": "الطلبات الغير ناجحة",
+    "total": "إجمالي الطلبات",
+    "total_commission": "إجمالي العمولة",
+    "total_added": "إجمالي القيمة المضافة",
+    "due": "المستحق"
+  },
+  "profit": {
+    "plural": "الارباح"
+  },
   "general": {
-    "view_more": "عرض المزيد"
+    "view_more": "عرض المزيد",
+    "currency": "رس"
   }
 }

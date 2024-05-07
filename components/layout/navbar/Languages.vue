@@ -3,7 +3,7 @@
     :items="items"
     :popper="{ arrow: true }"
     :ui="{
-      padding: 'px-0 py-0',
+      padding: 'px-0 py-0 relative z-[1]',
       base: 'border border-solid border-primaryColor stroke-none',
       ring: 'ring-0',
       rounded: 'rounded-lg',
@@ -38,21 +38,21 @@
 </template>
 
 <script setup lang="ts">
-// ========== language
-const { availableLocales, currentLocaleName, switchLocalePath } =
-  useSwitchLang();
+  // ========== language
+  const { availableLocales, currentLocaleName, switchLocalePath } =
+    useSwitchLang();
 
-// items
-const items = ref([]);
+  // items
+  const items = ref([]);
 
-for (const locale of availableLocales.value) {
-  if (locale) {
-    items.value.push([
-      {
-        label: locale.name,
-        to: switchLocalePath(locale.code),
-      },
-    ]);
+  for (const locale of availableLocales.value) {
+    if (locale) {
+      items.value.push([
+        {
+          label: locale.name,
+          to: switchLocalePath(locale.code),
+        },
+      ]);
+    }
   }
-}
 </script>

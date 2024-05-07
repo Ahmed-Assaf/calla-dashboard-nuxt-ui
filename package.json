@@ -11,10 +11,14 @@
   },
   "dependencies": {
     "@nuxt/ui": "^2.15.2",
+    "apexcharts": "^3.49.0",
+    "chart.js": "^4.4.2",
     "nuxt": "^3.11.2",
     "pinia": "^2.1.7",
     "vue": "^3.4.21",
-    "vue-router": "^4.3.0"
+    "vue-chartjs": "^5.3.1",
+    "vue-router": "^4.3.0",
+    "vue3-apexcharts": "^1.5.2"
   },
   "devDependencies": {
     "@nuxtjs/i18n": "^8.3.1",

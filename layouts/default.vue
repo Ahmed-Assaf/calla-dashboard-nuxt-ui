@@ -6,7 +6,7 @@
           <!-- sidebar -->
           <LayoutSidebar />
         </div>
-        <div class="col col-span-10 flex flex-col h-screen">
+        <div class="col col-span-10 p-0 flex flex-col h-screen">
           <!-- navbar -->
           <LayoutNavbar class="flex-shrink-0" />
 
@@ -21,11 +21,11 @@
 </template>
 
 <script lang="ts" setup>
-const head = useLocaleHead({
-  addDirAttribute: true,
-  identifierAttribute: "id",
-  addSeoAttributes: true,
-});
+  const head = useLocaleHead({
+    addDirAttribute: true,
+    identifierAttribute: "id",
+    addSeoAttributes: true,
+  });
 </script>
 
 <style></style>

@@ -10,6 +10,7 @@ export default <Partial<Config>>{
       colors: {
         primaryColor: "#00c2cb",
         primaryLightColor: "#BEF1F4",
+        primaryDarkColor: "#00b1b9",
         secondaryColor: "#FF66C4",
         secondaryLightColor: "#FFE5F5",
         greenColor: "#4EE682",
@@ -25,6 +26,9 @@ export default <Partial<Config>>{
     },
     container: {
       center: true,
+    },
+    boxShadow: {
+      card: "5px 10px 20px 0 rgb(209 216 215 / 25%)",
     },
   },
 };
