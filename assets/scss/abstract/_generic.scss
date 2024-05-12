@@ -2,13 +2,17 @@ body {
   @apply bg-bodyColor overflow-hidden font-base text-base;
 }
 
+.grid {
+  @apply gap-y-6;
+}
+
 .col:not(.p-0) {
   @apply px-3;
 }
 
 /* width */
 *::-webkit-scrollbar {
-  width: 6px;
+  @apply w-[6px] h-[6px];
 }
 
 /* Track */
@@ -18,10 +22,7 @@ body {
 
 /* Handle */
 *::-webkit-scrollbar-thumb {
-  background: #1e1e1e;
+  @apply bg-[#b5b5b5] hover:bg-[#939393] rounded;
 }
 
 /* Handle on hover */
-*::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}

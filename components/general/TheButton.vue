@@ -6,12 +6,12 @@
     :block="props.block"
   >
     <template #trailing>
-      <UAvatar :src="props.iconImage" size="3xs" />
+      <UAvatar :src="props.iconImage" size="2xs" />
     </template>
   </UButton>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 // props
 const props = defineProps({
   label: {

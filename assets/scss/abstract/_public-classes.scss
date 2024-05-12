@@ -1,0 +1,7 @@
+.stripe-table {
+  tr:nth-child(even) {
+    td {
+      @apply bg-bodyColor;
+    }
+  }
+}

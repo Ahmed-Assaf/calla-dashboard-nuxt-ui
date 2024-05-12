@@ -11,12 +11,16 @@
       </div>
 
       <div class="flex items-center gap-3 flex-wrap">
-        <div class="text-primaryColor bg-primaryLightColor num-card">
+        <div
+          class="text-primaryColor bg-primaryLightColor num-card flex-shrink-0"
+        >
           <h6>{{ $t("order.successful") }}</h6>
           <span class="font-bukra font-bold">24</span>
         </div>
 
-        <div class="text-secondaryColor bg-secondaryLightColor num-card">
+        <div
+          class="text-secondaryColor bg-secondaryLightColor num-card flex-shrink-0"
+        >
           <h6>{{ $t("order.unsuccessful") }}</h6>
           <span class="font-bukra font-bold">10</span>
         </div>
@@ -26,55 +30,55 @@
 </template>
 
 <script setup>
-  import {
-    Chart as ChartJS,
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    ArcElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend,
-  } from "chart.js";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  ArcElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
 
-  import { Doughnut } from "vue-chartjs";
+import { Doughnut } from "vue-chartjs";
 
-  ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    ArcElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend
-  );
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  ArcElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
-  const props = defineProps({
-    grid: {
-      type: String,
-      required: true,
+const props = defineProps({
+  grid: {
+    type: String,
+    required: true,
+  },
+  options: {
+    type: Object,
+    required: true,
+  },
+});
+
+const ordersPercentData = reactive({
+  labels: ["Successful", "Unsuccessful"],
+  datasets: [
+    {
+      backgroundColor: ["#00c2cb", "#FF66C4"],
+      data: [50, 50],
     },
-    options: {
-      type: Object,
-      required: true,
-    },
-  });
-
-  const ordersPercentData = reactive({
-    labels: ["Successful", "Unsuccessful"],
-    datasets: [
-      {
-        backgroundColor: ["#00c2cb", "#FF66C4"],
-        data: [50, 50],
-      },
-    ],
-  });
+  ],
+});
 </script>
 
 <style lang="scss" scoped>
-  .num-card {
-    @apply flex items-center justify-between gap-2 flex-wrap flex-1 flex-shrink-0 py-3 px-3 text-xs rounded-lg leading-tight;
-  }
+.num-card {
+  @apply flex items-center justify-between gap-2 flex-wrap flex-1 flex-shrink-0 py-3 px-3 text-xs rounded-lg leading-tight;
+}
 </style>

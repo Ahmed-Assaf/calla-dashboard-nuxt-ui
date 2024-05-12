@@ -59,156 +59,156 @@
 </template>
 
 <script setup>
-  // i18n
-  const { t } = useI18n();
+// i18n
+const { t } = useI18n();
 
-  // locale path
-  const localePath = useLocalePath();
+// locale path
+const localePath = useLocalePath();
 
-  // route
-  const route = useRoute();
+// route
+const route = useRoute();
 
-  // nav livks
-  const links = computed(() => [
-    {
-      label: t("pages.home"),
-      icon: {
-        src: route.name.includes("index")
-          ? "/images/icons/home-filled.svg"
-          : "/images/icons/home.svg",
-      },
-      to: localePath({ name: "index" }),
+// nav livks
+const links = computed(() => [
+  {
+    label: t("pages.home"),
+    icon: {
+      src: route.name.includes("index")
+        ? "/images/icons/home-filled.svg"
+        : "/images/icons/home.svg",
     },
-    {
-      label: t("pages.products_management"),
-      icon: {
-        src: route.name.includes("products-management")
-          ? "/images/icons/box-filled.svg"
-          : "/images/icons/box.svg",
-      },
-      to: localePath({ name: "products-management" }),
+    to: localePath({ name: "index" }),
+  },
+  {
+    label: t("pages.products_management"),
+    icon: {
+      src: route.name.includes("products")
+        ? "/images/icons/box-filled.svg"
+        : "/images/icons/box.svg",
     },
-    {
-      label: t("pages.chats"),
-      icon: {
-        src: route.name.includes("chats")
-          ? "/images/icons/message-filled.svg"
-          : "/images/icons/message.svg",
-      },
-      badge: 100,
-      to: "",
+    to: localePath({ name: "products" }),
+  },
+  {
+    label: t("pages.chats"),
+    icon: {
+      src: route.name.includes("chats")
+        ? "/images/icons/message-filled.svg"
+        : "/images/icons/message.svg",
     },
-    {
-      label: t("pages.orders_management"),
-      icon: {
-        src: route.name.includes("orders-management")
-          ? "/images/icons/order-manage-filled.svg"
-          : "/images/icons/order-manage.svg",
-      },
-      to: "",
+    badge: 100,
+    to: "",
+  },
+  {
+    label: t("pages.orders_management"),
+    icon: {
+      src: route.name.includes("orders-management")
+        ? "/images/icons/order-manage-filled.svg"
+        : "/images/icons/order-manage.svg",
     },
-    {
-      label: t("pages.products_refund"),
-      icon: {
-        src: route.name.includes("products-refund")
-          ? "/images/icons/return-filled.svg"
-          : "/images/icons/return.svg",
-      },
-      to: "",
+    to: "",
+  },
+  {
+    label: t("pages.products_refund"),
+    icon: {
+      src: route.name.includes("products-refund")
+        ? "/images/icons/return-filled.svg"
+        : "/images/icons/return.svg",
     },
-    {
-      label: t("pages.users_management"),
-      icon: {
-        src: route.name.includes("users-management")
-          ? "/images/icons/user-filled.svg"
-          : "/images/icons/user.svg",
-      },
-      to: "",
+    to: "",
+  },
+  {
+    label: t("pages.users_management"),
+    icon: {
+      src: route.name.includes("users-management")
+        ? "/images/icons/user-filled.svg"
+        : "/images/icons/user.svg",
     },
-    {
-      label: t("pages.finance_treatements"),
-      icon: {
-        src: route.name.includes("finance-treatements")
-          ? "/images/icons/coin-filled.svg"
-          : "/images/icons/coin.svg",
-      },
-      to: "",
+    to: "",
+  },
+  {
+    label: t("pages.finance_treatements"),
+    icon: {
+      src: route.name.includes("finance-treatements")
+        ? "/images/icons/coin-filled.svg"
+        : "/images/icons/coin.svg",
     },
-    {
-      label: t("pages.shop_rates"),
-      icon: {
-        src: route.name.includes("shop-rates")
-          ? "/images/icons/star-filled.svg"
-          : "/images/icons/star.svg",
-      },
-      to: "",
+    to: "",
+  },
+  {
+    label: t("pages.shop_rates"),
+    icon: {
+      src: route.name.includes("shop-rates")
+        ? "/images/icons/star-filled.svg"
+        : "/images/icons/star.svg",
     },
-    {
-      label: t("pages.contact_us"),
-      icon: {
-        src: route.name.includes("contact-us")
-          ? "/images/icons/call-filled.svg"
-          : "/images/icons/call.svg",
-      },
-      to: "",
+    to: "",
+  },
+  {
+    label: t("pages.contact_us"),
+    icon: {
+      src: route.name.includes("contact-us")
+        ? "/images/icons/call-filled.svg"
+        : "/images/icons/call.svg",
     },
-    {
-      label: t("pages.settings"),
-      icon: {
-        src: route.name.includes("settings")
-          ? "/images/icons/settings-filled.svg"
-          : "/images/icons/settings.svg",
-      },
-      to: "",
+    to: "",
+  },
+  {
+    label: t("pages.settings"),
+    icon: {
+      src: route.name.includes("settings")
+        ? "/images/icons/settings-filled.svg"
+        : "/images/icons/settings.svg",
     },
-    {
-      label: t("pages.logout"),
-      icon: {
-        src: route.name.includes("logout")
-          ? "/images/icons/logout-filled.svg"
-          : "/images/icons/logout.svg",
-      },
-      to: "",
+    to: "",
+  },
+  {
+    label: t("pages.logout"),
+    icon: {
+      src: route.name.includes("logout")
+        ? "/images/icons/logout-filled.svg"
+        : "/images/icons/logout.svg",
     },
-  ]);
+    to: "",
+  },
+]);
 </script>
 
 <style lang="scss" scoped>
-  aside {
-    @apply bg-sidebarColor h-full flex flex-col overflow-hidden font-bukra;
+aside {
+  @apply bg-sidebarColor flex flex-col overflow-hidden font-bukra transition-all duration-300;
 
-    .head {
-      @apply p-5 flex-shrink-0;
+  .head {
+    @apply p-5 flex-shrink-0;
 
-      .logo {
-        @apply mx-auto w-[65px];
-      }
+    .logo {
+      @apply mx-auto w-[65px];
     }
   }
+}
 </style>
 
 <style lang="scss">
-  .side-menu {
-    @apply flex-1 overflow-auto p-5 pt-0;
+.side-menu {
+  @apply flex-1 overflow-auto p-5 pt-0;
 
-    .link {
-      @apply text-white flex gap-3 items-center px-3 py-2 bg-transparent hover:text-white rounded-[10px] mb-2;
+  .link {
+    @apply text-white flex gap-3 items-center px-3 py-2 bg-transparent hover:text-white rounded-[10px] mb-2;
 
-      .icon {
-        @apply z-[1] w-[33px] h-[33px] flex items-center justify-center bg-white/5 rounded-[10px] relative;
+    .icon {
+      @apply z-[1] w-[33px] h-[33px] flex items-center justify-center flex-shrink-0 bg-white/5 rounded-[10px] relative;
 
-        .badge {
-          @apply absolute font-bold -translate-y-1/2 rtl:translate-x-1/2 ltr:-translate-x-1/2 top-0 start-0 rounded-full text-[10px] w-fit h-fit px-[2px] py-0 leading-none z-[1];
-        }
-      }
-
-      &.active {
-        @apply bg-primaryColor;
+      .badge {
+        @apply absolute font-bold -translate-y-1/2 rtl:translate-x-1/2 ltr:-translate-x-1/2 top-0 start-0 rounded-full text-[10px] w-fit h-fit px-[2px] py-0 leading-none z-[1];
       }
     }
 
-    &::-webkit-scrollbar-thumb {
-      @apply bg-[#fff]/20 hover:bg-[#fff]/25 rounded;
+    &.active {
+      @apply bg-primaryColor;
     }
   }
+
+  &::-webkit-scrollbar-thumb {
+    @apply bg-[#fff]/20 hover:bg-[#fff]/25 rounded;
+  }
+}
 </style>

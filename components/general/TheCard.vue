@@ -22,16 +22,14 @@
     </template>
 
     <slot />
-
-    <!-- <template #footer> </template> -->
   </UCard>
 </template>
 
 <script setup>
-  const props = defineProps({
-    header: {
-      type: Object,
-      default: {},
-    },
-  });
+const props = defineProps({
+  header: {
+    type: Object,
+    default: {},
+  },
+});
 </script>

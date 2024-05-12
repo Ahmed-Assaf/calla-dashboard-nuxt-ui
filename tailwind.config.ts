@@ -22,11 +22,22 @@ export default <Partial<Config>>{
         sidebarColor: "#272727",
         strokeLightGray: "#E6E6E6",
         lightGray: "#F7F7F7",
+        starActive: "#FFBA35",
+        redColor: "#F0516D",
+      },
+
+      keyframes: {
+        float: {
+          "0%": { transform: "translateY(-3%)" },
+          "100%": { transform: "translateY(3%)" },
+        },
+      },
+
+      animation: {
+        float: "float 4s linear infinite alternate",
       },
     },
-    container: {
-      center: true,
-    },
+
     boxShadow: {
       card: "5px 10px 20px 0 rgb(209 216 215 / 25%)",
     },

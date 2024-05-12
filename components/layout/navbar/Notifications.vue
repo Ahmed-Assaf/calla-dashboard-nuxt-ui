@@ -42,14 +42,11 @@
     <template #item="{ item }">
       <div class="flex flex-1 items-center gap-2">
         <UChip
-          color="red"
           position="top-center"
-          :show="item.new"
           :ui="{
-            position: {
-              'top-center': 'top-0 inset-x-auto -translate-y-1/2',
-            },
+            background: 'bg-redColor',
           }"
+          :show="item.new"
         >
           <div
             class="icon bg-lightGray border border-solid border-strokeLightGray w-8 h-8 rounded-lg flex-shrink-0 flex items-center justify-center relative"
@@ -100,43 +97,43 @@
   </UDropdown>
 </template>
 
-<script setup lang="ts">
-  // i18n
-  const { t } = useI18n();
+<script setup>
+// i18n
+const { t } = useI18n();
 
-  // locale path
-  const localePath = useLocalePath();
+// locale path
+const localePath = useLocalePath();
 
-  // items
-  const items = computed(() => [
-    [
-      {
-        label: "تم تغيير حالة الطلب",
-        time: "منذ 1 ساعة",
-        icon: "i-heroicons-cog-8-tooth",
-        new: false,
-      },
-      {
-        label: "Documentation",
-        icon: "i-heroicons-book-open",
-        new: false,
-      },
-      {
-        label: "Changelog",
-        icon: "i-heroicons-megaphone",
-        new: false,
-      },
-      {
-        label: "Status",
-        icon: "i-heroicons-signal",
-        new: true,
-      },
-    ],
-    [
-      {
-        label: t("general.view_more"),
-        slot: "more",
-      },
-    ],
-  ]);
+// items
+const items = computed(() => [
+  [
+    {
+      label: "تم تغيير حالة الطلب",
+      time: "منذ 1 ساعة",
+      icon: "i-heroicons-cog-8-tooth",
+      new: false,
+    },
+    {
+      label: "Documentation",
+      icon: "i-heroicons-book-open",
+      new: false,
+    },
+    {
+      label: "Changelog",
+      icon: "i-heroicons-megaphone",
+      new: false,
+    },
+    {
+      label: "Status",
+      icon: "i-heroicons-signal",
+      new: true,
+    },
+  ],
+  [
+    {
+      label: t("general.view_more"),
+      slot: "more",
+    },
+  ],
+]);
 </script>

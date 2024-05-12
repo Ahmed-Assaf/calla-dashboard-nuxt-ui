@@ -28,31 +28,45 @@
       size="sm"
       variant="link"
       :label="currentLocaleName"
-      class="text-black hover:text-black hover:no-underline font-normal"
+      class="hover:no-underline font-normal"
+      :class="props.color ? props.color : `text-black hover:text-black`"
     >
       <template #trailing>
-        <img src="/images/icons/chevron-down.svg" width="20" />
+        <img
+          :src="props.arrow ? props.arrow : `/images/icons/chevron-down.svg`"
+          width="20"
+        />
       </template>
     </UButton>
   </UDropdown>
 </template>
 
 <script setup lang="ts">
-  // ========== language
-  const { availableLocales, currentLocaleName, switchLocalePath } =
-    useSwitchLang();
+const props = defineProps({
+  color: {
+    type: String,
+    default: "",
+  },
+  arrow: {
+    type: String,
+    default: "",
+  },
+});
+// ========== language
+const { availableLocales, currentLocaleName, switchLocalePath } =
+  useSwitchLang();
 
-  // items
-  const items = ref([]);
+// items
+const items = ref([]);
 
-  for (const locale of availableLocales.value) {
-    if (locale) {
-      items.value.push([
-        {
-          label: locale.name,
-          to: switchLocalePath(locale.code),
-        },
-      ]);
-    }
+for (const locale of availableLocales.value) {
+  if (locale) {
+    items.value.push([
+      {
+        label: locale.name,
+        to: switchLocalePath(locale.code),
+      },
+    ]);
   }
+}
 </script>
