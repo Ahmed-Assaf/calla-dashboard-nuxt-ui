@@ -29,21 +29,89 @@
     "total": "إجمالي الطلبات",
     "total_commission": "إجمالي العمولة",
     "total_added": "إجمالي القيمة المضافة",
-    "due": "المستحق"
+    "due": "المستحق",
+    "received": "الطلبات الواردة",
+    "active": "الطلبات النشطة",
+    "completed": "الطلبات المكتملة",
+    "products_count": "عدد المنتجات",
+    "receive_new_orders": "استقبال طلبات جديدة"
   },
   "profit": {
     "plural": "الارباح"
   },
   "product": {
     "this": "منتج",
+    "plural": "المنتجات",
     "best_seller": "المنتجات الأعلي مبيعاً",
     "item": {
       "sold_times": "عدد مرات البيع"
     },
     "create": "اضف منتج جديد"
   },
+  "inputs": {
+    "email": {
+      "label": ""
+    },
+    "username": {
+      "label": "اسم المستخدم",
+      "placeholder": "ادخل اسم المستخدم",
+      "required": "اسم المستخدم مطلوب"
+    },
+    "phone": {
+      "label": "رقم الجوال",
+      "placeholder": "ادخل رقم الجوال",
+      "required": "رقم الجوال مطلوب"
+    },
+    "country_code": {
+      "label": "كود الدولة",
+      "placeholder": "ادخل كود الدولة",
+      "required": "كود الدولة مطلوب",
+      "search": "ابحث عن كود الدولة",
+      "no_result": ""
+    },
+    "password": {
+      "label": "كلمة المرور",
+      "placeholder": "ادخل كلمة المرور",
+      "required": "كلمة المرور مطلوبة",
+      "invalid": {
+        "length": "كلمة المرور يجب الا تقل عن 6 حروف او ارقام"
+      }
+    },
+    "new_password": {
+      "label": "كلمة المرور الجديدة",
+      "placeholder": "ادخل كلمة المرور",
+      "required": "كلمة المرور الجديدةمطلوبة",
+      "invalid": {
+        "length": "كلمة المرور يجب الا تقل عن 6 حروف او ارقام"
+      }
+    },
+    "confirm_new_password": {
+      "label": "تأكيد كلمة المرور الجديدة",
+      "placeholder": "ادخل كلمة المرور",
+      "required": "برجاء تأكيد كلمة المرور",
+      "invalid": {
+        "match": "كلمة المرور غير متطابقة"
+      }
+    }
+  },
+  "auth": {
+    "forgot_password": "هل نسيت كلمة المرور؟",
+    "forgot_password_title": "نسيت كلمة المرور",
+    "dont_have_account": "ليس لديك حساب و تريد الانضمام الينا كمتجر ؟",
+    "reset_password_title": "تغيير كلمة المرور",
+    "verification_code": {
+      "title": "كود التفعيل",
+      "description": "يرجى ادخال كود التفعيل المرسل علي رقم الجوال"
+    },
+    "register": {
+      "label": "تسجيل جديد"
+    }
+  },
   "general": {
     "view_more": "عرض المزيد",
-    "currency": "رس"
+    "currency": "رس",
+    "confirm": "تأكيد",
+    "not_found": "غير موجود",
+    "back": "رجوع"
   }
 }

@@ -2,8 +2,8 @@
   <section class="grid grid-cols-12 mb-6">
     <div class="col col-span-12">
       <UTable
-        :columns="columns"
-        :rows="rows"
+        :columns="props.columns"
+        :rows="props.rows"
         class="the-data-table"
         sort-asc-icon="i-material-symbols-arrow-drop-up"
         sort-desc-icon="i-material-symbols-arrow-drop-down"
@@ -23,6 +23,7 @@
             size: 'text-xs',
           },
         }"
+        loading="props.loading"
       >
       </UTable>
 
@@ -42,6 +43,24 @@
 </template>
 
 <script setup lang="ts">
+const props = defineProps({
+  columns: {
+    type: Array,
+    required: true,
+  },
+  rows: {
+    type: Array,
+    required: true,
+  },
+  paginate: {
+    type: Object,
+    required: true,
+  },
+  loading: {
+    type: Boolean,
+    required: true,
+  },
+});
 const columns = [
   {
     key: "id",

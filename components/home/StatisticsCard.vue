@@ -14,8 +14,8 @@
     }"
   >
     <div class="flex-1">
-      <h3 class="font-bold text-4xl mb-1">24</h3>
-      <h4 class="font-bold text-sm">الطلبات الواردة</h4>
+      <h3 class="font-bold text-4xl mb-1">{{ props.data.count }}</h3>
+      <h4 class="font-bold text-sm">{{ props.data.title }}</h4>
     </div>
 
     <div
@@ -28,20 +28,24 @@
 </template>
 
 <script setup>
-  const props = defineProps({
-    background: {
-      type: String,
-      required: true,
-    },
-    iconColor: {
-      type: String,
-      required: true,
-    },
-    iconImg: {
-      type: String,
-      required: true,
-    },
-  });
+const props = defineProps({
+  background: {
+    type: String,
+    required: true,
+  },
+  data: {
+    type: Object,
+    required: true,
+  },
+  iconColor: {
+    type: String,
+    required: true,
+  },
+  iconImg: {
+    type: String,
+    required: true,
+  },
+});
 </script>
 
 <style></style>

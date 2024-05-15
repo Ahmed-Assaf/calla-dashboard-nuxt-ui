@@ -9,12 +9,12 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     // local route
     const localeRoute = useLocaleRoute();
 
+    if (useCookie("auth").value) {
+      setAuth();
+    }
+
     if (!isAuthed.value) {
       // Check if user is not authenticated
-      console.log("User is not authenticated");
-
-      console.log(to.name.includes("auth-login"));
-
       if (!to.name.includes("auth-login")) {
         // Check if not already on login page
         return await navigateTo(localeRoute({ name: "auth-login" }));

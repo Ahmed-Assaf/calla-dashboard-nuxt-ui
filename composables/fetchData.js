@@ -59,9 +59,9 @@ export const useFetchData = () => {
             if (options.getSuccess) {
               // toast
               toast.add({
-                severity: "success",
-                detail: res.msg,
-                life: 3000,
+                description: res.msg,
+                timeout: 3000,
+                color: "primary",
               });
             }
 
@@ -93,11 +93,12 @@ export const useFetchData = () => {
               );
               deleteAuth();
             }
+
             // toast
             toast.add({
-              severity: "error",
-              detail: res.msg,
-              life: 3000,
+              description: res.msg,
+              timeout: 3000,
+              color: "red",
             });
 
             if (options.onError) {
@@ -105,10 +106,11 @@ export const useFetchData = () => {
             }
           }
         } else {
+          // toast
           toast.add({
-            severity: "error",
-            detail: res.msg,
-            life: 3000,
+            description: res.msg,
+            timeout: 3000,
+            color: "red",
           });
         }
       })

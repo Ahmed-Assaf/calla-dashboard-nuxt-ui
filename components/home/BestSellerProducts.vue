@@ -7,7 +7,7 @@
           variant="soft"
           color="secondary"
           square
-          class="rounded-full p-1.5"
+          class="rounded-full w-10 h-10 min-h-fit"
           size="xl"
         >
           <UAvatar
@@ -21,7 +21,7 @@
           variant="soft"
           color="secondary"
           square
-          class="rounded-full p-1.5"
+          class="rounded-full w-10 h-10 min-h-fit"
           size="xl"
         >
           <UAvatar
@@ -58,8 +58,6 @@ const items = [
 ];
 
 const { locale } = useI18n();
-
-console.log(locale);
 
 const arrowRight = computed(() => (locale.value === "en" ? "right" : "left"));
 const arrowLeft = computed(() => (locale.value === "en" ? "left" : "right"));

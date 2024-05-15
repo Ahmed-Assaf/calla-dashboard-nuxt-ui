@@ -19,7 +19,7 @@ export default <Partial<Config>>{
         orangeLightColor: "#FFF4DE",
         textLightColor: "#9B9B9B",
         bodyColor: "#FAFAFA",
-        sidebarColor: "#272727",
+        textBaseColor: "#272727",
         strokeLightGray: "#E6E6E6",
         lightGray: "#F7F7F7",
         starActive: "#FFBA35",

@@ -7,14 +7,19 @@ export default defineAppConfig({
       size: {
         sm: "text-xs",
         lg: "text-xs",
+        xl: "text-xs min-h-11",
       },
       padding: {
         sm: "px-5 py-2",
         lg: "px-5 py-2.5",
+        xl: "px-11 py-1.5",
       },
       color: {
         primary: {
           solid: "text-white bg-primaryColor hover:bg-primaryDarkColor",
+          outline:
+            "text-primaryColor bg-transparent border-2 border-primaryColor hover:text-white hover:bg-primaryColor",
+          link: "underline text-primaryColor dark:text-primaryColor hover:text-primaryColor dark:hover:text-primaryColor  focus-visible:ring-0 focus-visible:ring-0",
         },
         secondary: {
           soft: "text-secondaryColor bg-secondaryLightColor hover:bg-transparent",
@@ -22,6 +27,10 @@ export default defineAppConfig({
         gray: {
           solid:
             "text-base bg-strokeLightGray border-none ring-0 hover:bg-transparent",
+        },
+        red: {
+          solid:
+            "text-white bg-redColor border-none ring-0 hover:bg-redColor/90",
         },
       },
       default: {
@@ -52,6 +61,76 @@ export default defineAppConfig({
     },
     container: {
       center: true,
+      constrained: "w-full max-w-7xl",
+    },
+    formGroup: {
+      label: {
+        base: "text-xs text-textBaseColor",
+        required: "after:text-redColor dark:after:text-redColor",
+      },
+      error: "mt-2 text-xs text-redColor dark:text-redColor",
+      default: {
+        size: "lg",
+      },
+    },
+    input: {
+      placeholder: "placeholder-textLightColor dark:placeholder-textLightColor",
+      icon: {
+        trailing: {
+          pointer: "",
+        },
+      },
+      color: {
+        white: {
+          outline:
+            "shadow-none text-textLightColor ring-strokeLightGray focus:ring-1 focus:ring-primaryColor dark:focus:ring-primaryColor",
+        },
+      },
+      variant: {
+        outline: "shadow-none bg-white text-textLightColor",
+      },
+      rounded: "rounded-lg",
+      padding: {
+        lg: "py-3.5",
+      },
+      size: {
+        lg: "text-xs",
+      },
+      default: {
+        size: "lg",
+        color: "white",
+      },
+    },
+    select: {
+      padding: {
+        lg: "py-3.5",
+      },
+      size: {
+        lg: "text-xs",
+      },
+      color: {
+        white: {
+          outline:
+            "shadow-none text-textLightColor ring-strokeLightGray focus:ring-1 focus:ring-primaryColor dark:focus:ring-primaryColor",
+          none: "shadow-none text-textBaseColor ring-0 focus:ring-0",
+        },
+      },
+      default: {
+        size: "lg",
+        color: "white",
+      },
+    },
+    modal: {
+      overlay: {
+        background: "bg-black/60 dark:bg-black/60",
+      },
+      background: "bg-transparent dark:bg-transparent",
+    },
+    skeleton: {
+      background: "bg-gray-200 dark:bg-gray-800",
+    },
+    toggle: {
+      active: "bg-primaryColor dark:bg-primaryColor",
     },
   },
 });

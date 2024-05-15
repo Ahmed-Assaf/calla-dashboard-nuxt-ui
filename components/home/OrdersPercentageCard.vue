@@ -7,7 +7,9 @@
           :options="options"
           class="w-full h-auto z-[1] relative"
         />
-        <h5 class="text-xl absolute font-bukra font-bold">78%</h5>
+        <h5 class="text-xl absolute font-bukra font-bold">
+          {{ props.data.orders_percent }}%
+        </h5>
       </div>
 
       <div class="flex items-center gap-3 flex-wrap">
@@ -15,14 +17,18 @@
           class="text-primaryColor bg-primaryLightColor num-card flex-shrink-0"
         >
           <h6>{{ $t("order.successful") }}</h6>
-          <span class="font-bukra font-bold">24</span>
+          <span class="font-bukra font-bold">{{
+            props.data.success_orders
+          }}</span>
         </div>
 
         <div
           class="text-secondaryColor bg-secondaryLightColor num-card flex-shrink-0"
         >
           <h6>{{ $t("order.unsuccessful") }}</h6>
-          <span class="font-bukra font-bold">10</span>
+          <span class="font-bukra font-bold">{{
+            props.data.failure_orders
+          }}</span>
         </div>
       </div>
     </GeneralTheCard>
@@ -64,6 +70,14 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  data: {
+    type: Object,
+    required: true,
+  },
+});
+
+const unsuccessfulOrders = computed(() => {
+  return 100 - props.data.orders_percent;
 });
 
 const ordersPercentData = reactive({
@@ -71,7 +85,7 @@ const ordersPercentData = reactive({
   datasets: [
     {
       backgroundColor: ["#00c2cb", "#FF66C4"],
-      data: [50, 50],
+      data: [props.data.orders_percent, unsuccessfulOrders.value],
     },
   ],
 });

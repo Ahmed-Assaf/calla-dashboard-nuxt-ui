@@ -1,69 +1,76 @@
 <template>
-  <aside>
-    <div class="head">
-      <img src="/images/logo.svg" class="logo" />
-    </div>
+  <ClientOnly>
+    <aside class="h-screen">
+      <div class="head">
+        <img src="/images/logo.svg" class="logo" />
+      </div>
 
-    <ul class="side-menu">
-      <li v-for="(link, idx) in links" :key="link[idx]">
-        <ULink :to="link.to" class="link" active-class="active">
-          <span class="icon">
-            <img :src="link.icon.src" :alt="link.label" class="w-5" />
-            <UBadge size="xs" v-if="link.badge" color="red" class="badge">{{
-              link.badge
-            }}</UBadge>
-          </span>
+      <ul class="side-menu">
+        <li v-for="(link, idx) in links" :key="link[idx]">
+          <ULink
+            :to="link.to ? link.to : ''"
+            @click="link?.action"
+            class="link"
+            active-class="active"
+          >
+            <span class="icon">
+              <img :src="link.icon.src" :alt="link.label" class="w-5" />
+              <UBadge size="xs" v-if="link.badge" color="red" class="badge">{{
+                link.badge
+              }}</UBadge>
+            </span>
 
-          <span>
+            <span>
+              {{ link.label }}
+            </span>
+          </ULink>
+        </li>
+      </ul>
+
+      <!-- <UVerticalNavigation
+        class="side-menu"
+        :links="links"
+        :ui="{
+          wrapper: 'flex-1 overflow-auto p-5 pt-0',
+          base: 'text-white flex gap-3 items-center px-3 py-2 bg-transparent hover:text-white before:z-0 before:rounded-[10px] mb-2',
+          active: 'before:bg-primaryColor hover:before:bg-primaryColor',
+          inactive: 'hover:before:bg-transparent',
+          avatar: {
+            base: 'z-[1] w-[33px] h-[33px] flex items-center justify-center bg-white/5 rounded-[10px]',
+          },
+          badge: {
+            base: 'flex-shrink-0 ml-auto absolute font-bold -translate-y-1/2 rtl:translate-x-1/2 ltr:-translate-x-1/2 top-2 start-3 rounded-full text-[10px] w-fit h-fit px-[2px] py-0 leading-none z-[1]',
+            color: 'red',
+            variant: 'solid',
+          },
+        }"
+      >
+        <template #icon="{ link }">
+          <IconHover :image="link.icon" />
+        </template>
+  
+        <template #default="{ link }">
+          <div class="relative">
             {{ link.label }}
-          </span>
-        </ULink>
-      </li>
-    </ul>
-
-    <!-- <UVerticalNavigation
-      class="side-menu"
-      :links="links"
-      :ui="{
-        wrapper: 'flex-1 overflow-auto p-5 pt-0',
-        base: 'text-white flex gap-3 items-center px-3 py-2 bg-transparent hover:text-white before:z-0 before:rounded-[10px] mb-2',
-        active: 'before:bg-primaryColor hover:before:bg-primaryColor',
-        inactive: 'hover:before:bg-transparent',
-        avatar: {
-          base: 'z-[1] w-[33px] h-[33px] flex items-center justify-center bg-white/5 rounded-[10px]',
-        },
-        badge: {
-          base: 'flex-shrink-0 ml-auto absolute font-bold -translate-y-1/2 rtl:translate-x-1/2 ltr:-translate-x-1/2 top-2 start-3 rounded-full text-[10px] w-fit h-fit px-[2px] py-0 leading-none z-[1]',
-          color: 'red',
-          variant: 'solid',
-        },
-      }"
-    >
-      <template #icon="{ link }">
-        <IconHover :image="link.icon" />
-      </template>
-
-      <template #default="{ link }">
-        <div class="relative">
-          {{ link.label }}
-        </div>
-      </template>
-
-      <template #accordion="{ link }">
-        <div class="relative bg-red">
-          {{ link.label }}
-        </div>
-      </template>
-    </UVerticalNavigation> -->
-  </aside>
+          </div>
+        </template>
+  
+        <template #accordion="{ link }">
+          <div class="relative bg-red">
+            {{ link.label }}
+          </div>
+        </template>
+      </UVerticalNavigation> -->
+    </aside>
+  </ClientOnly>
 </template>
 
 <script setup>
 // i18n
 const { t } = useI18n();
 
-// locale path
-const localePath = useLocalePath();
+// local route
+const localeRoute = useLocaleRoute();
 
 // route
 const route = useRoute();
@@ -77,7 +84,7 @@ const links = computed(() => [
         ? "/images/icons/home-filled.svg"
         : "/images/icons/home.svg",
     },
-    to: localePath({ name: "index" }),
+    to: localeRoute({ name: "index" }),
   },
   {
     label: t("pages.products_management"),
@@ -86,7 +93,7 @@ const links = computed(() => [
         ? "/images/icons/box-filled.svg"
         : "/images/icons/box.svg",
     },
-    to: localePath({ name: "products" }),
+    to: localeRoute({ name: "products" }),
   },
   {
     label: t("pages.chats"),
@@ -168,14 +175,45 @@ const links = computed(() => [
         ? "/images/icons/logout-filled.svg"
         : "/images/icons/logout.svg",
     },
-    to: "",
+    action: logout,
   },
 ]);
+
+// auth store
+const { userInfo } = storeToRefs(useAuthStore());
+const { deleteAuth } = useAuthStore();
+
+// fetch composable
+const { fetchData } = useFetchData();
+
+// runtime config
+const config = useRuntimeConfig();
+
+// handle logout
+const logout = async () => {
+  const token = userInfo.value.token;
+
+  await fetchData({
+    url: "provider/sign-out",
+    method: "DELETE",
+    getSuccess: true,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    params: {
+      device_id: config.public.device_id,
+    },
+    onSuccess: async () => {
+      deleteAuth();
+      await navigateTo(localeRoute({ name: "auth-login", replace: true }));
+    },
+  });
+};
 </script>
 
 <style lang="scss" scoped>
 aside {
-  @apply bg-sidebarColor flex flex-col overflow-hidden font-bukra transition-all duration-300;
+  @apply bg-textBaseColor flex flex-col overflow-hidden font-bukra transition-all duration-300;
 
   .head {
     @apply p-5 flex-shrink-0;

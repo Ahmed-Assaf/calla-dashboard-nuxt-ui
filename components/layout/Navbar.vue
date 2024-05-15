@@ -1,7 +1,7 @@
 <template>
-  <nav class="navbar">
-    <div class="col">
-      <ClientOnly>
+  <ClientOnly>
+    <nav class="navbar">
+      <div class="col">
         <UButton
           :icon="icon"
           size="md"
@@ -14,20 +14,20 @@
 
         <LayoutNavbarNotifications />
 
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-2" v-if="isAuthed">
           <UAvatar
-            src="https://avatars.githubusercontent.com/u/739984?v=4"
+            :src="userInfo?.image"
             alt="shop"
             class="border border-solid border-strokeLightGray bg-white rounded-lg shadow-none relative w-[37.6px] h-[37.6px] overflow-hidden"
           />
 
-          <small>اسم المتجر</small>
+          <small>{{ userInfo?.name }}</small>
         </div>
 
         <LayoutNavbarLanguages />
-      </ClientOnly>
-    </div>
-  </nav>
+      </div>
+    </nav>
+  </ClientOnly>
 </template>
 
 <script lang="ts" setup>
@@ -43,6 +43,9 @@ const icon = computed(() =>
     ? "i-heroicons-bars-3-bottom-right"
     : "i-heroicons-bars-3-bottom-left"
 );
+
+// auth store
+const { isAuthed, userInfo } = storeToRefs(useAuthStore());
 </script>
 
 <style lang="scss">

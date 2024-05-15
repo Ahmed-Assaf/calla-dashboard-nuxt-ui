@@ -17,7 +17,7 @@
         base: 'gap-2 ',
         active: 'bg-primaryColor text-white',
         inactive:
-          'text-black hover:text-black bg-transparent hover:bg-transparent',
+          'text-textBaseColor hover:text-textBaseColor bg-transparent hover:bg-transparent',
         rounded: 'rounded-none',
         padding: 'px-4 py-3',
       },
@@ -28,8 +28,13 @@
       size="sm"
       variant="link"
       :label="currentLocaleName"
-      class="hover:no-underline font-normal"
-      :class="props.color ? props.color : `text-black hover:text-black`"
+      class="!no-underline !hover:no-underline font-normal"
+      :class="
+        props.color
+          ? props.color
+          : `text-textBaseColor hover:text-textBaseColor`
+      "
+      :padded="false"
     >
       <template #trailing>
         <img

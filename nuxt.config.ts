@@ -1,6 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
+  // app: {
+  //   pageTransition: { name: "page", mode: "out-in" },
+  // },
   modules: ["@nuxt/ui", "@nuxtjs/i18n", "@pinia/nuxt"],
   css: ["~/assets/scss/main.scss"],
   postcss: {
@@ -11,6 +14,13 @@ export default defineNuxtConfig({
   },
   colorMode: {
     preference: "light",
+  },
+  runtimeConfig: {
+    public: {
+      GOOGLE_MAPS_API_KEY: "AIzaSyBNLoYGrbnQI_GMqHt6m0PSN9yA7Zvq7gA",
+      base_url: "https://calla-app.com/api/",
+      device_id: "1",
+    },
   },
   i18n: {
     // lazy: true,
