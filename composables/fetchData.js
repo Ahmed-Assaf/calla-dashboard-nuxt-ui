@@ -49,11 +49,10 @@ export const useFetchData = () => {
             if (res.data) {
               // pagination
               if (res.data.pagination) {
-                resultData.value = res.data.data;
                 pagination.value = res.data.pagination;
-              } else {
-                resultData.value = res.data;
               }
+
+              resultData.value = res.data;
             }
 
             if (options.getSuccess) {
