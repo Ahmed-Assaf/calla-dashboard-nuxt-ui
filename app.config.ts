@@ -132,5 +132,31 @@ export default defineAppConfig({
     toggle: {
       active: "bg-primaryColor dark:bg-primaryColor",
     },
+    table: {
+      wrapper: "the-data-table",
+      base: "min-w-full table-fixed",
+      // wrapper: 'overflow-visible',
+      divide: "divide-none",
+      thead: "font-bukra",
+      tbody: "divide-none font-medium",
+      th: {
+        padding: "px-0 py-0",
+        size: "text-xs",
+        color: "text-textBaseColor",
+      },
+      td: {
+        base: "h-20",
+        padding: "px-0 py-0",
+        size: "text-xs",
+        color: "text-textBaseColor",
+      },
+      default: {
+        sortAscIcon: "i-material-symbols-arrow-drop-up",
+        sortDescIcon: "i-material-symbols-arrow-drop-down",
+        sortButton: {
+          class: "text-xs",
+        },
+      },
+    },
   },
 });

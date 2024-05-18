@@ -1,31 +1,7 @@
 <template>
   <section class="grid grid-cols-12 mb-6">
     <div class="col col-span-12">
-      <UTable
-        :columns="props.columns"
-        :rows="props.rows"
-        class="the-data-table"
-        sort-asc-icon="i-material-symbols-arrow-drop-up"
-        sort-desc-icon="i-material-symbols-arrow-drop-down"
-        :ui="{
-          base: 'min-w-full table-fixed',
-          // wrapper: 'overflow-visible',
-          divide: 'divide-none',
-          thead: 'font-kaff',
-          tbody: 'divide-none font-bukra',
-          th: {
-            padding: 'px-0 py-0',
-            size: 'text-xs',
-          },
-          td: {
-            base: 'h-20',
-            padding: 'px-0 py-0',
-            size: 'text-xs',
-          },
-        }"
-        loading="props.loading"
-      >
-      </UTable>
+      <slot />
 
       <div
         class="flex items-center justify-between gap-6 flex-wrap border-t border-t-strokeLightGray bg-white p-7 shadow-card rounded-b-3xl"
@@ -44,94 +20,11 @@
 
 <script setup lang="ts">
 const props = defineProps({
-  columns: {
-    type: Array,
-    required: true,
-  },
-  rows: {
-    type: Array,
-    required: true,
-  },
   paginate: {
     type: Object,
-    required: true,
-  },
-  loading: {
-    type: Boolean,
-    required: true,
+    required: false,
   },
 });
-const columns = [
-  {
-    key: "id",
-    label: "ID",
-  },
-  {
-    key: "name",
-    label: "Name",
-    sortable: true,
-  },
-  {
-    key: "title",
-    label: "Title",
-    sortable: true,
-  },
-  {
-    key: "email",
-    label: "Email",
-    sortable: true,
-    direction: "desc" as const,
-  },
-  {
-    key: "role",
-    label: "Role",
-  },
-];
-
-const people = [
-  {
-    id: 1,
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
-  },
-  {
-    id: 2,
-    name: "Courtney Henry",
-    title: "Designer",
-    email: "courtney.henry@example.com",
-    role: "Admin",
-  },
-  {
-    id: 3,
-    name: "Tom Cook",
-    title: "Director of Product",
-    email: "tom.cook@example.com",
-    role: "Member",
-  },
-  {
-    id: 4,
-    name: "Whitney Francis",
-    title: "Copywriter",
-    email: "whitney.francis@example.com",
-    role: "Admin",
-  },
-  {
-    id: 5,
-    name: "Leonard Krasner",
-    title: "Senior Designer",
-    email: "leonard.krasner@example.com",
-    role: "Owner",
-  },
-  {
-    id: 6,
-    name: "Floyd Miles",
-    title: "Principal Designer",
-    email: "floyd.miles@example.com",
-    role: "Member",
-  },
-];
 
 // pagination
 const page = ref(1),
