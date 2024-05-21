@@ -150,6 +150,38 @@
       "label": "العلامة التجارية",
       "placeholder": "اختر العلامة التجارية",
       "required": "العلامة التجارية مطلوبة"
+    },
+    "product_description": {
+      "ar": {
+        "label": "وصف المنتج",
+        "placeholder": "ادخل وصف المنتج",
+        "required": "وصف المنتج مطلوبة"
+      },
+      "en": {
+        "label": "وصف المنتج (بالانجليزية)",
+        "placeholder": "ادخل وصف المنتج (بالانجليزية)",
+        "required": "وصف المنتج (بالانجليزية) مطلوبة"
+      }
+    },
+    "price": {
+      "label": "السعر",
+      "placeholder": "ادخل السعر",
+      "required": "السعر مطلوب"
+    },
+    "discount_type": {
+      "label": "نوع الخصم",
+      "placeholder": "ادخل نوع الخصم",
+      "required": "نوع الخصم مطلوب",
+      "options": {
+        "ratio": "نسبة",
+        "number": "مبلغ",
+        "none": "لا يوجد"
+      }
+    },
+    "discount_amount": {
+      "label": "قيمة الخصم",
+      "placeholder": "ادخل قيمة الخصم",
+      "required": "قيمة الخصم مطلوبة"
     }
   },
   "auth": {

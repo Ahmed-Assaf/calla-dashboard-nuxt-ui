@@ -178,5 +178,15 @@ export default defineAppConfig({
       active: "text-textLightColor dark:text-white",
       inactive: "text-textLightColor",
     },
+    radio: {
+      wrapper: "inline-flex items-center",
+      label: "text-xs text-textBaseColor",
+      color: "text-primaryColor dark:text-primaryColor",
+      border: "border-strokeLightGray",
+      base: "h-3 w-3",
+    },
+    radioGroup: {
+      fieldset: "flex items-center flex-wrap gap-6 mt-2",
+    },
   },
 });

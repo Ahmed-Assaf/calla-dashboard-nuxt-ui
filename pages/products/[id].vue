@@ -3,16 +3,17 @@
     <GeneralPageHeading :title="headingTitle" />
 
     <div class="grid grid-cols-12">
-      <div class="col col-span-8 mb-8">
+      <div class="col col-span-7 mb-8">
         <GeneralTheCard>
           <GeneralTheForm
             :button="{
               label: $t('product.confirm_create'),
               radius: 'rounded-xl me-auto',
-              loading,
+              loading: formLoading,
             }"
             :state
             :schema
+            @submit="handleSubmit"
           >
             <!-- type -->
             <UFormGroup
@@ -87,20 +88,25 @@
             </UFormGroup>
 
             <!-- stock -->
-            <UFormGroup :label="$t('inputs.quantity.label')" name="stock">
+            <UFormGroup
+              :label="$t('inputs.quantity.label')"
+              name="stock"
+              v-if="!state.type || state.type === 'simple'"
+            >
               <UInput
                 v-model="state.stock"
                 :placeholder="$t('inputs.quantity.placeholder')"
                 type="number"
-                min="0"
+                min="1"
               />
             </UFormGroup>
 
             <!-- images -->
             <UFormGroup
-              :label="$t('inputs.quantity.label')"
+              :label="$t('inputs.images.label')"
               name="images[]"
               class="relative"
+              v-if="!state.type || state.type === 'simple'"
             >
               <UInput
                 type="file"
@@ -125,7 +131,9 @@
             </UFormGroup>
 
             <div
-              v-if="state['images[]']"
+              v-if="
+                (!state.type || state.type === 'simple') && state['images[]']
+              "
               class="flex items-center gap-6 flex-wrap w-full mb-5"
             >
               <div
@@ -153,7 +161,7 @@
             </div>
 
             <!-- brands -->
-            <UFormGroup :label="$t('inputs.brand.label')" name="stock">
+            <UFormGroup :label="$t('inputs.brand.label')" name="brand_id">
               <GeneralTheSelectMenu
                 v-model="state.brand_id"
                 :options="brands"
@@ -165,7 +173,88 @@
               />
             </UFormGroup>
 
-            <!-- <UTextarea v-model="value" /> -->
+            <!-- description ar -->
+            <UFormGroup
+              :label="$t('inputs.product_description.ar.label')"
+              name="description[ar]"
+            >
+              <UTextarea
+                v-model="state['description[ar]']"
+                :placeholder="$t('inputs.product_description.ar.placeholder')"
+              />
+            </UFormGroup>
+
+            <!-- description en -->
+            <UFormGroup
+              :label="$t('inputs.product_description.en.label')"
+              name="description[en]"
+            >
+              <UTextarea
+                v-model="state['description[en]']"
+                :placeholder="$t('inputs.product_description.en.placeholder')"
+              />
+            </UFormGroup>
+
+            <!-- price -->
+            <UFormGroup
+              :label="$t('inputs.price.label')"
+              name="price"
+              v-if="!state.type || state.type === 'simple'"
+            >
+              <UInput
+                v-model="state.price"
+                :placeholder="$t('inputs.price.placeholder')"
+                type="number"
+                min="1"
+              >
+                <template #trailing>
+                  <span class="text-xs text-textLightColor">{{
+                    $t("general.currency")
+                  }}</span>
+                </template>
+              </UInput>
+            </UFormGroup>
+
+            <!-- discount type -->
+            <UFormGroup
+              :label="$t('inputs.discount_type.label')"
+              name="discount_type"
+              v-if="!state.type || state.type === 'simple'"
+            >
+              <URadioGroup
+                :options="[
+                  {
+                    value: 'ratio',
+                    label: $t('inputs.discount_type.options.ratio'),
+                  },
+                  {
+                    value: 'number',
+                    label: $t('inputs.discount_type.options.number'),
+                  },
+                  {
+                    value: null,
+                    label: $t('inputs.discount_type.options.none'),
+                  },
+                ]"
+                v-model="state.discount_type"
+              />
+            </UFormGroup>
+
+            <!-- discount amount -->
+            <UFormGroup
+              :label="$t('inputs.discount_amount.label')"
+              name="discount_amount"
+              v-if="
+                (!state.type || state.type === 'simple') && state.discount_type
+              "
+            >
+              <UInput
+                v-model="state.discount_amount"
+                :placeholder="$t('inputs.discount_amount.placeholder')"
+                type="number"
+                min="1"
+              />
+            </UFormGroup>
           </GeneralTheForm>
         </GeneralTheCard>
       </div>
@@ -265,20 +354,44 @@ const state = reactive({
   sub_category_id: null,
   "title[ar]": undefined,
   "title[en]": undefined,
-  stock: 0,
+  stock: null,
   "images[]": [],
   brand_id: null,
+  "description[ar]": undefined,
+  "description[en]": undefined,
+  price: null,
+  discount_type: "ratio",
+  discount_amount: null,
 });
 
 // schema
-const schema = object({
-  type: string().required(t("inputs.type.required")),
-  category_id: string().required(t("inputs.category.required")),
-  sub_category_id: string().required(t("inputs.sub_category.required")),
-  "title[ar]": string().required(t("inputs.product_name.required")),
-  "title[en]": string().required(t("inputs.product_name_en.required")),
-  stock: string().required(t("inputs.quantity.required")),
-  "images[]": array().min(1, t("inputs.images.required")),
+const schema = computed(() => {
+  return object({
+    type: string().required(t("inputs.type.required")),
+    category_id: string().required(t("inputs.category.required")),
+    sub_category_id: string().required(t("inputs.sub_category.required")),
+    "title[ar]": string().required(t("inputs.product_name.required")),
+    "title[en]": string().required(t("inputs.product_name_en.required")),
+    stock:
+      !state.type || state.type === "simple"
+        ? string().required(t("inputs.quantity.required"))
+        : null,
+    "images[]":
+      !state.type || state.type === "simple"
+        ? array().min(1, t("inputs.images.required"))
+        : null,
+    brand_id: string().required(t("inputs.brand.required")),
+    "description[ar]": string().required(
+      t("inputs.product_description.ar.required")
+    ),
+    "description[en]": string().required(
+      t("inputs.product_description.en.required")
+    ),
+    price: string().required(t("inputs.price.required")),
+    discount_amount: state.discount_type
+      ? string().required(t("inputs.discount_amount.required"))
+      : null,
+  });
 });
 
 // upload images
@@ -317,6 +430,46 @@ const headingTitle = computed(() => {
     ];
   }
 });
+
+// auth store
+const { userInfo } = storeToRefs(useAuthStore());
+
+// submit form
+const formLoading = ref(false);
+const handleSubmit = async () => {
+  formLoading.value = true;
+  if (editPage.value) {
+    await fetchData({
+      url: `provider/products/update/${route.params.id}`,
+      method: "post",
+      headers: {
+        Authorization: `Bearer ${userInfo.value.token}`,
+      },
+      params: {
+        _method: "PUT",
+      },
+      body: state,
+      getSuccess: true,
+      onSuccess: () => {
+        navigateTo(localeRoute({ name: "products", replace: true }));
+      },
+    });
+  } else {
+    await fetchData({
+      url: `provider/products/store`,
+      method: "post",
+      headers: {
+        Authorization: `Bearer ${userInfo.value.token}`,
+      },
+      body: state,
+      getSuccess: true,
+      onSuccess: () => {
+        navigateTo(localeRoute({ name: "products", replace: true }));
+      },
+    });
+  }
+  formLoading.value = false;
+};
 </script>
 
 <style></style>
