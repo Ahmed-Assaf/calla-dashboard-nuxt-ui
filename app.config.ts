@@ -31,6 +31,7 @@ export default defineAppConfig({
         red: {
           solid:
             "text-white bg-redColor border-none ring-0 hover:bg-redColor/90",
+          link: "underline text-redColor dark:text-redColor hover:text-redColor dark:hover:text-redColor  focus-visible:ring-0 focus-visible:ring-0",
         },
       },
       default: {
@@ -108,6 +109,7 @@ export default defineAppConfig({
       size: {
         lg: "text-xs",
       },
+      rounded: "rounded-lg",
       color: {
         white: {
           outline:
@@ -131,6 +133,11 @@ export default defineAppConfig({
     },
     toggle: {
       active: "bg-primaryColor dark:bg-primaryColor",
+    },
+    progress: {
+      color: {
+        primary: "bg-primaryColor",
+      },
     },
     table: {
       wrapper: "the-data-table",
@@ -156,7 +163,20 @@ export default defineAppConfig({
         sortButton: {
           class: "text-xs",
         },
+        progress: {
+          color: "primaryColor",
+        },
       },
+    },
+    tabs: {
+      list: {
+        background: "bg-transparent dark:bg-transparent",
+        padding: "p-0",
+      },
+    },
+    breadcrumb: {
+      active: "text-textLightColor dark:text-white",
+      inactive: "text-textLightColor",
     },
   },
 });

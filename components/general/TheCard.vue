@@ -29,7 +29,6 @@
 const props = defineProps({
   header: {
     type: Object,
-    default: {},
   },
 });
 </script>

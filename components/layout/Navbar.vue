@@ -1,5 +1,4 @@
 <template>
-  <ClientOnly>
     <nav class="navbar">
       <div class="col">
         <UButton
@@ -27,7 +26,6 @@
         <LayoutNavbarLanguages />
       </div>
     </nav>
-  </ClientOnly>
 </template>
 
 <script lang="ts" setup>

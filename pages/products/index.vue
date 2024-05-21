@@ -1,9 +1,15 @@
 <template>
   <div>
-    <GeneralPageHeading :title="$t('product.plural')" />
+    <GeneralPageHeading :title="[{ label: $t('product.plural') }]" />
 
-    <GeneralTheDataTable class="stripe-table">
-      <UTable :columns="columns" :rows="products.products" :loading="loading">
+    <GeneralTheDataTable class="stripe-table" @update:page="fetchProducts">
+      <UTable
+        :columns="columns"
+        :rows="products.products"
+        :loading="loading"
+        :loadingState="{ label: $t('general.loading') }"
+        :emptyState="{ label: $t('general.no_data') }"
+      >
         <template #image-data="{ row }">
           <img
             :src="row.image ? row.image : '/images/product-default.svg'"
@@ -22,6 +28,40 @@
             />
           </div>
         </template>
+
+        <template #is_available-data="{ row }">
+          <ProductTableStatus
+            :status="row.is_available"
+            :product-id="row.id"
+            @updated="fetchProducts"
+          />
+        </template>
+
+        <template #actions-data="{ row }">
+          <div class="flex items-center gap-2">
+            <!-- delete -->
+            <ProductTableDelete :product-id="row.id" @deleted="fetchProducts" />
+
+            <!-- edit -->
+            <UButton
+              :to="
+                localeRoute({
+                  name: 'products-id',
+                  params: { id: row.id },
+                })
+              "
+              square
+              class="rounded-full"
+              size="2xs"
+            >
+              <img
+                src="/images/icons/pen-filled-white.svg"
+                :alt="$t('product.edit')"
+                class="w-4 h-4"
+              />
+            </UButton>
+          </div>
+        </template>
       </UTable>
 
       <!-- foot data -->
@@ -31,13 +71,14 @@
           :label="$t('product.create')"
           link="products-create"
           icon-image="/images/icons/plus-square-filled-white.svg"
+          :to="localeRoute({ name: 'products-id', params: { id: 'create' } })"
         />
       </template>
     </GeneralTheDataTable>
   </div>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 // page meta
 definePageMeta({
   title: "pages.products_management",
@@ -46,11 +87,13 @@ definePageMeta({
 // i18n
 const { t } = useI18n();
 
+const localeRoute = useLocaleRoute();
+
 // auth store
 const { userInfo } = storeToRefs(useAuthStore());
 
 // fetch data
-const { fetchData, loading, resultData: products, pagination } = useFetchData();
+const { fetchData, loading, resultData: products } = useFetchData();
 
 // table columns
 const columns = computed(() => [
@@ -95,17 +138,29 @@ const columns = computed(() => [
   },
 ]);
 
-onMounted(() => {
+// pagination
+const paginateData = ref({});
+provide("paginateData", paginateData);
+
+// fetch products
+const fetchProducts = (page = 1) => {
   fetchData({
     url: "provider/products/index",
     headers: {
       Authorization: `Bearer ${userInfo.value.token}`,
     },
+    params: {
+      page,
+    },
     onSuccess: () => {
-      console.log(pagination.value);
+      paginateData.value = products.value.pagination;
+      console.log(products.value.products);
     },
   });
+};
+
+// on mounted
+onMounted(() => {
+  fetchProducts();
 });
 </script>
-
-<style></style>

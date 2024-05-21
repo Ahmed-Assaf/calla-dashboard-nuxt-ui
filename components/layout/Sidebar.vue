@@ -1,33 +1,32 @@
 <template>
-  <ClientOnly>
-    <aside class="h-screen">
-      <div class="head">
-        <img src="/images/logo.svg" class="logo" />
-      </div>
+  <aside class="h-screen">
+    <div class="head">
+      <img src="/images/logo.svg" class="logo" />
+    </div>
 
-      <ul class="side-menu">
-        <li v-for="(link, idx) in links" :key="link[idx]">
-          <ULink
-            :to="link.to ? link.to : ''"
-            @click="link?.action"
-            class="link"
-            active-class="active"
-          >
-            <span class="icon">
-              <img :src="link.icon.src" :alt="link.label" class="w-5" />
-              <UBadge size="xs" v-if="link.badge" color="red" class="badge">{{
-                link.badge
-              }}</UBadge>
-            </span>
+    <ul class="side-menu">
+      <li v-for="(link, idx) in links" :key="link[idx]">
+        <ULink
+          :to="link.to ? link.to : ''"
+          @click="link?.action"
+          class="link"
+          active-class="active"
+        >
+          <span class="icon">
+            <img :src="link.icon.src" :alt="link.label" class="w-5" />
+            <UBadge size="xs" v-if="link.badge" color="red" class="badge">{{
+              link.badge
+            }}</UBadge>
+          </span>
 
-            <span>
-              {{ link.label }}
-            </span>
-          </ULink>
-        </li>
-      </ul>
+          <span>
+            {{ link.label }}
+          </span>
+        </ULink>
+      </li>
+    </ul>
 
-      <!-- <UVerticalNavigation
+    <!-- <UVerticalNavigation
         class="side-menu"
         :links="links"
         :ui="{
@@ -61,8 +60,7 @@
           </div>
         </template>
       </UVerticalNavigation> -->
-    </aside>
-  </ClientOnly>
+  </aside>
 </template>
 
 <script setup>
@@ -103,7 +101,7 @@ const links = computed(() => [
         : "/images/icons/message.svg",
     },
     badge: 100,
-    to: "",
+    to: localeRoute({ name: "chats" }),
   },
   {
     label: t("pages.orders_management"),

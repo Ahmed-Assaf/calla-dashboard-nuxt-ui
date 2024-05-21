@@ -10,9 +10,7 @@
           <slot name="tfoot" />
         </div>
 
-        <ClientOnly>
-          <GeneralThePaginator v-model="page" :paginate-data="paginateData" />
-        </ClientOnly>
+        <GeneralThePaginator @update:page="$emit('update:page', $event)" />
       </div>
     </div>
   </section>
@@ -26,24 +24,15 @@ const props = defineProps({
   },
 });
 
-// pagination
-const page = ref(1),
-  pageCount = ref(5),
-  rows = computed(() => {
-    return people.slice(
-      (page.value - 1) * pageCount.value,
-      page.value * pageCount.value
-    );
-  }),
-  paginateData = computed(() => {
-    if (process.client) {
-      return {
-        pageCount: pageCount.value,
-        total: people.length,
-        maxItems: 5,
-      };
-    }
-  });
+// paginateData = computed(() => {
+//   if (process.client) {
+//     return {
+//       pageCount: pageCount.value,
+//       total: people.length,
+//       maxItems: 5,
+//     };
+//   }
+// });
 </script>
 
 <style lang="scss">
