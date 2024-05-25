@@ -14,27 +14,25 @@
       @close="forgotModal = false"
       :header="{ title: modalTitle }"
     >
-      <ClientOnly>
-        <AuthLoginForgotPasswordSendCode
-          @send="sendCode"
-          img-src="/images/password-device.svg"
-          v-if="!sentCode && !confirmedCode"
-        />
+      <AuthLoginForgotPasswordSendCode
+        @send="sendCode"
+        img-src="/images/password-device.svg"
+        v-if="!sentCode && !confirmedCode"
+      />
 
-        <AuthLoginForgotPasswordConfirmCode
-          @confirm="confirmCode"
-          @back="sentCode = false"
-          img-src="/images/otp.gif"
-          v-if="sentCode && !confirmedCode"
-          :sent-state="state"
-        />
+      <AuthLoginForgotPasswordConfirmCode
+        @confirm="confirmCode"
+        @back="sentCode = false"
+        img-src="/images/otp.gif"
+        v-if="sentCode && !confirmedCode"
+        :sent-state="state"
+      />
 
-        <AuthLoginForgotPasswordResetPassword
-          @reset="resetPassword"
-          v-if="confirmedCode && !sentCode"
-          :confirmed-state="state"
-        />
-      </ClientOnly>
+      <AuthLoginForgotPasswordResetPassword
+        @reset="resetPassword"
+        v-if="confirmedCode && !sentCode"
+        :confirmed-state="state"
+      />
     </GeneralTheModal>
   </div>
 </template>

@@ -1,16 +1,17 @@
 <template>
   <UPopover>
-    <UButton color="red" square class="rounded-full" size="2xs">
-      <img
-        src="/images/icons/trash-filled-white.svg"
-        :alt="$t('product.edit')"
-        class="w-4 h-4"
-      />
+    <UButton
+      color="red"
+      square
+      class="rounded-full"
+      icon="i-heroicons-x-mark-16-solid"
+      size="2xs"
+    >
     </UButton>
 
     <template #panel="{ close }">
       <div class="p-4">
-        <h6 class="text-center mb-4">{{ $t("product.delete.sure") }}</h6>
+        <h6 class="text-center mb-4">{{ $t("product.group.delete.sure") }}</h6>
 
         <div class="flex items-center justify-center gap-3 flex-wrap">
           <UButton
@@ -55,7 +56,7 @@ loading.value = false;
 // delete product
 const deleteProduct = (close) => {
   fetchData({
-    url: `provider/products/${props.productId}`,
+    url: `provider/products/delete-variant/${props.productId}`,
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${userInfo.value.token}`,

@@ -3,17 +3,14 @@
     <GeneralPageHeading :title="headingTitle" />
 
     <div class="grid grid-cols-12">
-      <div class="col col-span-7 mb-8">
+      <div class="col lg:col-span-7 md:col-span-9 col-span-12 mb-8">
         <GeneralTheCard>
           <GeneralTheForm
-            :button="{
-              label: $t('product.confirm_create'),
-              radius: 'rounded-xl me-auto',
-              loading: formLoading,
-            }"
+            :button="formBtn"
             :state
             :schema
             @submit="handleSubmit"
+            ref="form"
           >
             <!-- type -->
             <UFormGroup
@@ -104,7 +101,6 @@
             <!-- images -->
             <UFormGroup
               :label="$t('inputs.images.label')"
-              name="images[]"
               class="relative"
               v-if="!state.type || state.type === 'simple'"
             >
@@ -112,6 +108,7 @@
                 type="file"
                 class="absolute top-0 left-0 w-full h-full z-[1] opacity-0 cursor-pointer"
                 multiple
+                name="images[]"
                 @change="uploadImages($event)"
               />
 
@@ -119,6 +116,7 @@
                 :placeholder="$t('inputs.images.placeholder')"
                 icon="i-heroicons-link"
                 trailing
+                readonly
               >
                 <template #leading>
                   <img
@@ -131,14 +129,12 @@
             </UFormGroup>
 
             <div
-              v-if="
-                (!state.type || state.type === 'simple') && state['images[]']
-              "
+              v-if="(!state.type || state.type === 'simple') && thumbnails"
               class="flex items-center gap-6 flex-wrap w-full mb-5"
             >
               <div
                 class="w-16 relative"
-                v-for="(img, idx) in state['images[]']"
+                v-for="(img, idx) in thumbnails"
                 :key="idx"
               >
                 <UButton
@@ -262,14 +258,16 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 // imports
-import { number, object, string, array } from "yup";
+import { object, string } from "yup";
 
 // page meta
 definePageMeta({
   title: "product.create",
 });
+
+const form = ref(null);
 
 // i18n
 const { t } = useI18n();
@@ -313,7 +311,7 @@ const fetchCategories = async () => {
 const subCategories = ref([]),
   subCategoriesLoading = ref(false);
 
-// fetch categories
+// fetch sub-categories
 const fetchSubCategories = async () => {
   if (!subCategories.value.length) {
     subCategoriesLoading.value = true;
@@ -332,7 +330,7 @@ const fetchSubCategories = async () => {
 const brands = ref([]),
   brandsLoading = ref(false);
 
-// fetch categories
+// fetch brands
 const fetchBrands = async () => {
   if (!brands.value.length) {
     brandsLoading.value = true;
@@ -347,6 +345,9 @@ const fetchBrands = async () => {
   brandsLoading.value = false;
 };
 
+// images upload
+const { thumbnails, imgsList, uploadImages, removeImage } = useImageUpload();
+
 // state
 const state = reactive({
   type: undefined,
@@ -355,7 +356,7 @@ const state = reactive({
   "title[ar]": undefined,
   "title[en]": undefined,
   stock: null,
-  "images[]": [],
+  images: imgsList.value,
   brand_id: null,
   "description[ar]": undefined,
   "description[en]": undefined,
@@ -373,48 +374,34 @@ const schema = computed(() => {
     "title[ar]": string().required(t("inputs.product_name.required")),
     "title[en]": string().required(t("inputs.product_name_en.required")),
     stock:
-      !state.type || state.type === "simple"
+      state.type !== "multi"
         ? string().required(t("inputs.quantity.required"))
         : null,
-    "images[]":
-      !state.type || state.type === "simple"
-        ? array().min(1, t("inputs.images.required"))
+    images:
+      state.type !== "multi"
+        ? string().required(t("inputs.images.required"))
         : null,
     brand_id: string().required(t("inputs.brand.required")),
+
     "description[ar]": string().required(
       t("inputs.product_description.ar.required")
     ),
     "description[en]": string().required(
       t("inputs.product_description.en.required")
     ),
-    price: string().required(t("inputs.price.required")),
-    discount_amount: state.discount_type
-      ? string().required(t("inputs.discount_amount.required"))
-      : null,
+    price:
+      state.type !== "multi"
+        ? string().required(t("inputs.price.required"))
+        : null,
+    discount_amount:
+      state.type !== "multi" && state.discount_type
+        ? string().required(t("inputs.discount_amount.required"))
+        : null,
   });
 });
 
-// upload images
-const uploadImages = ($event: any) => {
-  for (const f of $event) {
-    var fileReader = new FileReader();
-
-    fileReader.onload = function (e) {
-      state["images[]"].push(e.target.result);
-
-      console.log(state["images[]"]);
-    };
-    fileReader.readAsDataURL(f);
-  }
-};
-
-// remove uploaded image
-const removeImage = (img: string) => {
-  state["images[]"].splice(state["images[]"].indexOf(img), 1);
-};
-
 // edit pages param
-const editPage = computed(() => (route.params.id !== "create" ? true : false));
+const editPage = computed(() => route.params.id !== "create");
 
 // heading title
 const headingTitle = computed(() => {
@@ -431,12 +418,49 @@ const headingTitle = computed(() => {
   }
 });
 
+// form button
+const formBtn = computed(() => {
+  if (editPage.value) {
+    if (state.type === "multi")
+      return {
+        label: t("product.attribute.plural.edit"),
+        radius: "rounded-xl me-auto",
+        loading: formLoading.value,
+      };
+    else
+      return {
+        label: t("product.confirm_edit"),
+        radius: "rounded-xl me-auto",
+        loading: formLoading.value,
+      };
+  } else {
+    if (state.type === "multi")
+      return {
+        label: t("product.attribute.plural.add"),
+        radius: "rounded-xl me-auto",
+        loading: formLoading.value,
+      };
+    else
+      return {
+        label: t("product.confirm_create"),
+        radius: "rounded-xl me-auto",
+        loading: formLoading.value,
+        trailing: {
+          src: "/images/icons/plus-square-filled-white.svg",
+        },
+      };
+  }
+});
+
 // auth store
 const { userInfo } = storeToRefs(useAuthStore());
 
 // submit form
 const formLoading = ref(false);
+
 const handleSubmit = async () => {
+  const formData = new FormData(document.querySelector("form"));
+
   formLoading.value = true;
   if (editPage.value) {
     await fetchData({
@@ -445,13 +469,18 @@ const handleSubmit = async () => {
       headers: {
         Authorization: `Bearer ${userInfo.value.token}`,
       },
-      params: {
-        _method: "PUT",
-      },
-      body: state,
+      params: { _method: "PUT" },
+      body: formData,
       getSuccess: true,
       onSuccess: () => {
-        navigateTo(localeRoute({ name: "products", replace: true }));
+        if (state.type === "multi")
+          navigateTo(
+            localeRoute({
+              name: `products-id-attributes`,
+              params: { id: route.params.id },
+            })
+          );
+        else navigateTo(localeRoute({ name: "products", replace: true }));
       },
     });
   } else {
@@ -461,10 +490,21 @@ const handleSubmit = async () => {
       headers: {
         Authorization: `Bearer ${userInfo.value.token}`,
       },
-      body: state,
+      body: formData,
       getSuccess: true,
       onSuccess: () => {
-        navigateTo(localeRoute({ name: "products", replace: true }));
+        console.log(resultData.value);
+        if (state.type === "multi")
+          navigateTo(
+            localeRoute({
+              name: `products-id-attributes`,
+              params: { id: route.params.id },
+              query: {
+                product_id: resultData.value.product_id,
+              },
+            })
+          );
+        else navigateTo(localeRoute({ name: "products", replace: true }));
       },
     });
   }

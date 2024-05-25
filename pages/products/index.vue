@@ -38,7 +38,7 @@
         </template>
 
         <template #actions-data="{ row }">
-          <div class="flex items-center gap-2">
+          <div class="flex items-center gap-2 w-max">
             <!-- delete -->
             <ProductTableDelete :product-id="row.id" @deleted="fetchProducts" />
 
@@ -154,7 +154,6 @@ const fetchProducts = (page = 1) => {
     },
     onSuccess: () => {
       paginateData.value = products.value.pagination;
-      console.log(products.value.products);
     },
   });
 };

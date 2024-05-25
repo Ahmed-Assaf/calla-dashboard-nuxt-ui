@@ -25,4 +25,6 @@ body {
   @apply bg-[#b5b5b5] hover:bg-[#939393] rounded;
 }
 
-/* Handle on hover */
+input[pseudo="-webkit-file-upload-button"] {
+  @apply cursor-pointer;
+}

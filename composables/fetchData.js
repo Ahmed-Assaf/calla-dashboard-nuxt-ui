@@ -38,7 +38,12 @@ export const useFetchData = () => {
     await axios({
       url: options.url,
       method: options.method || "GET",
-      headers: { lang: locale.value || "ar", ...options.headers },
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        // "Content-Type": "application/json",
+        lang: locale.value || "ar",
+        ...options.headers,
+      },
       params: { ...options.params },
       data: options.body,
     })

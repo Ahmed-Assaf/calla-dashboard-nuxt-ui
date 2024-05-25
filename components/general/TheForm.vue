@@ -10,8 +10,22 @@
         :size="props.button.size || 'xl'"
         :class="props.button.radius || 'rounded-lg'"
         :loading="props.button.loading"
+        :label="props.button.label"
+        :variant="props.button.variant || 'solid'"
       >
-        {{ props.button.label }}
+        <template #trailing v-if="props.button.trailing">
+          <img
+            :src="props.button.trailing.src"
+            :width="props.button.trailing.width || 18"
+          />
+        </template>
+
+        <template #leading v-if="props.button.leading">
+          <img
+            :src="props.button.leading.src"
+            :width="props.button.leading.width || 18"
+          />
+        </template>
       </UButton>
 
       <slot name="action-button" />
@@ -19,7 +33,7 @@
   </UForm>
 </template>
 
-<script setup lang="ts">
+<script setup>
 // props
 const props = defineProps({
   button: {
