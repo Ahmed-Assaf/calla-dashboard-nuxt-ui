@@ -1,0 +1,1 @@
+import{_ as n}from"./DOaSUxXF.js";import{K as t,_ as s,o as _,l as e,w as c,a as r}from"./CST-ZKdJ.js";const a=t("/images/icons/chevron-down-gray.svg"),i={},m=r("img",{src:a,width:"20"},null,-1);function l(p,u){const o=n;return _(),e(o,null,{trailing:c(()=>[m]),_:1})}const x=s(i,[["render",l]]);export{x as _};

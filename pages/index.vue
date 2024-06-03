@@ -102,7 +102,7 @@
     </div>
   </section>
 
-  <!-- CHARTS AND PROFITS SUMMARY STATS -->
+  <!-- best seller products -->
   <section class="grid grid-cols-12 mb-6">
     <div class="col col-span-12">
       <HomeBestSellerProducts />

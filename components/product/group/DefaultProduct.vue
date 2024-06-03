@@ -4,7 +4,7 @@
       :label="$t('product.group.choose_main.title')"
       variant="outline"
       size="xl"
-      class="rounded-xl"
+      class="rounded-xl px-4"
       @click="modal = true"
     />
 
@@ -67,7 +67,7 @@ const updateDefaultId = (id) => {
 
 const changeDefault = () => {
   fetchData({
-    url: `provider/products/change-variant-is-default/${route.query.product_id}?`,
+    url: `provider/products/change-variant-is-default/${route.params.id}?`,
     method: "POST",
     headers: {
       Authorization: `Bearer ${userInfo.value.token}`,

@@ -1,20 +1,5 @@
 <template>
-  <UCard
-    :ui="{
-      base: 'h-full',
-      divide: 'divide-strokeLightGray',
-      ring: 'ring-0',
-      shadow: 'shadow-card',
-      rounded: 'rounded-2xl',
-      header: {
-        base: 'min-h-[50px] flex items-center justify-between gap-3 flex-wrap',
-        padding: 'px-4 py-2',
-      },
-      body: {
-        padding: 'sm:p-4',
-      },
-    }"
-  >
+  <UCard>
     <template #header v-if="props.header">
       <h5 class="font-bukra font-bold text-sm">{{ header.title }}</h5>
 
@@ -22,6 +7,10 @@
     </template>
 
     <slot />
+
+    <template #footer v-if="props.footer">
+      <slot name="footer" />
+    </template>
   </UCard>
 </template>
 
@@ -29,6 +18,10 @@
 const props = defineProps({
   header: {
     type: Object,
+  },
+  footer: {
+    type: Boolean,
+    default: false,
   },
 });
 </script>

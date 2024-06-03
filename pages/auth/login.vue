@@ -7,12 +7,22 @@
 
       <p class="text-xs font-bukra">
         {{ $t("auth.dont_have_account") }}
+
         <UButton
           :label="$t('auth.register.label')"
           :padded="false"
           variant="link"
           class="font-normal"
           size="xs"
+          @click="registerClick"
+        />
+
+        <AuthRegisterModal
+          v-if="registerModal"
+          v-model="registerModal"
+          :sentCode="loginStatus === 'needActive'"
+          :sentStore="loginStatus === 'needCompleteInfo'"
+          :login-state="authData"
         />
       </p>
     </div>
@@ -50,7 +60,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 // imports
 import { object, string } from "yup";
 
@@ -85,6 +95,17 @@ const { setAuth } = useAuthStore();
 // locale route
 const localeRoute = useLocaleRoute();
 
+// login status
+const loginStatus = ref("");
+
+// register link click
+const registerClick = () => {
+  registerModal.value = true;
+  loginStatus.value = "";
+};
+
+const authData = ref({});
+
 // fetch data
 const { resultData, fetchData, loading } = useFetchData();
 loading.value = false;
@@ -95,6 +116,25 @@ const handleSubmit = async () => {
     method: "post",
     body: state,
     getSuccess: true,
+    onNeedCompleteInfo: async () => {
+      loginStatus.value = "needCompleteInfo";
+      registerModal.value = true;
+      authData.value = {
+        country_code: resultData.value.country_code,
+        phone: resultData.value.phone,
+        device_id: "1111111111",
+        device_type: "web",
+      };
+    },
+    onNeedActive: async () => {
+      loginStatus.value = "needActive";
+      registerModal.value = true;
+      authData.value = {
+        ...resultData.value,
+        device_id: "1111111111",
+        device_type: "web",
+      };
+    },
     onSuccess: async () => {
       const authCookie = useCookie("auth", { watch: true });
 
@@ -111,6 +151,9 @@ const handleSubmit = async () => {
     },
   });
 };
+
+// register modal
+const registerModal = ref(false);
 </script>
 
 <style></style>

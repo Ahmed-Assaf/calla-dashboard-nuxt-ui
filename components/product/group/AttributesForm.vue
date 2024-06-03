@@ -12,12 +12,13 @@
         <div
           class="relative cursor-pointer w-16 aspect-[1] p-1 rounded-lg border border-solid border-strokeLightGray flex items-center justify-center flex-col gap-1"
         >
-          <UInput
+          <input
             type="file"
             class="absolute top-0 left-0 w-full h-full z-[1] opacity-0 cursor-pointer"
             multiple
             name="images[]"
-            @change="uploadImages($event)"
+            @change="uploadImages($event.target.files)"
+            ref="fileRef"
           />
           <img
             src="/images/icons/camera.svg"
@@ -31,6 +32,33 @@
           }}</small>
         </div>
 
+        <!-- old images -->
+        <template v-if="!state.type || state.type === 'simple'">
+          <div
+            class="w-16 relative"
+            v-for="(img, idx) in oldThumbnails"
+            :key="idx"
+          >
+            <UButton
+              square
+              class="absolute top-0 end-0 rtl:-translate-x-1/2 -translate-y-1/2 ltr:translate-x-1/2 rounded-full"
+              @click="removeOldImage(img.id, img.image)"
+              size="2xs"
+              color="red"
+            >
+              <template #leading>
+                <img src="/images/icons/trash-filled-white.svg" width="8" />
+              </template>
+            </UButton>
+
+            <img
+              :src="img.image"
+              class="w-full aspect-[1] object-contain p-1 rounded-lg border border-solid border-strokeLightGray"
+            />
+          </div>
+        </template>
+
+        <!-- uploaded images -->
         <template v-if="thumbnails">
           <div
             class="w-16 relative"
@@ -103,11 +131,12 @@
             label: $t('inputs.discount_type.options.number'),
           },
           {
-            value: null,
+            value: '',
             label: $t('inputs.discount_type.options.none'),
           },
         ]"
         v-model="state.discount_type"
+        valueAttribute="value"
       />
     </UFormGroup>
 
@@ -147,6 +176,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  variantId: {
+    type: Number,
+    default: null,
+  },
 });
 
 // emits
@@ -159,9 +192,6 @@ const { t } = useI18n();
 
 // route
 const route = useRoute();
-
-// locale route
-const localeRoute = useLocaleRoute();
 
 // fetch data
 const { fetchData, resultData, loading } = useFetchData();
@@ -233,6 +263,28 @@ const fetchBrands = async () => {
 // images upload
 const { thumbnails, imgsList, uploadImages, removeImage } = useImageUpload();
 
+// old Thumbnails
+const oldThumbnails = ref([]);
+
+const simpleVariantId = ref(null);
+
+// remove old images
+const removeOldImage = (id, img) => {
+  fetchData({
+    url: `provider/products/delete-image/${simpleVariantId.value}/${id}`,
+    method: "delete",
+    headers: {
+      Authorization: `Bearer ${userInfo.value.token}`,
+    },
+    getSuccess: true,
+    onSuccess: () => {
+      oldThumbnails.value = oldThumbnails.value.filter(
+        (thumb) => thumb.image !== img
+      );
+    },
+  });
+};
+
 // state
 const state = reactive({
   images: imgsList,
@@ -248,7 +300,6 @@ let initialState = reactive({});
 // schema
 const schema = computed(() => {
   return object({
-    images: string().required(t("inputs.images.required")),
     price: number().required(t("inputs.price.required")),
     discount_amount: state.discount_type
       ? string().required(t("inputs.discount_amount.required"))
@@ -265,7 +316,7 @@ const prodAttrs = ref([]);
 
 const getProdAttrs = async () => {
   fetchData({
-    url: `provider/products/get-features-options/${route.query.product_id}`,
+    url: `provider/products/get-features-options/${route.params.id}`,
     headers: {
       Authorization: `Bearer ${userInfo.value.token}`,
     },
@@ -282,12 +333,47 @@ const getProdAttrs = async () => {
   });
 };
 
+// fetch form data
+const getVariantData = async () => {
+  await fetchData({
+    url: `provider/products/show-variant/${props.variantId}`,
+    headers: {
+      Authorization: `Bearer ${userInfo.value.token}`,
+    },
+    onSuccess: () => {
+      const variant = resultData.value;
+
+      state.options_ids = [];
+
+      for (const opt of variant.options_ids) {
+        state.options_ids.push(opt.id);
+      }
+
+      state.price = variant.price;
+      state.discount_type = variant.discount_type;
+      state.discount_amount = variant.discount_amount;
+      state.stock = variant.stock;
+      oldThumbnails.value = variant.images;
+    },
+  });
+};
+
 // submit form
 const formLoading = ref(false);
+const fileRef = ref(null);
+
+const submitUrl = computed(() => {
+  if (props.variantId) {
+    return `provider/products/update-variant/${props.variantId}`;
+  } else {
+    return `provider/products/add-variant/${route.params.id}`;
+  }
+});
 
 const handleSubmit = async () => {
-  const formEl = document.querySelector("form");
-  const formData = new FormData(formEl);
+  const formData = new FormData(document.querySelector("form"));
+
+  // fileRef.value.files = imgsList.value;
 
   formData.append("options_ids", JSON.stringify(state.options_ids));
 
@@ -296,7 +382,7 @@ const handleSubmit = async () => {
   formLoading.value = true;
 
   await fetchData({
-    url: `provider/products/add-variant/${route.query.product_id}`,
+    url: submitUrl.value,
     method: "post",
     headers: {
       Authorization: `Bearer ${userInfo.value.token}`,
@@ -305,9 +391,11 @@ const handleSubmit = async () => {
     getSuccess: true,
     onSuccess: () => {
       emit("addGroup");
-      formEl.reset();
-      Object.assign(initialState, state);
-      thumbnails.value = [];
+      if (!props.variantId) {
+        formEl.reset();
+        Object.assign(initialState, state);
+        thumbnails.value = [];
+      }
     },
   });
   formLoading.value = false;
@@ -334,6 +422,10 @@ const buttonObj = computed(() => {
 // on mounted hook
 onMounted(async () => {
   await getProdAttrs();
+
+  if (props.variantId) {
+    await getVariantData();
+  }
 });
 </script>
 

@@ -12,14 +12,17 @@
     @close="modal = false"
     :header="{ title: $t('general.edit') }"
   >
-    <ProductGroupAttributesForm @add-group="editProduct" />
+    <ProductGroupAttributesForm
+      @add-group="editProduct"
+      :variant-id="props.variantId"
+    />
   </GeneralTheModal>
 </template>
 
 <script setup>
 // props
 const props = defineProps({
-  productId: {
+  variantId: {
     type: Number,
     required: true,
   },

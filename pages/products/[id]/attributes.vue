@@ -1,13 +1,16 @@
 <template>
   <div>
-    <UNotifications />
+    <!-- <UNotifications /> -->
 
     <GeneralPageHeading :title="headingTitle" />
 
     <div class="grid grid-cols-12">
       <div class="col lg:col-span-7 md:col-span-9 col-span-12 mb-8">
         <!-- Add Attribute -->
-        <GeneralTheCard class="h-fit mb-5">
+        <GeneralTheCard
+          class="h-fit mb-5"
+          :ui="{ body: { base: 'overflow-visible' } }"
+        >
           <UForm class="space-y-4" :state :schema @submit="handleAddAttributes">
             <!-- attribute -->
             <UFormGroup
@@ -44,6 +47,7 @@
             v-for="item in items"
             :key="item.id"
             :data="item"
+            :selected-options="selectedAttrOPtions"
             @update="handleAttrUpdate(item.id, $event)"
             @remove="handleAttrRemove(item.id)"
           />
@@ -86,7 +90,7 @@ const localeRoute = useLocaleRoute();
 const toast = useToast();
 
 // edit pages param
-const editPage = computed(() => route.params.id !== "create");
+const editPage = computed(() => route.query.action !== "create");
 
 // heading title
 const headingTitle = computed(() => {
@@ -175,6 +179,23 @@ const items = computed(() => {
   }
 });
 
+// handle get attributes in edit page
+const selectedAttrOPtions = ref(null);
+const handleGetAttributes = async () => {
+  fetchData({
+    url: `provider/products/get-features-options/${route.params.id}`,
+    headers: {
+      Authorization: `Bearer ${userInfo.value.token}`,
+    },
+    onSuccess: () => {
+      for (const feature of resultData.value.features) {
+        selected.value.push(feature.id);
+        selectedAttrOPtions.value = feature.options;
+      }
+    },
+  });
+};
+
 // add attributes
 const handleAddAttributes = async () => {
   if (selected.value.includes(state.attribute)) {
@@ -249,7 +270,7 @@ const handleAttrsSubmit = async () => {
     },
     body: {
       features: JSON.stringify(prodAttrsData.value),
-      product_id: route.query.product_id,
+      product_id: route.params.id,
     },
     getSuccess: true,
     onSuccess: () => {
@@ -258,7 +279,7 @@ const handleAttrsSubmit = async () => {
           name: `products-id-groups`,
           params: { id: route.params.id },
           query: {
-            product_id: route.query.product_id,
+            action: !editPage.value ? "create" : undefined,
           },
         })
       );
@@ -266,6 +287,18 @@ const handleAttrsSubmit = async () => {
   });
   formLoading.value = false;
 };
+
+onBeforeMount(async () => {
+  if (editPage.value) {
+    await fetchAttribute();
+  }
+});
+
+onMounted(async () => {
+  if (editPage.value) {
+    await handleGetAttributes();
+  }
+});
 </script>
 
 <style></style>

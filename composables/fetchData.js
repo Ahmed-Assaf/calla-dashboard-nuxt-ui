@@ -81,15 +81,50 @@ export const useFetchData = () => {
 
             // loading
             loading.value = false;
+          } else if (res.key === "needCompleteInfo") {
+            if (res.data) {
+              // pagination
+              if (res.data.pagination) {
+                pagination.value = res.data.pagination;
+              }
+
+              resultData.value = res.data;
+            }
+
+            if (options.getSuccess) {
+              // toast
+              toast.add({
+                description: res.msg,
+                timeout: 3000,
+                color: "primary",
+              });
+            }
+
+            if (options.onNeedCompleteInfo) {
+              options.onNeedCompleteInfo();
+            }
           } else if (res.key === "needActive") {
-            // if () {
-            await navigateTo(
-              localeRoute({
-                name: "auth-verification-code",
-                query: needActivateQuery.value,
-              })
-            );
-            // }
+            if (res.data) {
+              // pagination
+              if (res.data.pagination) {
+                pagination.value = res.data.pagination;
+              }
+
+              resultData.value = res.data;
+            }
+
+            if (options.getSuccess) {
+              // toast
+              toast.add({
+                description: res.msg,
+                timeout: 3000,
+                color: "warning",
+              });
+            }
+
+            if (options.onNeedActive) {
+              options.onNeedActive();
+            }
           } else {
             if (res.key === "blocked") {
               await navigateTo(

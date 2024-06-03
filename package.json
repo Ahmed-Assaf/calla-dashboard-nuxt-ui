@@ -10,6 +10,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@fawmi/vue-google-maps": "^0.9.72",
     "@nuxt/ui": "^2.16.0",
     "apexcharts": "^3.49.0",
     "axios": "^1.6.8",

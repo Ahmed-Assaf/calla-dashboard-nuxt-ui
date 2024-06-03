@@ -20,12 +20,13 @@
         v-if="!sentCode && !confirmedCode"
       />
 
-      <AuthLoginForgotPasswordConfirmCode
+      <AuthConfirmCode
         @confirm="confirmCode"
         @back="sentCode = false"
         img-src="/images/otp.gif"
         v-if="sentCode && !confirmedCode"
         :sent-state="state"
+        fetch-url="provider/forget-password-check-code"
       />
 
       <AuthLoginForgotPasswordResetPassword
@@ -37,7 +38,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 // i18n
 const { t } = useI18n();
 
@@ -59,13 +60,13 @@ const modalTitle = computed(() => {
 });
 
 // send code method
-const sendCode = async (enteredState: Object) => {
+const sendCode = async (enteredState) => {
   state = enteredState;
   sentCode.value = true;
 };
 
 // confirm code method
-const confirmCode = async (confirmedState: Object) => {
+const confirmCode = async (confirmedState) => {
   state = confirmedState;
   sentCode.value = false;
   confirmedCode.value = true;

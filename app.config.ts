@@ -75,6 +75,9 @@ export default defineAppConfig({
       },
     },
     input: {
+      file: {
+        base: "w-full h-full cursor-pointer file:w-full file:h-full file:mx-0 file:cursor-pointer !p-0",
+      },
       placeholder: "placeholder-textLightColor dark:placeholder-textLightColor",
       icon: {
         trailing: {
@@ -100,6 +103,30 @@ export default defineAppConfig({
       default: {
         size: "lg",
         color: "white",
+      },
+    },
+    textarea: {
+      placeholder: "placeholder-textLightColor dark:placeholder-textLightColor",
+      color: {
+        white: {
+          outline:
+            "shadow-none text-textLightColor ring-strokeLightGray focus:ring-1 focus:ring-primaryColor dark:focus:ring-primaryColor",
+        },
+      },
+      variant: {
+        outline: "shadow-none bg-white text-textLightColor",
+      },
+      rounded: "rounded-lg",
+      padding: {
+        lg: "py-3.5",
+      },
+      size: {
+        lg: "text-xs",
+      },
+      default: {
+        size: "lg",
+        color: "white",
+        variant: "outline",
       },
     },
     select: {
@@ -139,13 +166,30 @@ export default defineAppConfig({
         primary: "bg-primaryColor",
       },
     },
+    card: {
+      base: "h-full",
+      divide: "divide-strokeLightGray",
+      ring: "ring-0",
+      shadow: "shadow-card",
+      rounded: "rounded-2xl",
+      header: {
+        base: "min-h-[50px] flex items-center justify-between gap-3 flex-wrap",
+        padding: "px-4 py-2",
+      },
+      body: {
+        base: "flex-1 overflow-auto",
+        padding: "sm:p-4",
+      },
+    },
     table: {
-      wrapper: "the-data-table",
       base: "min-w-full table-fixed",
       // wrapper: 'overflow-visible',
       divide: "divide-none",
       thead: "font-bukra",
       tbody: "divide-none font-medium",
+      tr: {
+        selected: "selected-row",
+      },
       th: {
         padding: "px-0 py-0",
         size: "text-xs",
@@ -187,6 +231,17 @@ export default defineAppConfig({
     },
     radioGroup: {
       fieldset: "flex items-center flex-wrap gap-6 mt-2",
+    },
+    checkbox: {
+      wrapper: "items-center",
+      color: "text-primaryColor dark:text-primaryColor",
+      border: "border-strokeLightGray",
+      ring: "focus-visible:ring-0",
+      base: "h-3.5 w-3.5",
+      label: "text-xs font-normal",
+    },
+    avatar: {
+      placeholder: "font-bukra font-bold text-primaryColor",
     },
   },
 });

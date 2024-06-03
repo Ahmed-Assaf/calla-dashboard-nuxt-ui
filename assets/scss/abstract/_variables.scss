@@ -71,3 +71,17 @@
   font-style: normal;
   font-display: swap;
 }
+
+@font-face {
+  font-family: "29LT Kaff";
+  src: url("/assets/fonts/lt-kaff/29LTKaff-Light.eot");
+  src: url("/assets/fonts/lt-kaff/29LTKaff-Light.eot?#iefix")
+      format("embedded-opentype"),
+    url("/assets/fonts/lt-kaff/29LTKaff-Light.woff2") format("woff2"),
+    url("/assets/fonts/lt-kaff/29LTKaff-Light.woff") format("woff"),
+    url("/assets/fonts/lt-kaff/29LTKaff-Light.ttf") format("truetype"),
+    url("/assets/fonts/lt-kaff/29LTKaff-Light.svg#29LTKaff-Light") format("svg");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}

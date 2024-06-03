@@ -21,6 +21,7 @@
         padding: 'px-4 py-3',
       },
     }"
+    @update:open="onOpen($event)"
   >
     <UButton
       square
@@ -33,7 +34,8 @@
           color="red"
           variant="solid"
           class="flex aspect-square absolute -translate-y-1/2 rtl:translate-x-1/2 ltr:-translate-x-1/2 top-0 start-0 rounded-full text-[8px] w-fit h-fit px-[2px] py-0 leading-tight z-[1] font-bukra font-bold"
-          >5</UBadge
+          v-show="notifsCount"
+          >{{ notifsCount }}</UBadge
         >
         <UAvatar src="/images/icons/notifications-filled.svg" size="2xs" />
       </template>
@@ -136,4 +138,45 @@ const items = computed(() => [
     },
   ],
 ]);
+
+// auth store
+const { userInfo } = storeToRefs(useAuthStore());
+
+// fetch data
+const { fetchData, resultData } = useFetchData();
+
+// get notiifications on open
+const onOpen = (open) => {
+  if (open) {
+    fetchData({
+      url: "provider/notifications",
+      headers: {
+        Authorization: `Bearer ${userInfo.value.token}`,
+      },
+      onSuccess: () => {
+        console.log("notifications", resultData.value);
+      },
+    });
+  }
+};
+
+// notifications count
+const notifsCount = ref(0);
+
+// get notiifications count
+const getNotifsCount = async () => {
+  fetchData({
+    url: "provider/count-notifications",
+    headers: {
+      Authorization: `Bearer ${userInfo.value.token}`,
+    },
+    onSuccess: () => {
+      notifsCount.value = resultData.value.count;
+    },
+  });
+};
+
+onMounted(async () => {
+  await getNotifsCount();
+});
 </script>

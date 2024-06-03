@@ -11,6 +11,9 @@
           base: 'flex items-center',
           padding: 'px-[50px] py-5 sm:px-[50px]',
         },
+        body: {
+          base: 'overflow-visible',
+        },
       }"
     >
       <template #header v-if="props.header">

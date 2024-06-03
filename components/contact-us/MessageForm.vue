@@ -1,0 +1,175 @@
+<template>
+  <GeneralTheCard :ui="{ body: { padding: 'sm:!py-9 sm:p-8' } }">
+    <GeneralTheForm
+      :button="{
+        label: t('general.send'),
+        radius: 'rounded-xl me-auto ',
+        loading: loading,
+      }"
+      :state
+      :schema
+      @submit="handleSubmit"
+      ref="form"
+    >
+      <!-- message title -->
+      <UFormGroup
+        :label="$t('inputs.message_title.label')"
+        name="message_title"
+      >
+        <UInput
+          v-model="state.message_title"
+          :placeholder="$t('inputs.message_title.placeholder')"
+        />
+      </UFormGroup>
+
+      <!-- message -->
+      <UFormGroup :label="$t('inputs.message.label')" name="message">
+        <UTextarea
+          v-model="state.message"
+          :placeholder="$t('inputs.message.placeholder')"
+          :rows="4"
+        />
+      </UFormGroup>
+
+      <!-- images -->
+      <UFormGroup
+        class="relative"
+        v-if="!state.type || state.type === 'simple'"
+      >
+        <template #label>
+          <div class="mb-1">
+            {{ $t("inputs.image.label") }}
+            <span class="text-textLightColor text-[10px]">
+              ({{ $t("inputs.optional") }})
+            </span>
+          </div>
+        </template>
+        <UInput
+          type="file"
+          class="absolute top-0 left-0 w-full h-full z-[1] opacity-0 cursor-pointer"
+          name="images[]"
+          @change="uploadImages($event)"
+        />
+
+        <UInput
+          :placeholder="$t('inputs.image.placeholder')"
+          icon="i-heroicons-link"
+          trailing
+          readonly
+        >
+          <template #leading>
+            <img
+              src="/images/icons/camera.svg"
+              :alt="$t('inputs.images.label')"
+              width="18"
+            />
+          </template>
+        </UInput>
+      </UFormGroup>
+
+      <div
+        v-if="(!state.type || state.type === 'simple') && thumbnails"
+        class="flex items-center gap-6 flex-wrap w-full mb-5"
+      >
+        <div class="w-16 relative" v-for="(img, idx) in thumbnails" :key="idx">
+          <UButton
+            square
+            class="absolute top-0 end-0 rtl:-translate-x-1/2 -translate-y-1/2 ltr:translate-x-1/2 rounded-full"
+            @click="removeImage(img)"
+            size="2xs"
+            color="red"
+          >
+            <template #leading>
+              <img src="/images/icons/trash-filled-white.svg" width="8" />
+            </template>
+          </UButton>
+
+          <img
+            :src="img"
+            class="w-full aspect-[1] object-contain p-1 rounded-lg border border-solid border-strokeLightGray"
+          />
+        </div>
+      </div>
+    </GeneralTheForm>
+  </GeneralTheCard>
+</template>
+
+<script setup>
+// imports
+import { object, string } from "yup";
+
+// form ref
+const form = ref(null);
+
+// i18n
+const { t } = useI18n();
+
+// route
+const route = useRoute();
+
+// locale route
+const localeRoute = useLocaleRoute();
+
+// fetch data
+const { fetchData, resultData, loading } = useFetchData();
+loading.value = false;
+
+// images upload
+const { thumbnails, imgsList, uploadImages, removeImage } = useImageUpload();
+
+// state
+const state = reactive({
+  message_title: undefined,
+  message: null,
+  sub_category_id: null,
+  "title[ar]": undefined,
+  "title[en]": undefined,
+  stock: null,
+  images: imgsList.value,
+  brand_id: null,
+  "description[ar]": undefined,
+  "description[en]": undefined,
+  price: null,
+  discount_type: "ratio",
+  discount_amount: null,
+});
+
+// schema
+const schema = computed(() => {
+  return object({
+    message_title: string().required(t("inputs.message_title.required")),
+    message: string().required(t("inputs.message.required")),
+  });
+});
+
+// auth store
+const { userInfo } = storeToRefs(useAuthStore());
+
+// handle submit
+const handleSubmit = async () => {
+  const formData = new FormData(document.querySelector("form"));
+
+  await fetchData({
+    url: `provider/products/update/${route.params.id}`,
+    method: "post",
+    headers: {
+      Authorization: `Bearer ${userInfo.value.token}`,
+    },
+    params: { _method: "PUT" },
+    body: formData,
+    getSuccess: true,
+    onSuccess: () => {
+      if (state.type === "multi")
+        navigateTo(
+          localeRoute({
+            name: `products-id-attributes`,
+            params: { id: route.params.id },
+          })
+        );
+      else navigateTo(localeRoute({ name: "products", replace: true }));
+    },
+  });
+};
+</script>
+
+<style></style>

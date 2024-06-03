@@ -1,14 +1,18 @@
 <template>
-  <NuxtLayout>
-    <NuxtPage />
-  </NuxtLayout>
+  <div>
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
 
-  <UNotifications />
+    <UNotifications />
+
+    <UModals />
+  </div>
 </template>
 
 <script setup>
 // route
-const route = useRoute();
+// const route = useRoute();
 
 // // auth store
 // const { setAuth } = useAuthStore();
@@ -39,6 +43,19 @@ const route = useRoute();
 //     setAuth();
 //   }
 // });
+
+// import { GeneralActionModal } from "#components";
+// const modal = useModal();
+onMounted(() => {
+  // modal.open(GeneralActionModal, {
+  //   actionData: {
+  //     title: "Title",
+  //   },
+  //   onClose: () => {
+  //     modal.close();
+  //   },
+  // });
+});
 </script>
 
 <style>

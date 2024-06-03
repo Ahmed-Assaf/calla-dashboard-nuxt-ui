@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="!countryCodesLoading">
     <img
       v-if="props.imgSrc"
       :src="props.imgSrc"
@@ -24,12 +24,13 @@
           <template #trailing>
             <USelectMenu
               v-model="state.country_code"
-              :options="codes"
+              :options="countryCodes"
+              v-if="!countryCodesLoading"
               searchable
               :searchable-placeholder="$t('inputs.country_code.search')"
               clear-search-on-close
               trailingIcon=""
-              placeholder="Select a person"
+              :placeholder="$t('inputs.country_code.placeholder')"
               variant="none"
               :padded="false"
               :uiMenu="{
@@ -37,8 +38,8 @@
                 trigger: 'py-3 px-0',
               }"
               :popper="{ placement: 'bottom-start', offsetDistance: 0 }"
-              option-attribute="label"
-              value-attribute="id"
+              option-attribute="key"
+              value-attribute="key"
             >
               <template #option-empty="{ query }">
                 <q>{{ query }}</q> {{ $t("general.not_found") }}
@@ -47,7 +48,7 @@
               <template #leading>
                 <UAvatar
                   v-if="state.country_code"
-                  v-bind="(countryFlag as Avatar)"
+                  :src="countryFlag"
                   size="2xs"
                   class="relative after:-end-1 after:block after:absolute after:h-full after:content-[''] after:border-e after:border-strokeLightGray after:border-solid"
                 />
@@ -60,7 +61,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 // imports
 import { object, string } from "yup";
 
@@ -72,25 +73,11 @@ const props = defineProps({
   },
 });
 
-import type { Avatar } from "#ui/types";
-
-const codes = [
-  {
-    id: "00966",
-    label: "qw",
-    avatar: { src: "https://avatars.githubusercontent.com/u/739984?v=4" },
-  },
-  {
-    id: "2",
-    label: "qw",
-    avatar: { src: "https://avatars.githubusercontent.com/u/904724?v=4" },
-  },
-  {
-    id: "3",
-    label: "qw",
-    avatar: { src: "https://avatars.githubusercontent.com/u/7547335?v=4" },
-  },
-];
+// country codes store
+const { countryCodes, countryCodesLoading } = storeToRefs(
+  useCountryCodesStore()
+);
+const { fetchCountryCodes } = useCountryCodesStore();
 
 // i18n
 const { t } = useI18n();
@@ -101,12 +88,12 @@ const emit = defineEmits(["send"]);
 // state
 const state = reactive({
   phone: undefined,
-  country_code: codes[0].id,
+  country_code: undefined,
 });
 
 // computed selected country flag
 const countryFlag = computed(() => {
-  return codes.find((p) => p.id === state.country_code)?.avatar;
+  return countryCodes.value.find((p) => p.key === state.country_code)?.image;
 });
 
 // schema
@@ -116,7 +103,7 @@ const schema = object({
 });
 
 // fetch data
-const { resultData, fetchData, loading } = useFetchData();
+const { fetchData, loading } = useFetchData();
 loading.value = false;
 
 const handleSubmit = async () => {
@@ -130,6 +117,15 @@ const handleSubmit = async () => {
     },
   });
 };
+
+onMounted(async () => {
+  await fetchCountryCodes({
+    onSuccess: () => {
+      if (countryCodes.value.length)
+        state.country_code = countryCodes.value[0].key;
+    },
+  });
+});
 </script>
 
 <style></style>

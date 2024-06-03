@@ -1,5 +1,9 @@
 <template>
-  <GeneralTheCard :header="{ title: props.data.name }" class="mb-5 h-fit">
+  <GeneralTheCard
+    :header="{ title: props.data.name }"
+    :ui="{ body: { base: 'overflow-visible' } }"
+    class="mb-5 h-fit"
+  >
     <template #header>
       <UButton
         icon="i-heroicons-x-mark-16-solid"
@@ -84,6 +88,9 @@ const props = defineProps({
   data: {
     type: Object,
     required: true,
+  },
+  selectedOptions: {
+    type: Array,
   },
 });
 
@@ -189,6 +196,21 @@ const handleRemove = (id) => {
   selected.value = selected.value.filter((item) => item !== id);
   emit("update", selected.value);
 };
+
+onBeforeMount(async () => {
+  if (props.selectedOptions) {
+    await fetchAttribute();
+  }
+});
+
+onMounted(async () => {
+  if (props.selectedOptions) {
+    for (const option of props.selectedOptions) {
+      selected.value.push(option.id);
+    }
+    emit("update", selected.value);
+  }
+});
 </script>
 
 <style></style>

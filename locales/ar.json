@@ -10,7 +10,9 @@
     "products_refund": "إرجاع المنتجات",
     "users_management": "إدارة المستخدمين",
     "finance_treatements": "المعاملات المالية",
-    "shop_rates": "تقييمات المتجر",
+    "financial_reports": "التقارير المالية",
+    "settlement_requests": "طلبات التسوية",
+    "store_rates": "تقييمات المتجر",
     "contact_us": "تواصل معنا",
     "settings": "الإعدادت",
     "logout": "تسجيل الخروج",
@@ -23,6 +25,8 @@
     "show_reports": "عرض التقارير"
   },
   "order": {
+    "this": "الطلب",
+    "plural": "الطلبات",
     "percentage": "نسبة الطلبات",
     "successful": "الطلبات الناجحة",
     "unsuccessful": "الطلبات الغير ناجحة",
@@ -30,11 +34,31 @@
     "total_commission": "إجمالي العمولة",
     "total_added": "إجمالي القيمة المضافة",
     "due": "المستحق",
+    "new": "الطلبات الجديدة",
+    "wait_pay": "بإنتظار الدفع",
+    "preparing": "جاري التجهيز",
+    "delivering_representative": "التسليم للمندوب",
+    "delivering": "جاري التوصيل",
+    "finished": "تم الانتهاء",
     "received": "الطلبات الواردة",
     "active": "الطلبات النشطة",
     "completed": "الطلبات المكتملة",
     "products_count": "عدد المنتجات",
-    "receive_new_orders": "استقبال طلبات جديدة"
+    "receive_new_orders": "استقبال طلبات جديدة",
+    "details": {
+      "this": "تفاصيل الطلب",
+      "status": {
+        "new": "طلب جديد"
+      }
+    },
+    "table": {
+      "number": "رقم الطلب",
+      "total_price": "السعر الإجمالى",
+      "date": "تاريخ الطلب",
+      "address": "العنوان",
+      "payment_method": "طريقة الدفع",
+      "coupon": "كوبون الخصم"
+    }
   },
   "profit": {
     "plural": "الارباح"
@@ -91,23 +115,111 @@
       }
     }
   },
+  "user": {
+    "this": "المستخدم",
+    "plural": "المستخدمين",
+    "create": "اضف مستخدم جديد",
+    "create_confirm": "تأكيد اضافة المستخدم",
+    "edit": "تعديل المستخدم",
+    "details": "بيانات المستخدم",
+    "delete": {
+      "this": "حذف المستخدم",
+      "sure": "هل انت متأكد من حذف هذا المستخدم؟"
+    },
+    "table": {
+      "name": "اسم المستخدم",
+      "id": "رقم المستخدم",
+      "job": "الوظيفة",
+      "job_name": "اسم الوظيفة"
+    },
+    "permissions": {
+      "order_management": "ادارة الطلبات",
+      "add_users": "إضافة مستخدمين",
+      "make_settlement": "عمل تسوية",
+      "chats": "المحادثات",
+      "product_management": "ادارة المنتجات"
+    }
+  },
+  "finance_treatements": {
+    "financial_history": "التاريخ المالي",
+    "settlement": {
+      "description": "يمكنك ارسال طلب تسوية لتحويل الأموال علي حسابك البنكي",
+      "request": "طلب تسوية",
+      "status": {
+        "waiting_accept": "بإنتظار الموافقة",
+        "waiting_accept_description": "تم ارسال طلبك , بإنتظار الموافقة من الادارة"
+      },
+      "table": {
+        "value": "قيمة الطلب",
+        "commission": "العمولة",
+        "status": "حالة الطلب"
+      }
+    }
+  },
+  "store_rates": {
+    "users_rates": "تقييمات المستخدمين",
+    "rate": {
+      "number": "تقييما"
+    }
+  },
+  "settings": {
+    "account_data": {
+      "title": "بيانات التسجيل"
+    },
+    "store_data": {
+      "title": "بيانات المتجر"
+    }
+  },
   "inputs": {
     "email": {
-      "label": ""
+      "label": "البريد الإلكترونى",
+      "placeholder": "ادخل البريد الإلكترونى",
+      "required": "البريد الإلكترونى مطلوب",
+      "invalid": "البريد الإلكترونى غير صالح"
     },
     "username": {
       "label": "اسم المستخدم",
       "placeholder": "ادخل اسم المستخدم",
       "required": "اسم المستخدم مطلوب"
     },
+    "new_username": {
+      "label": "اسم المستخدم الجديد",
+      "placeholder": "ادخل اسم المستخدم الجديد",
+      "required": "اسم المستخدم الجديد مطلوب"
+    },
+    "job_name": {
+      "label": "اسم الوظيفة",
+      "placeholder": "ادخل اسم الوظيفة",
+      "required": "اسم الوظيفة مطلوب"
+    },
+    "job_name_ar": {
+      "label": "اسم الوظيفة (بالعربية)",
+      "placeholder": "ادخل اسم الوظيفة (بالعربية)",
+      "required": "اسم الوظيفة (بالعربية) مطلوب"
+    },
+    "job_name_en": {
+      "label": "اسم الوظيفة (بالإنجليزية)",
+      "placeholder": "ادخل اسم الوظيفة (بالإنجليزية)",
+      "required": "اسم الوظيفة (بالإنجليزية) مطلوب"
+    },
+    "permissions": {
+      "label": "الصلاحيات",
+      "placeholder": "ادخل الصلاحيات",
+      "required": "الصلاحيات مطلوبة"
+    },
     "phone": {
       "label": "رقم الجوال",
       "placeholder": "ادخل رقم الجوال",
       "required": "رقم الجوال مطلوب"
     },
+    "new_phone": {
+      "label": "رقم الجوال الجديد",
+      "placeholder": "ادخل رقم الجوال الجديد",
+      "required": "رقم الجوال الجديد مطلوب"
+    },
     "country_code": {
       "label": "كود الدولة",
-      "placeholder": "ادخل كود الدولة",
+      "placeholder": "اختر كود الدولة",
       "required": "كود الدولة مطلوب",
       "search": "ابحث عن كود الدولة",
       "no_result": ""
@@ -120,10 +232,18 @@
         "length": "كلمة المرور يجب الا تقل عن 6 حروف او ارقام"
       }
     },
+    "current_password": {
+      "label": "كلمة المرور الحالية",
+      "placeholder": "ادخل كلمة المرور الحالية",
+      "required": "كلمة المرور الحالية مطلوبة",
+      "invalid": {
+        "length": "كلمة المرور يجب الا تقل عن 6 حروف او ارقام"
+      }
+    },
     "new_password": {
       "label": "كلمة المرور الجديدة",
       "placeholder": "ادخل كلمة المرور",
-      "required": "كلمة المرور الجديدةمطلوبة",
+      "required": "كلمة المرور الجديدة مطلوبة",
       "invalid": {
         "length": "كلمة المرور يجب الا تقل عن 6 حروف او ارقام"
       }
@@ -216,7 +336,42 @@
       "placeholder": "اختر السمة",
       "required": "السمة مطلوبة"
     },
-    "required": "مطلوب"
+    "message_title": {
+      "label": "عنوان الرسالة",
+      "placeholder": "عنوان الرسالة هنا",
+      "required": "عنوان الرسالة مطلوب"
+    },
+    "message": {
+      "label": "رسالتك",
+      "placeholder": "قم بكتابة رسالتك هنا",
+      "required": "الرسالة مطلوبة"
+    },
+    "image": {
+      "label": "ارفاق صورة",
+      "placeholder": "اضغط هنا لإرفاق صورة"
+    },
+    "store_name": {
+      "label": "اسم المتجر",
+      "placeholder": "اسم المتجر هنا",
+      "required": "اسم المتجر مطلوب"
+    },
+    "city": {
+      "label": "المدينة",
+      "placeholder": "اختر المدينة",
+      "required": "المدينة مطلوبة"
+    },
+    "store_location": {
+      "label": "موقع المتجر",
+      "placeholder": "حدد موقع المتجر",
+      "required": "موقع المتجر مطلوب"
+    },
+    "commercial_number": {
+      "label": "رقم السجل التجاري",
+      "placeholder": "ادخل رقم السجل التجاري",
+      "required": "رقم السجل التجاري مطلوب"
+    },
+    "required": "مطلوب",
+    "optional": "اختياري"
   },
   "auth": {
     "forgot_password": "هل نسيت كلمة المرور؟",
@@ -228,10 +383,23 @@
       "description": "يرجى ادخال كود التفعيل المرسل علي رقم الجوال"
     },
     "register": {
-      "label": "تسجيل جديد"
+      "label": "تسجيل جديد",
+      "request_as_store": "طلب الانضمام كمتجر"
+    },
+    "username": {
+      "change": "تغيير اسم المستخدم"
+    },
+    "phone": {
+      "change": "تغيير الجوال"
+    },
+    "password": {
+      "change": "تغيير كلمة المرور"
+    },
+    "store": {
+      "change": "طلب تغيير البيانات",
+      "send_request": "ارسال الطلب"
     }
   },
-
   "general": {
     "view_more": "عرض المزيد",
     "currency": "رس",
@@ -244,7 +412,8 @@
       "price": "السعر",
       "discount": "السعر بعد الخصم",
       "date": "تاريخ الاضافة",
-      "rate": "التقييم"
+      "rate": "التقييم",
+      "client_name": "اسم العميل"
     },
     "loading": "جاري التحميل...",
     "no_data": "لا يوجد بيانات",
@@ -253,6 +422,8 @@
     "save_changes": "حفظ التغييرات",
     "already_chose": "لقد اخترت بالفعل",
     "added": "تمت إضافة",
-    "piece": "قطعة"
+    "piece": "قطعة",
+    "send": "ارسال",
+    "next": "التالي"
   }
 }

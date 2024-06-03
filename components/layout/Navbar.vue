@@ -1,31 +1,31 @@
 <template>
-    <nav class="navbar">
-      <div class="col">
-        <UButton
-          :icon="icon"
-          size="md"
-          color="gray"
-          square
-          variant="outline"
-          class="me-auto md:hidden"
-          @click="$emit('toggleSidebar')"
+  <nav class="navbar">
+    <div class="col">
+      <UButton
+        :icon="icon"
+        size="md"
+        color="gray"
+        square
+        variant="outline"
+        class="me-auto md:hidden"
+        @click="$emit('toggleSidebar')"
+      />
+
+      <LayoutNavbarNotifications />
+
+      <div class="flex items-center gap-2" v-if="isAuthed">
+        <UAvatar
+          :src="userInfo?.store_image"
+          :alt="userInfo?.store_name"
+          class="border border-solid border-strokeLightGray bg-white rounded-lg shadow-none relative w-[37.6px] h-[37.6px] overflow-hidden"
         />
 
-        <LayoutNavbarNotifications />
-
-        <div class="flex items-center gap-2" v-if="isAuthed">
-          <UAvatar
-            :src="userInfo?.image"
-            alt="shop"
-            class="border border-solid border-strokeLightGray bg-white rounded-lg shadow-none relative w-[37.6px] h-[37.6px] overflow-hidden"
-          />
-
-          <small>{{ userInfo?.name }}</small>
-        </div>
-
-        <LayoutNavbarLanguages />
+        <small class="font-bukra text-xs">{{ userInfo?.store_name }}</small>
       </div>
-    </nav>
+
+      <LayoutNavbarLanguages />
+    </div>
+  </nav>
 </template>
 
 <script lang="ts" setup>

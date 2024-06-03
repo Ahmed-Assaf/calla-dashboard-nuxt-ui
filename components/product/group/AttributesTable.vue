@@ -6,6 +6,7 @@
     :loadingState="{ label: $t('general.loading') }"
     :emptyState="{ label: $t('general.no_data') }"
     :ui="{
+      wrapper: 'the-data-table',
       thead: 'hidden',
       td: {
         base: 'h-[70px]',
@@ -56,7 +57,7 @@
         <ProductGroupDelete :product-id="row.id" @deleted="$emit('update')" />
 
         <!-- edit -->
-        <ProductGroupEdit :product-id="row.id" @edited="$emit('update')" />
+        <ProductGroupEdit :variant-id="row.id" @edited="$emit('update')" />
       </div>
     </template>
   </UTable>
@@ -81,8 +82,9 @@ const emit = defineEmits(["updateAttrId"]);
 watch(
   () => props.tableData.attributes.variants,
   (newVal) => {
-    if (newVal) {
-      attrId.value = newVal[0].id;
+    if (props.tableData.attributes.variants && newVal) {
+      console.log(newVal);
+      // attrId.value = newVal[0].id;
     }
   },
   { immediate: true, deep: true }

@@ -5,7 +5,7 @@
     :variant="props.variant"
     :block="props.block"
   >
-    <template #trailing>
+    <template #trailing v-if="props.iconImage">
       <UAvatar :src="props.iconImage" size="2xs" />
     </template>
   </UButton>
@@ -22,7 +22,7 @@ const props = defineProps({
   link: {
     type: String,
     required: false,
-    default: "",
+    default: null,
   },
   variant: {
     type: String,

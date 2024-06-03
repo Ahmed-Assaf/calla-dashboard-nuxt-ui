@@ -41,6 +41,7 @@
                 option-attribute="name"
                 :loading="categoriesLoading"
                 @open="fetchCategories"
+                @change="onChangeCategory"
               />
             </UFormGroup>
 
@@ -104,12 +105,13 @@
               class="relative"
               v-if="!state.type || state.type === 'simple'"
             >
-              <UInput
+              <input
                 type="file"
                 class="absolute top-0 left-0 w-full h-full z-[1] opacity-0 cursor-pointer"
                 multiple
                 name="images[]"
-                @change="uploadImages($event)"
+                ref="fileRef"
+                @change="uploadImages($event.target.files)"
               />
 
               <UInput
@@ -128,32 +130,66 @@
               </UInput>
             </UFormGroup>
 
-            <div
-              v-if="(!state.type || state.type === 'simple') && thumbnails"
-              class="flex items-center gap-6 flex-wrap w-full mb-5"
-            >
-              <div
-                class="w-16 relative"
-                v-for="(img, idx) in thumbnails"
-                :key="idx"
-              >
-                <UButton
-                  square
-                  class="absolute top-0 end-0 rtl:-translate-x-1/2 -translate-y-1/2 ltr:translate-x-1/2 rounded-full"
-                  @click="removeImage(img)"
-                  size="2xs"
-                  color="red"
+            <div class="flex items-center gap-6 flex-wrap w-full mb-5">
+              <!-- old images -->
+              <template v-if="!state.type || state.type === 'simple'">
+                <div
+                  class="w-16 relative"
+                  v-for="(img, idx) in oldThumbnails"
+                  :key="idx"
                 >
-                  <template #leading>
-                    <img src="/images/icons/trash-filled-white.svg" width="8" />
-                  </template>
-                </UButton>
+                  <UButton
+                    square
+                    class="absolute top-0 end-0 rtl:-translate-x-1/2 -translate-y-1/2 ltr:translate-x-1/2 rounded-full"
+                    @click="removeOldImage(img.id, img.image)"
+                    size="2xs"
+                    color="red"
+                  >
+                    <template #leading>
+                      <img
+                        src="/images/icons/trash-filled-white.svg"
+                        width="8"
+                      />
+                    </template>
+                  </UButton>
 
-                <img
-                  :src="img"
-                  class="w-full aspect-[1] object-contain p-1 rounded-lg border border-solid border-strokeLightGray"
-                />
-              </div>
+                  <img
+                    :src="img.image"
+                    class="w-full aspect-[1] object-contain p-1 rounded-lg border border-solid border-strokeLightGray"
+                  />
+                </div>
+              </template>
+
+              <!-- uploaded images -->
+              <template
+                v-if="(!state.type || state.type === 'simple') && thumbnails"
+              >
+                <div
+                  class="w-16 relative"
+                  v-for="(img, idx) in thumbnails"
+                  :key="idx"
+                >
+                  <UButton
+                    square
+                    class="absolute top-0 end-0 rtl:-translate-x-1/2 -translate-y-1/2 ltr:translate-x-1/2 rounded-full"
+                    @click="removeImage(img)"
+                    size="2xs"
+                    color="red"
+                  >
+                    <template #leading>
+                      <img
+                        src="/images/icons/trash-filled-white.svg"
+                        width="8"
+                      />
+                    </template>
+                  </UButton>
+
+                  <img
+                    :src="img"
+                    class="w-full aspect-[1] object-contain p-1 rounded-lg border border-solid border-strokeLightGray"
+                  />
+                </div>
+              </template>
             </div>
 
             <!-- brands -->
@@ -177,6 +213,7 @@
               <UTextarea
                 v-model="state['description[ar]']"
                 :placeholder="$t('inputs.product_description.ar.placeholder')"
+                :rows="4"
               />
             </UFormGroup>
 
@@ -188,6 +225,7 @@
               <UTextarea
                 v-model="state['description[en]']"
                 :placeholder="$t('inputs.product_description.en.placeholder')"
+                :rows="4"
               />
             </UFormGroup>
 
@@ -228,11 +266,12 @@
                     label: $t('inputs.discount_type.options.number'),
                   },
                   {
-                    value: null,
+                    value: '',
                     label: $t('inputs.discount_type.options.none'),
                   },
                 ]"
                 v-model="state.discount_type"
+                valueAttribute="value"
               />
             </UFormGroup>
 
@@ -326,6 +365,16 @@ const fetchSubCategories = async () => {
   subCategoriesLoading.value = false;
 };
 
+// on change category
+const onChangeCategory = async () => {
+  subCategories.value = [];
+  state.sub_category_id = null;
+
+  nextTick(async () => {
+    await fetchSubCategories();
+  });
+};
+
 // product brands
 const brands = ref([]),
   brandsLoading = ref(false);
@@ -347,6 +396,28 @@ const fetchBrands = async () => {
 
 // images upload
 const { thumbnails, imgsList, uploadImages, removeImage } = useImageUpload();
+
+// old Thumbnails
+const oldThumbnails = ref([]);
+
+const simpleVariantId = ref(null);
+
+// remove old images
+const removeOldImage = (id, img) => {
+  fetchData({
+    url: `provider/products/delete-image/${simpleVariantId.value}/${id}`,
+    method: "delete",
+    headers: {
+      Authorization: `Bearer ${userInfo.value.token}`,
+    },
+    getSuccess: true,
+    onSuccess: () => {
+      oldThumbnails.value = oldThumbnails.value.filter(
+        (thumb) => thumb.image !== img
+      );
+    },
+  });
+};
 
 // state
 const state = reactive({
@@ -377,10 +448,10 @@ const schema = computed(() => {
       state.type !== "multi"
         ? string().required(t("inputs.quantity.required"))
         : null,
-    images:
-      state.type !== "multi"
-        ? string().required(t("inputs.images.required"))
-        : null,
+    // images:
+    //   state.type !== "multi"
+    //     ? string().required(t("inputs.images.required"))
+    //     : null,
     brand_id: string().required(t("inputs.brand.required")),
 
     "description[ar]": string().required(
@@ -455,10 +526,53 @@ const formBtn = computed(() => {
 // auth store
 const { userInfo } = storeToRefs(useAuthStore());
 
+// fetch form data
+const getProductData = async () => {
+  await fetchData({
+    url: `provider/products/show/${route.params.id}`,
+    headers: {
+      Authorization: `Bearer ${userInfo.value.token}`,
+    },
+    onSuccess: () => {
+      const product = resultData.value;
+
+      state.type = product.type;
+      state.category_id = product.category_id;
+      state.sub_category_id = product.sub_category_id;
+      state["title[ar]"] = product.title.ar;
+      state["title[en]"] = product.title.en;
+      state.brand_id = product.brand_id;
+      state["description[ar]"] = product.description.ar;
+      state["description[en]"] = product.description.en;
+      if (product.type === "simple") {
+        state.stock = product.variants.stock;
+        state.price = product.variants.price;
+        state.discount_type = product.variants.discount_type;
+        state.discount_amount = product.variants.discount_amount;
+
+        oldThumbnails.value = product.variants.images;
+
+        simpleVariantId.value = product.variants.id;
+      } else {
+        state.stock = null;
+        state.price = null;
+        state.discount_type = "";
+        state.discount_amount = null;
+        simpleVariantId.value = null;
+      }
+    },
+  });
+};
+
 // submit form
 const formLoading = ref(false);
+const fileRef = ref(null);
 
 const handleSubmit = async () => {
+  if (state.type === "simple") {
+    // fileRef.value.files = imgsList.value;
+  }
+
   const formData = new FormData(document.querySelector("form"));
 
   formLoading.value = true;
@@ -493,14 +607,13 @@ const handleSubmit = async () => {
       body: formData,
       getSuccess: true,
       onSuccess: () => {
-        console.log(resultData.value);
         if (state.type === "multi")
           navigateTo(
             localeRoute({
               name: `products-id-attributes`,
-              params: { id: route.params.id },
+              params: { id: resultData.value.product_id },
               query: {
-                product_id: resultData.value.product_id,
+                action: "create",
               },
             })
           );
@@ -510,6 +623,24 @@ const handleSubmit = async () => {
   }
   formLoading.value = false;
 };
+
+onBeforeMount(async () => {
+  if (editPage.value) {
+    await fetchCategories();
+
+    await fetchBrands();
+
+    nextTick(async () => {
+      await fetchSubCategories();
+    });
+  }
+});
+
+onMounted(async () => {
+  if (editPage.value) {
+    await getProductData();
+  }
+});
 </script>
 
 <style></style>
