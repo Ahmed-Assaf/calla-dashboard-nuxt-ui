@@ -45,6 +45,7 @@
 
     <template #footer>
       <GeneralThePaginator
+        v-if="paginateData"
         @update:page="$emit('update:page', $event)"
         class="ms-auto my-3"
       />
@@ -61,7 +62,7 @@ const { fetchData, loading, resultData: products } = useFetchData();
 loading.value = false;
 
 // pagination
-const paginateData = ref({});
+const paginateData = ref(null);
 provide("paginateData", paginateData);
 
 // fetch products

@@ -1,8 +1,8 @@
 <template>
-  <UFormGroup :label="$t('inputs.username.label')" name="name">
+  <UFormGroup :label="$t('inputs.password.label')" name="name">
     <UInput
       modelValue="********"
-      :placeholder="$t('inputs.username.placeholder')"
+      :placeholder="$t('inputs.password.placeholder')"
       :ui="{
         padding: {
           lg: `!pe-48`,

@@ -122,6 +122,7 @@
 // page meta
 definePageMeta({
   title: "pages.settlement_requests",
+  permissionId: 6,
 });
 
 // i18n
@@ -210,7 +211,7 @@ const { userInfo } = storeToRefs(useAuthStore());
 const { fetchData, loading, resultData: orders } = useFetchData();
 
 // pagination
-const paginateData = ref({});
+const paginateData = ref(null);
 provide("paginateData", paginateData);
 
 // fetch orders

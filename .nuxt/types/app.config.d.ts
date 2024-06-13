@@ -28,6 +28,7 @@ declare const inlineConfig = {
       "fuchsia",
       "pink",
       "rose",
+      "java",
       "primary"
     ],
     "strategy": "merge"

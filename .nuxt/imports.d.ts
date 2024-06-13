@@ -48,6 +48,7 @@ export { useAuthStore } from '../stores/authStore';
 export { useCitiesStore } from '../stores/citiesStore';
 export { useCountryCodesStore } from '../stores/countriesCodesStore';
 export { useMultiProductGroupsStore } from '../stores/multiProductGroups';
+export { useProfileStore } from '../stores/profile';
 export { useAbilitiesStore } from '../stores/userAbilities';
 export { useColorMode } from '../node_modules/@nuxtjs/color-mode/dist/runtime/composables';
 export { useI18n } from '../node_modules/vue-i18n/dist/vue-i18n';

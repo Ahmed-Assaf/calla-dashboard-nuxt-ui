@@ -9,6 +9,7 @@
       :state
       :schema
       ref="form"
+      id="store_form"
       @submit="handleSubmit"
     >
       <!-- store image -->
@@ -123,6 +124,7 @@
 <script setup>
 // imports
 import { object, string, number } from "yup";
+import { GeneralActionModal } from "#components";
 
 // props
 const props = defineProps({
@@ -169,7 +171,7 @@ const center = reactive({ lat: 31, lng: 31 }),
 
 const stateObj = computed(() => {
   if (props.edit) {
-    return props.confirmedState;
+    return { ...props.confirmedState };
   } else {
     return {
       store_image: imgList.value,
@@ -259,17 +261,22 @@ const url = computed(() => {
   if (props.edit) {
     return "provider/settings/update-provider-store";
   } else {
-    ("provider/complete-info");
+    return "provider/complete-info";
   }
 });
 
 const handleSubmit = async () => {
-  const formEl = document.querySelector("form");
-  const formData = new FormData(formEl);
+  const formData = new FormData(document.querySelector("#store_form"));
 
   formData.append("lat", center.lat);
   formData.append("lng", center.lng);
   formData.append("map_desc", state.map_desc);
+
+  if (!props.edit) {
+    Object.entries(props.confirmedState).forEach(([key, value]) => {
+      formData.append(key, value);
+    });
+  }
 
   await fetchData({
     url: url.value,
@@ -278,9 +285,23 @@ const handleSubmit = async () => {
     },
     method: "post",
     body: formData,
-    getSuccess: true,
+    getSuccess: props.edit ? true : false,
     onSuccess: async () => {
       emit("submitted", state);
+
+      if (!props.edit) {
+        // modal
+        const modal = useModal();
+        modal.open(GeneralActionModal, {
+          actionData: {
+            title: t("auth.register_success"),
+            button: t("pages.auth.login"),
+          },
+          onClose: async () => {
+            modal.close();
+          },
+        });
+      }
     },
   });
 };

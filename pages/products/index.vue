@@ -94,6 +94,7 @@
 // page meta
 definePageMeta({
   title: "pages.products_management",
+  permissionId: 1,
 });
 
 // i18n
@@ -151,7 +152,7 @@ const columns = computed(() => [
 ]);
 
 // pagination
-const paginateData = ref({});
+const paginateData = ref(null);
 provide("paginateData", paginateData);
 
 // fetch products

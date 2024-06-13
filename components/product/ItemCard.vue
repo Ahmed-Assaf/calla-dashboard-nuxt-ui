@@ -6,7 +6,7 @@
       ring: 'ring-0',
       shadow: 'shadow-none',
       header: {
-        base: 'text-center mb-2 sm:p-0',
+        base: 'text-center mb-2 sm:p-0 flex-col gap-0',
       },
       body: {
         padding: 'py-0 px-0 sm:p-0',
@@ -18,7 +18,9 @@
         {{ $t("product.item.sold_times") }}
       </h5>
 
-      <h6 class="text-2xl text-primaryColor font-bukra font-bold">67</h6>
+      <h6 class="text-2xl text-primaryColor font-bukra font-bold">
+        {{ props.item.selling_count }}
+      </h6>
     </template>
 
     <div
@@ -32,16 +34,16 @@
     </div>
 
     <h6 class="font-bukra truncate max-w-full text-sm mb-3">
-      روك كريم ريتينول كوريكشن روك كريم ريتينول كوريكشن روك كريم ريتينول كوريكشن
+      {{ props.item.title }}
     </h6>
 
     <div class="flex items-center justify-between gap-3 flex-wrap">
       <p class="text-sm text-primaryColor font-bukra font-bold">
-        500 {{ $t("general.currency") }}
+        {{ props.item.price }} {{ $t("general.currency") }}
       </p>
 
       <small class="font-bukra font-bold">
-        4.4
+        {{ props.item.avg_rate }}
         <UIcon
           name="i-heroicons-star-solid"
           dynamic
@@ -57,6 +59,10 @@ const props = defineProps({
   header: {
     type: Object,
     default: {},
+  },
+  item: {
+    type: Object,
+    required: true,
   },
 });
 </script>

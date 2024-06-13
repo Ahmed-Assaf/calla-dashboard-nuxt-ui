@@ -38,6 +38,9 @@
 </template>
 
 <script setup>
+// imports
+import { GeneralActionModal } from "#components";
+
 // props
 const props = defineProps({
   tableData: {
@@ -46,14 +49,20 @@ const props = defineProps({
   },
 });
 
-// route
-const route = useRoute();
+// i18n
+const { t } = useI18n();
+
+// locale route
+const localeRoute = useLocaleRoute();
+
+// emit
+const emit = defineEmits(["update"]);
 
 // auth store
 const { userInfo } = storeToRefs(useAuthStore());
 
 // fetch data
-const { fetchData, loading, resultData } = useFetchData();
+const { fetchData, loading } = useFetchData();
 loading.value = false;
 
 // modal
@@ -61,13 +70,16 @@ const modal = ref(false);
 
 const defaultGroup = ref(null);
 
+// modal
+const actionModal = useModal();
+
 const updateDefaultId = (id) => {
   defaultGroup.value = id;
 };
 
 const changeDefault = () => {
   fetchData({
-    url: `provider/products/change-variant-is-default/${route.params.id}?`,
+    url: `provider/products/change-variant-is-default/${defaultGroup.value}`,
     method: "POST",
     headers: {
       Authorization: `Bearer ${userInfo.value.token}`,
@@ -75,9 +87,19 @@ const changeDefault = () => {
     params: {
       _method: "PATCH",
     },
-    getSuccess: true,
     onSuccess: () => {
       modal.value = false;
+      emit("update");
+
+      actionModal.open(GeneralActionModal, {
+        actionData: {
+          title: t("product.group.choose_main.change_success"),
+        },
+        onClose: async () => {
+          actionModal.close();
+          await navigateTo(localeRoute({ name: "products", replace: true }));
+        },
+      });
     },
   });
 };

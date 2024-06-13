@@ -2,7 +2,12 @@
   <UModal :ui="{ width: 'w-full sm:max-w-xs' }" :model-value="props.modelValue">
     <UCard>
       <div class="text-center">
-        <img :src="image" :alt="props.actionData?.title" class="w-44 mx-auto" />
+        <img
+          :src="image"
+          :alt="props.actionData?.title"
+          class="w-44 mx-auto"
+          :class="{ 'w-24 mb-4': props.actionData?.image }"
+        />
         <h5 class="font-bukra font-bold text-sm mb-4">
           {{ props.actionData?.title }}
         </h5>
@@ -16,7 +21,7 @@
           size="xl"
           class="w-full justify-center"
           v-else
-          >{{ $t("general.back") }}</UButton
+          >{{ props.actionData?.button || $t("general.back") }}</UButton
         >
       </div>
     </UCard>

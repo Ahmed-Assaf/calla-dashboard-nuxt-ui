@@ -15,12 +15,15 @@
 
       <div class="flex items-center gap-2" v-if="isAuthed">
         <UAvatar
-          :src="userInfo?.store_image"
-          :alt="userInfo?.store_name"
+          :src="profile?.store_image"
+          :alt="profile?.store_name"
           class="border border-solid border-strokeLightGray bg-white rounded-lg shadow-none relative w-[37.6px] h-[37.6px] overflow-hidden"
+          :ui="{
+            rounded: 'rounded-lg',
+          }"
         />
 
-        <small class="font-bukra text-xs">{{ userInfo?.store_name }}</small>
+        <small class="font-bukra text-xs">{{ profile?.store_name }}</small>
       </div>
 
       <LayoutNavbarLanguages />
@@ -28,7 +31,7 @@
   </nav>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 // i18n
 const { locale } = useI18n();
 
@@ -43,7 +46,15 @@ const icon = computed(() =>
 );
 
 // auth store
-const { isAuthed, userInfo } = storeToRefs(useAuthStore());
+const { isAuthed } = storeToRefs(useAuthStore());
+
+// profile store
+const { profile } = storeToRefs(useProfileStore());
+const { fetchProfile } = useProfileStore();
+
+onMounted(async () => {
+  await fetchProfile();
+});
 </script>
 
 <style lang="scss">

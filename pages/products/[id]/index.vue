@@ -300,6 +300,7 @@
 <script setup>
 // imports
 import { object, string } from "yup";
+import { GeneralActionModal } from "#components";
 
 // page meta
 definePageMeta({
@@ -564,6 +565,9 @@ const getProductData = async () => {
   });
 };
 
+// modal
+const modal = useModal();
+
 // submit form
 const formLoading = ref(false);
 const fileRef = ref(null);
@@ -594,7 +598,19 @@ const handleSubmit = async () => {
               params: { id: route.params.id },
             })
           );
-        else navigateTo(localeRoute({ name: "products", replace: true }));
+        else {
+          modal.open(GeneralActionModal, {
+            actionData: {
+              title: t("product.group.choose_main.change_success"),
+            },
+            onClose: async () => {
+              modal.close();
+              await navigateTo(
+                localeRoute({ name: "products", replace: true })
+              );
+            },
+          });
+        }
       },
     });
   } else {
@@ -617,7 +633,19 @@ const handleSubmit = async () => {
               },
             })
           );
-        else navigateTo(localeRoute({ name: "products", replace: true }));
+        else {
+          modal.open(GeneralActionModal, {
+            actionData: {
+              title: t("product.group.choose_main.change_success"),
+            },
+            onClose: async () => {
+              modal.close();
+              await navigateTo(
+                localeRoute({ name: "products", replace: true })
+              );
+            },
+          });
+        }
       },
     });
   }

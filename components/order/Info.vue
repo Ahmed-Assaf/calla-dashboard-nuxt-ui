@@ -1,30 +1,47 @@
 <template>
   <GeneralTheCard
-    :header="{ title: $t('profit.plural') }"
+    :header="{ title: $t('order.details.info') }"
     class="rounded-xl h-fit"
   >
     <ul>
       <li>
         {{ $t("order.table.number") }}
-        <!-- <span>{{ props.data }} {{ $t("general.currency") }}</span> -->
+        <span>#{{ props.data.order_num }}</span>
       </li>
       <li>
         {{ $t("order.table.payment_method") }}
-        <!-- <span>{{ props.data }} {{ $t("general.currency") }}</span> -->
+        <span>{{ props.data.pay_type_text }}</span>
       </li>
       <li>
         {{ $t("order.table.address") }}
-        <!-- <span>{{ props.data }} {{ $t("general.currency") }}</span> -->
+        <span>{{ props.data.address_name }}</span>
       </li>
       <li>
         {{ $t("order.table.coupon") }}
-        <!-- <span>{{ props.data }} {{ $t("general.currency") }}</span> -->
+        <span>{{
+          props.data.coupon_name ? props.data.coupon_name : $t("general.none")
+        }}</span>
+      </li>
+      <li>
+        {{ $t("order.table.date") }}
+        <span>{{ props.data.created_at_date }}</span>
+      </li>
+      <li>
+        {{ $t("order.table.time") }}
+        <span>{{ props.data.created_at_time }}</span>
       </li>
     </ul>
   </GeneralTheCard>
 </template>
 
-<script lang="ts" setup></script>
+<script setup>
+const props = defineProps({
+  data: {
+    type: Object,
+    required: true,
+  },
+});
+</script>
 
 <style lang="scss" scoped>
 ul {
@@ -33,9 +50,6 @@ ul {
 
     &:not(:first-of-type) {
       @apply pt-6;
-    }
-    &:last-of-type {
-      @apply font-bold text-primaryColor;
     }
 
     span {

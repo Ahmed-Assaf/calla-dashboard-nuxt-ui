@@ -18,6 +18,7 @@
 // page meta
 definePageMeta({
   title: "pages.contact_us",
+  permissionId: 8,
 });
 </script>
 

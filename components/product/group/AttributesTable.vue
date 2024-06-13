@@ -7,6 +7,7 @@
     :emptyState="{ label: $t('general.no_data') }"
     :ui="{
       wrapper: 'the-data-table',
+      base: 'w-max',
       thead: 'hidden',
       td: {
         base: 'h-[70px]',
@@ -23,7 +24,7 @@
       <img
         :src="row.image ? row.image : '/images/product-default.svg'"
         alt=""
-        class="w-full object-contain shadow-card px-5 py-1 bg-white rounded-lg h-full"
+        class="w-full object-contain shadow-card px-1 py-1 bg-white rounded-lg h-full"
       />
     </template>
 
@@ -73,7 +74,7 @@ const props = defineProps({
 });
 
 // attr id
-const attrId = ref();
+const attrId = ref(null);
 
 // emit
 const emit = defineEmits(["updateAttrId"]);
@@ -82,9 +83,10 @@ const emit = defineEmits(["updateAttrId"]);
 watch(
   () => props.tableData.attributes.variants,
   (newVal) => {
-    if (props.tableData.attributes.variants && newVal) {
-      console.log(newVal);
-      // attrId.value = newVal[0].id;
+    if (props.tableData.attributes.variants && newVal && process.client) {
+      const defaultVar = newVal.find((el) => el.is_default === true);
+
+      attrId.value = defaultVar ? defaultVar.id : newVal[0].id;
     }
   },
   { immediate: true, deep: true }

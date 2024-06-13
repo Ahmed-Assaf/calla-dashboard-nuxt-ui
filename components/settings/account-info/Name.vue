@@ -1,7 +1,7 @@
 <template>
   <UFormGroup :label="$t('inputs.username.label')" name="name">
     <UInput
-      :modelValue="props.name"
+      :modelValue="profile?.name"
       :placeholder="$t('inputs.username.placeholder')"
       :ui="{
         padding: {
@@ -15,6 +15,7 @@
           },
         },
       }"
+      :loading="profileLoading"
       readonly
     >
       <template #trailing>
@@ -33,14 +34,9 @@
 </template>
 
 <script setup>
-// props
-const props = defineProps({
-  name: {
-    type: String,
-    required: true,
-  },
-});
-
 //  modal
 const modal = ref(false);
+
+// profile store
+const { profile, profileLoading } = storeToRefs(useProfileStore());
 </script>

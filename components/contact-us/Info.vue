@@ -6,12 +6,17 @@
       class="w-48 mx-auto mb-7"
     />
 
-    <p class="text-xs font-light leading-[2.5] mb-7">
-      هذا النص يمكن استبداله هذا النص يمكن استبداله في نفس المساحة هذا النص يمكن
-      استبداله هذا النص يمكن استبداله هذا النص يمكن استبداله في نفس المساحة هذا
-      النص يمكن استبداله هذا النص يمكن استبداله هذا النص يمكن استبداله في نفس
-      المساحة هذا النص يمكن استبداله هذا النص يمكن استبداله هذا النص يمكن
-      استبداله في نفس المساحة هذا النص يمكن استبداله
+    <div v-if="loading" class="mb-7">
+      <USkeleton
+        :ui="{ rounded: 'rounded-2xl' }"
+        class="h-2 mb-2"
+        v-for="i in 5"
+        :key="i"
+      />
+    </div>
+
+    <p class="text-xs font-light leading-[2.5] mb-7" v-else>
+      {{ info.contact_text }}
     </p>
 
     <ul>
@@ -21,7 +26,13 @@
             <img src="/images/icons/location-white.svg" alt="address" />
           </div>
 
-          <span class="font-bukra font-bold">الرياض</span>
+          <USkeleton
+            :ui="{ rounded: 'rounded-2xl' }"
+            class="flex-1 h-2"
+            v-if="loading"
+          />
+
+          <span class="font-bukra font-bold" v-else>{{ info.map_desc }}</span>
         </ULink>
       </li>
 
@@ -31,7 +42,13 @@
             <img src="/images/icons/envelope-white.svg" alt="address" />
           </div>
 
-          <span>example.info@gmail.com</span>
+          <USkeleton
+            :ui="{ rounded: 'rounded-2xl' }"
+            class="flex-1 h-2"
+            v-if="loading"
+          />
+
+          <span v-else>{{ info.email }}</span>
         </ULink>
       </li>
 
@@ -41,14 +58,40 @@
             <img src="/images/icons/phone-white.svg" alt="address" />
           </div>
 
-          <span dir="ltr">+966 5555 5652 1565</span>
+          <USkeleton
+            :ui="{ rounded: 'rounded-2xl' }"
+            class="flex-1 h-2"
+            v-if="loading"
+          />
+
+          <span dir="ltr" v-else>{{ info.phone }}</span>
         </ULink>
       </li>
     </ul>
   </GeneralTheCard>
 </template>
 
-<script setup></script>
+<script setup>
+// auth store
+const { userInfo } = storeToRefs(useAuthStore());
+
+// fetch data
+const { fetchData, resultData: info, loading } = useFetchData();
+
+// fetch contact info
+const fetchInfo = async () => {
+  fetchData({
+    url: "provider/complaints",
+    headers: {
+      Authorization: `Bearer ${userInfo.value.token}`,
+    },
+  });
+};
+
+onMounted(async () => {
+  await fetchInfo();
+});
+</script>
 
 <style lang="scss" scoped>
 ul {

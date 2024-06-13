@@ -118,7 +118,7 @@ const columns = computed(() => [
 const selectedUser = ref([]);
 
 // pagination
-const paginateData = ref({});
+const paginateData = ref(null);
 provide("paginateData", paginateData);
 
 // fetch users

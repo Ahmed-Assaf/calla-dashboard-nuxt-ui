@@ -14,7 +14,7 @@
 // route
 // const route = useRoute();
 
-// // auth store
+// auth store
 // const { setAuth } = useAuthStore();
 
 // // check account block
@@ -38,7 +38,7 @@
 //   }
 // });
 
-// onMounted(async () => {
+// onMounted(() => {
 //   if (useCookie("auth").value) {
 //     setAuth();
 //   }
@@ -46,16 +46,16 @@
 
 // import { GeneralActionModal } from "#components";
 // const modal = useModal();
-onMounted(() => {
-  // modal.open(GeneralActionModal, {
-  //   actionData: {
-  //     title: "Title",
-  //   },
-  //   onClose: () => {
-  //     modal.close();
-  //   },
-  // });
-});
+// onMounted(() => {
+// modal.open(GeneralActionModal, {
+//   actionData: {
+//     title: "Title",
+//   },
+//   onClose: () => {
+//     modal.close();
+//   },
+// });
+// });
 </script>
 
 <style>

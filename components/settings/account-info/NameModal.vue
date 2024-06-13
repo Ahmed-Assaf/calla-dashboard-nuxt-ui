@@ -23,8 +23,8 @@ const props = defineProps({
   },
 });
 
-// auth store
-const { userInfo } = storeToRefs(useAuthStore());
+// profile store
+const { profile } = storeToRefs(useProfileStore());
 
 // emits
 const emit = defineEmits(["update:modelValue"]);
@@ -40,7 +40,7 @@ const onChecked = async (password) => {
 };
 
 const onNameChanged = async (name) => {
-  userInfo.value.name = name;
+  profile.value.name = name;
   emit("update:modelValue", false);
 };
 

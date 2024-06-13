@@ -16,12 +16,13 @@
         placement: `group-data-[popper-placement*='bottom']:-top-2`,
       },
       item: {
-        base: 'gap-2 bg-transparent hover:bg-transparent border-b border-solid border-strokeLightGray items-start text-start',
+        base: 'gap-2 bg-transparent hover:bg-transparent border-b border-solid border-strokeLightGray items-start text-start cursor-default',
         rounded: 'rounded-none',
         padding: 'px-4 py-3',
       },
     }"
     @update:open="onOpen($event)"
+    ref="dropdown"
   >
     <UButton
       square
@@ -43,28 +44,22 @@
 
     <template #item="{ item }">
       <div class="flex flex-1 items-center gap-2">
-        <UChip
-          position="top-center"
-          :ui="{
-            background: 'bg-redColor',
-          }"
-          :show="item.new"
+        <div
+          class="icon bg-lightGray border border-solid border-strokeLightGray w-8 h-8 rounded-lg flex-shrink-0 flex items-center justify-center relative"
         >
-          <div
-            class="icon bg-lightGray border border-solid border-strokeLightGray w-8 h-8 rounded-lg flex-shrink-0 flex items-center justify-center relative"
-          >
-            <img
-              src="/images/icons/notifications.svg"
-              alt="notification"
-              width="16"
-            />
-          </div>
-        </UChip>
+          <img
+            src="/images/icons/notifications.svg"
+            alt="notification"
+            width="16"
+          />
+        </div>
 
         <div class="flex-1">
-          <small class="flex leading-tight mb-1">{{ item.label }}</small>
+          <small class="flex leading-tight mb-1 whitespace-break-spaces">{{
+            item.title
+          }}</small>
           <small class="flex leading-tight text-textLightColor">{{
-            item.time
+            item.created_at
           }}</small>
         </div>
       </div>
@@ -75,6 +70,7 @@
         variant="link"
         :padded="false"
         class="flex-shrink-0"
+        @click="deleteNotification(item.id)"
       >
         <template #leading>
           <UAvatar src="/images/icons/trash-filled.svg" size="3xs" />
@@ -82,7 +78,7 @@
       </UButton>
     </template>
 
-    <template #more="{ item }">
+    <template #more="{ item }" v-if="items?.length">
       <UButton
         :to="localePath({ name: 'notifications' })"
         :label="item.label"
@@ -106,47 +102,21 @@ const { t } = useI18n();
 // locale path
 const localePath = useLocalePath();
 
-// items
-const items = computed(() => [
-  [
-    {
-      label: "تم تغيير حالة الطلب",
-      time: "منذ 1 ساعة",
-      icon: "i-heroicons-cog-8-tooth",
-      new: false,
-    },
-    {
-      label: "Documentation",
-      icon: "i-heroicons-book-open",
-      new: false,
-    },
-    {
-      label: "Changelog",
-      icon: "i-heroicons-megaphone",
-      new: false,
-    },
-    {
-      label: "Status",
-      icon: "i-heroicons-signal",
-      new: true,
-    },
-  ],
-  [
-    {
-      label: t("general.view_more"),
-      slot: "more",
-    },
-  ],
-]);
-
 // auth store
 const { userInfo } = storeToRefs(useAuthStore());
 
+// dropdown
+const dropdown = ref(null);
+
 // fetch data
-const { fetchData, resultData } = useFetchData();
+const { fetchData, loading, resultData } = useFetchData();
+
+// notifications
+const notifications = ref([]),
+  notificationsLoading = ref(false);
 
 // get notiifications on open
-const onOpen = (open) => {
+const onOpen = async (open) => {
   if (open) {
     fetchData({
       url: "provider/notifications",
@@ -154,11 +124,23 @@ const onOpen = (open) => {
         Authorization: `Bearer ${userInfo.value.token}`,
       },
       onSuccess: () => {
-        console.log("notifications", resultData.value);
+        console.log(resultData.value);
+        notifications.value = resultData.value.notifications?.data;
       },
     });
   }
 };
+
+// notifications items
+const items = computed(() => [
+  [...notifications.value],
+  [
+    {
+      label: t("general.view_more"),
+      slot: "more",
+    },
+  ],
+]);
 
 // notifications count
 const notifsCount = ref(0);
@@ -172,6 +154,21 @@ const getNotifsCount = async () => {
     },
     onSuccess: () => {
       notifsCount.value = resultData.value.count;
+    },
+  });
+};
+
+// delete notiifications
+const deleteNotification = async (id) => {
+  dropdown.value.open();
+  fetchData({
+    url: `provider/delete-notification/${id}`,
+    method: "delete",
+    headers: {
+      Authorization: `Bearer ${userInfo.value.token}`,
+    },
+    onSuccess: async () => {
+      await onOpen();
     },
   });
 };

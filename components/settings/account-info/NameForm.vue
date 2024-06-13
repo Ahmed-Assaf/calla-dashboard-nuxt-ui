@@ -22,7 +22,8 @@
 
 <script setup>
 // imports
-import { object, string, ref } from "yup";
+import { object, string } from "yup";
+import { GeneralActionModal } from "#components";
 
 // props
 const props = defineProps({
@@ -34,6 +35,9 @@ const props = defineProps({
 
 // i18n
 const { t } = useI18n();
+
+// modal
+const modal = useModal();
 
 // emit
 const emit = defineEmits(["changed"]);
@@ -70,6 +74,15 @@ const handleSubmit = async () => {
     getSuccess: true,
     onSuccess: async () => {
       emit("changed", state.name);
+
+      modal.open(GeneralActionModal, {
+        actionData: {
+          title: t("auth.username.change_success"),
+        },
+        onClose: async () => {
+          modal.close();
+        },
+      });
     },
   });
 };

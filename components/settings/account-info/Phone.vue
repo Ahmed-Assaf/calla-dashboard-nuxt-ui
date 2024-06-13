@@ -1,11 +1,7 @@
 <template>
-  <UFormGroup
-    :label="$t('inputs.phone.label')"
-    name="phone"
-    v-if="!countryCodesLoading"
-  >
+  <UFormGroup :label="$t('inputs.phone.label')" name="phone">
     <UInput
-      :modelValue="props.phone"
+      :modelValue="profile?.phone"
       :placeholder="$t('inputs.phone.placeholder')"
       :ui="{
         padding: {
@@ -19,11 +15,12 @@
           },
         },
       }"
+      :loading="profileLoading"
       readonly
     >
       <template #trailing>
         <USelectMenu
-          :modelValue="props.countryCode"
+          :modelValue="`+${profile?.country_code}`"
           :options="countryCodes"
           searchable
           :searchable-placeholder="$t('inputs.country_code.search')"
@@ -39,6 +36,7 @@
           :popper="{ placement: 'bottom-start', offsetDistance: 0 }"
           option-attribute="key"
           value-attribute="key"
+          v-if="!countryCodesLoading"
           disabled
         >
           <template #option-empty="{ query }">
@@ -47,7 +45,6 @@
 
           <template #leading>
             <UAvatar
-              v-if="props.countryCode"
               :src="countryFlag"
               size="2xs"
               class="relative after:-end-1 after:block after:absolute after:h-full after:content-[''] after:border-e after:border-strokeLightGray after:border-solid"
@@ -66,22 +63,28 @@
       </template>
     </UInput>
 
-    <SettingsAccountInfoPhoneModal v-model="modal" />
+    <SettingsAccountInfoPhoneModal
+      v-model="modal"
+      @update:model-value="fetchCountryCodes"
+    />
   </UFormGroup>
 </template>
 
 <script setup>
 // props
-const props = defineProps({
-  phone: {
-    type: String,
-    required: true,
-  },
-  countryCode: {
-    type: String,
-    required: true,
-  },
-});
+// const props = defineProps({
+//   phone: {
+//     type: String,
+//     required: true,
+//   },
+//   countryCode: {
+//     type: String,
+//     required: true,
+//   },
+// });
+
+// profile store
+const { profile, profileLoading } = storeToRefs(useProfileStore());
 
 // country codes store
 const { countryCodes, countryCodesLoading } = storeToRefs(
@@ -91,15 +94,13 @@ const { fetchCountryCodes } = useCountryCodesStore();
 
 // computed selected country flag
 const countryFlag = computed(() => {
-  return countryCodes.value.find((p) => p.key === props.countryCode)?.image;
+  return countryCodes.value.find(
+    (p) => p.key === `+${profile.value?.country_code}`
+  )?.image;
 });
 
 onMounted(async () => {
-  await fetchCountryCodes({
-    onSuccess: () => {
-      // if (countryCodes.length) props.countryCode = countryCodes.value[0].key;
-    },
-  });
+  await fetchCountryCodes();
 });
 
 //  modal

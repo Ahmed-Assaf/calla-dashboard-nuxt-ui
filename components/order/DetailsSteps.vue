@@ -3,7 +3,7 @@
     <li
       v-for="(step, idx) in props.steps"
       :key="idx"
-      :class="{ active: step.name === props.active }"
+      :class="{ active: step.id === props.active, error: step.error }"
     >
       <span>{{ step.label }}</span>
     </li>
@@ -35,6 +35,10 @@ const props = defineProps({
 
     &:has(~ .active) {
       @apply text-primaryColor font-bold before:bg-[url('/images/icons/check-white.svg')] before:bg-no-repeat before:bg-center before:bg-auto   before:border-primaryColor before:w-7 before:border-4;
+    }
+
+    &.error {
+      @apply text-redColor before:border-redColor  font-bold before:bg-[url('/images/icons/x-red.svg')] before:bg-no-repeat before:bg-center before:bg-auto before:w-7 before:border-4;
     }
   }
 }

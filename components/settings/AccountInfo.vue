@@ -2,13 +2,10 @@
   <GeneralTheCard :ui="{ body: { base: 'overflow-visible' } }">
     <div class="space-y-5">
       <!-- name -->
-      <SettingsAccountInfoName :name="userInfo.name" />
+      <SettingsAccountInfoName />
 
       <!-- phone -->
-      <SettingsAccountInfoPhone
-        :phone="userInfo.phone"
-        :country-code="`+${userInfo.country_code}`"
-      />
+      <SettingsAccountInfoPhone />
 
       <!-- password -->
       <SettingsAccountInfoPassword />
@@ -16,7 +13,4 @@
   </GeneralTheCard>
 </template>
 
-<script setup>
-// auth store
-const { userInfo } = storeToRefs(useAuthStore());
-</script>
+<script setup></script>

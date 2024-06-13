@@ -17,13 +17,16 @@
       @back="status = 'checkedPassword'"
       img-src="/images/otp.gif"
       :sent-state="state"
-      fetch-url="provider/forget-password-check-code"
+      fetch-url="provider/settings/change-phone-new-phone-check-code"
       v-else
     />
   </GeneralTheModal>
 </template>
 
 <script setup>
+// imports
+import { GeneralActionModal } from "#components";
+
 // props
 const props = defineProps({
   modelValue: {
@@ -32,8 +35,14 @@ const props = defineProps({
   },
 });
 
+// i18n
+const { t } = useI18n();
+
+// modal
+const modal = useModal();
+
 // auth store
-const { userInfo } = storeToRefs(useAuthStore());
+const { profile } = storeToRefs(useProfileStore());
 
 // emits
 const emit = defineEmits(["update:modelValue"]);
@@ -54,15 +63,22 @@ const onChecked = async (password) => {
 const onPhoneChanged = async (sentState) => {
   state = sentState;
   status.value = "sentPhone";
-  // userInfo.value.phone = phone;
-  // emit("update:modelValue", false);
 };
 
 const confirmCode = async () => {
-  userInfo.value.phone = status.phone;
-  userInfo.value.country_code = status.country_code;
+  profile.value.phone = state.phone;
+  profile.value.country_code = state.country_code;
   emit("update:modelValue", false);
   status.value = undefined;
+
+  modal.open(GeneralActionModal, {
+    actionData: {
+      title: t("auth.phone.change_success"),
+    },
+    onClose: async () => {
+      modal.close();
+    },
+  });
 };
 
 // close modal method

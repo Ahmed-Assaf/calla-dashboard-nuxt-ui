@@ -19,6 +19,7 @@ export const useFetchData = () => {
   const pagination = ref({});
   const loading = ref(true);
   const noData = ref(false);
+  const resMsg = ref(undefined);
 
   const fetchData = async (options) => {
     const needActivateQuery = computed(() => {
@@ -49,21 +50,20 @@ export const useFetchData = () => {
     })
       .then(async (response) => {
         const res = response.data;
+        resMsg.value = res.msg;
         if (response.status === 200) {
           if (res.key === "success") {
-            if (res.data) {
-              // pagination
-              if (res.data.pagination) {
-                pagination.value = res.data.pagination;
-              }
-
-              resultData.value = res.data;
+            // pagination
+            if (res.data?.pagination) {
+              pagination.value = res.data.pagination;
             }
+
+            resultData.value = res.data;
 
             if (options.getSuccess) {
               // toast
               toast.add({
-                description: res.msg,
+                description: resMsg.value,
                 timeout: 3000,
                 color: "primary",
               });
@@ -94,7 +94,7 @@ export const useFetchData = () => {
             if (options.getSuccess) {
               // toast
               toast.add({
-                description: res.msg,
+                description: resMsg.value,
                 timeout: 3000,
                 color: "primary",
               });
@@ -116,7 +116,7 @@ export const useFetchData = () => {
             if (options.getSuccess) {
               // toast
               toast.add({
-                description: res.msg,
+                description: resMsg.value,
                 timeout: 3000,
                 color: "warning",
               });
@@ -126,7 +126,7 @@ export const useFetchData = () => {
               options.onNeedActive();
             }
           } else {
-            if (res.key === "blocked") {
+            if (res.key === "blocked" || res.key === "unAuthenticated") {
               await navigateTo(
                 localeRoute({ name: "auth-login", replace: true })
               );
@@ -135,7 +135,7 @@ export const useFetchData = () => {
 
             // toast
             toast.add({
-              description: res.msg,
+              description: resMsg.value,
               timeout: 3000,
               color: "red",
             });
@@ -147,7 +147,7 @@ export const useFetchData = () => {
         } else {
           // toast
           toast.add({
-            description: res.msg,
+            description: resMsg.value,
             timeout: 3000,
             color: "red",
           });
@@ -157,5 +157,5 @@ export const useFetchData = () => {
       .finally(() => (loading.value = false));
   };
 
-  return { fetchData, resultData, pagination, loading, noData };
+  return { fetchData, resultData, pagination, loading, noData, resMsg };
 };

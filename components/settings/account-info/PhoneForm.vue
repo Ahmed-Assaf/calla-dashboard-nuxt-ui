@@ -68,7 +68,7 @@
 
 <script setup>
 // imports
-import { object, string, ref } from "yup";
+import { object, string } from "yup";
 
 // auth store
 const { userInfo } = storeToRefs(useAuthStore());
@@ -125,7 +125,11 @@ const handleSubmit = async () => {
     body: state,
     getSuccess: true,
     onSuccess: async () => {
-      emit("changed", state);
+      emit("changed", {
+        phone: state.phone,
+        country_code: state.country_code.replace("+", ""),
+        password: state.password,
+      });
     },
   });
 };

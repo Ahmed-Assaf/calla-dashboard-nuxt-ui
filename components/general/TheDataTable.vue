@@ -9,12 +9,15 @@
         <slot name="tfoot" />
       </div>
 
-      <GeneralThePaginator @update:page="$emit('update:page', $event)" />
+      <GeneralThePaginator
+        v-if="paginateData"
+        @update:page="$emit('update:page', $event)"
+      />
     </div>
   </section>
 </template>
 
-<script setup lang="ts">
+<script setup>
 // paginateData = computed(() => {
 //   if (process.client) {
 //     return {
@@ -24,6 +27,8 @@
 //     };
 //   }
 // });
+
+const paginateData = inject("paginateData");
 </script>
 
 <style lang="scss">

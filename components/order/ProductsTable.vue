@@ -9,82 +9,77 @@
   >
     <UTable
       :columns="columns"
-      :rows="people"
+      :rows="props.data"
       :ui="{
         wrapper: 'the-table',
         thead: 'border-b border-b-strokeLightGray',
         th: { padding: 'px-4 py-3.5' },
         td: { base: 'h-fit', padding: 'px-4 py-3.5' },
       }"
-    />
+      :loading="props.loading"
+    >
+      <template #product-data="{ row }">
+        <div class="flex items-center gap-2">
+          <img
+            :src="row.image"
+            :alt="row.name"
+            class="w-11 aspcet-[1/1.1] object-contain overflow-hidden"
+          />
+          <small class="whitespace-normal">{{ row.name }}</small>
+        </div>
+      </template>
+
+      <template #options-data="{ row }">
+        <span class="whitespace-normal">{{ setOptions(row.options) }}</span>
+      </template>
+    </UTable>
   </GeneralTheCard>
 </template>
 
 <script setup>
+// i18n
+const { t } = useI18n();
+
+// columns
 const columns = [
   {
-    key: "id",
-    label: "ID",
+    key: "product",
+    label: t("product.plural"),
   },
   {
-    key: "name",
-    label: "User name",
+    key: "qty",
+    label: t("inputs.quantity.label"),
   },
   {
-    key: "title",
-    label: "Job position",
+    key: "price",
+    label: t("inputs.price.label"),
   },
   {
-    key: "email",
-    label: "Email",
+    key: "options",
+    label: t("product.attribute.plural.this"),
   },
   {
-    key: "role",
+    key: "total_price",
+    label: t("order.table.total_price"),
   },
 ];
 
-const people = [
-  {
-    id: 1,
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
+const props = defineProps({
+  data: {
+    type: Array,
   },
-  {
-    id: 2,
-    name: "Courtney Henry",
-    title: "Designer",
-    email: "courtney.henry@example.com",
-    role: "Admin",
+  loading: {
+    type: Boolean,
+    required: true,
   },
-  {
-    id: 3,
-    name: "Tom Cook",
-    title: "Director of Product",
-    email: "tom.cook@example.com",
-    role: "Member",
-  },
-  {
-    id: 4,
-    name: "Whitney Francis",
-    title: "Copywriter",
-    email: "whitney.francis@example.com",
-    role: "Admin",
-  },
-  {
-    id: 5,
-    name: "Leonard Krasner",
-    title: "Senior Designer",
-    email: "leonard.krasner@example.com",
-    role: "Owner",
-  },
-  {
-    id: 6,
-    name: "Floyd Miles",
-    title: "Principal Designer",
-    email: "floyd.miles@example.com",
-    role: "Member",
-  },
-];
+});
+
+const setOptions = (opts) => {
+  console.log(opts);
+  return opts
+    .map((opt) => {
+      return opt;
+    })
+    .join(" , ");
+};
 </script>

@@ -70,6 +70,7 @@ const defineAppConfig = (config) => config;
 
 const appConfig0 = defineAppConfig({
   ui: {
+    primary: "java",
     button: {
       base: "shadow-none ring-0 transition-colors ease-in-out duration-300",
       font: "font-bukra font-bold",
@@ -98,7 +99,8 @@ const appConfig0 = defineAppConfig({
         },
         red: {
           solid: "text-white bg-redColor border-none ring-0 hover:bg-redColor/90",
-          link: "underline text-redColor dark:text-redColor hover:text-redColor dark:hover:text-redColor  focus-visible:ring-0 focus-visible:ring-0"
+          link: "underline text-redColor dark:text-redColor hover:text-redColor dark:hover:text-redColor  focus-visible:ring-0 focus-visible:ring-0",
+          soft: "text-redColor bg-redLightColor hover:bg-transparent"
         }
       },
       default: {
@@ -270,10 +272,10 @@ const appConfig0 = defineAppConfig({
         sortDescIcon: "i-material-symbols-arrow-drop-down",
         sortButton: {
           class: "text-xs"
-        },
-        progress: {
-          color: "primaryColor"
         }
+        // progress: {
+        //   color: "primaryColor",
+        // },
       }
     },
     tabs: {
@@ -335,6 +337,7 @@ const inlineAppConfig = {
       "fuchsia",
       "pink",
       "rose",
+      "java",
       "primary"
     ],
     "strategy": "merge"

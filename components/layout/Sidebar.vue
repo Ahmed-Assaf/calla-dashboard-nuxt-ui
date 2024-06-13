@@ -11,18 +11,29 @@
           @click="link?.action"
           class="link"
           active-class="active"
-          :class="{ active: link.active }"
+          :class="{ active: link.active, 'opacity-40 !pe-0': !link.open }"
+          :disabled="!link.open"
         >
-          <span class="icon">
+          <span class="item-icon">
             <img :src="link.icon.src" :alt="link.label" class="w-5" />
-            <UBadge size="xs" v-if="link.badge" color="red" class="badge">{{
-              link.badge
-            }}</UBadge>
+            <UBadge
+              size="xs"
+              v-if="link.badge && link.open"
+              color="red"
+              class="badge"
+              >{{ link.badge }}</UBadge
+            >
           </span>
 
-          <span>
+          <span class="flex-1">
             {{ link.label }}
           </span>
+
+          <UIcon
+            name="i-heroicons-lock-closed"
+            class="text-base flex-shrink-0 opacity-40"
+            v-if="!link.open"
+          />
         </ULink>
 
         <ul class="sub-menu" v-if="link.sub_links && link.active">
@@ -46,6 +57,14 @@ const localeRoute = useLocaleRoute();
 
 // route
 const route = useRoute();
+const { deleteAuth } = useAuthStore();
+
+// auth store
+const { userInfo } = storeToRefs(useAuthStore());
+
+const checkOpen = (id) => {
+  return userInfo.value.abilities.some((ab) => ab.id === id);
+};
 
 // nav livks
 const links = computed(() => [
@@ -57,6 +76,7 @@ const links = computed(() => [
         : "/images/icons/home.svg",
     },
     to: localeRoute({ name: "index" }),
+    open: true,
   },
   {
     label: t("pages.products_management"),
@@ -66,6 +86,7 @@ const links = computed(() => [
         : "/images/icons/box.svg",
     },
     to: localeRoute({ name: "products" }),
+    open: checkOpen(1),
   },
   {
     label: t("pages.chats"),
@@ -76,6 +97,7 @@ const links = computed(() => [
     },
     badge: 100,
     to: localeRoute({ name: "chats" }),
+    open: checkOpen(2),
   },
   {
     label: t("pages.orders_management"),
@@ -85,15 +107,17 @@ const links = computed(() => [
         : "/images/icons/order-manage.svg",
     },
     to: localeRoute({ name: "orders" }),
+    open: checkOpen(3),
   },
   {
     label: t("pages.products_refund"),
     icon: {
-      src: route.name.includes("products-refund")
+      src: route.name.includes("refund")
         ? "/images/icons/return-filled.svg"
         : "/images/icons/return.svg",
     },
-    to: "",
+    to: localeRoute({ name: "refund" }),
+    open: checkOpen(4),
   },
   {
     label: t("pages.users_management"),
@@ -103,6 +127,7 @@ const links = computed(() => [
         : "/images/icons/user.svg",
     },
     to: localeRoute({ name: "users" }),
+    open: checkOpen(5),
   },
   {
     label: t("pages.finance_treatements"),
@@ -112,6 +137,7 @@ const links = computed(() => [
         : "/images/icons/coin.svg",
     },
     to: localeRoute({ name: "finance-treatements-financial-reports" }),
+    open: checkOpen(6),
     sub_links: [
       {
         label: t("pages.financial_reports"),
@@ -136,6 +162,7 @@ const links = computed(() => [
     to: localeRoute({
       name: "store-rates",
     }),
+    open: checkOpen(7),
   },
   {
     label: t("pages.contact_us"),
@@ -147,6 +174,7 @@ const links = computed(() => [
     to: localeRoute({
       name: "contact-us",
     }),
+    open: checkOpen(8),
   },
   {
     label: t("pages.settings"),
@@ -158,6 +186,7 @@ const links = computed(() => [
     to: localeRoute({
       name: "settings",
     }),
+    open: checkOpen(9),
   },
   {
     label: t("pages.logout"),
@@ -167,12 +196,9 @@ const links = computed(() => [
         : "/images/icons/logout.svg",
     },
     action: logout,
+    open: true,
   },
 ]);
-
-// auth store
-const { userInfo } = storeToRefs(useAuthStore());
-const { deleteAuth } = useAuthStore();
 
 // fetch composable
 const { fetchData } = useFetchData();
@@ -227,7 +253,7 @@ aside {
   .link {
     @apply text-white flex gap-3 items-center ps-3 pe-6 py-2 bg-transparent hover:text-white rounded-[10px];
 
-    .icon {
+    .item-icon {
       @apply z-[1] w-[33px] h-[33px] flex items-center justify-center flex-shrink-0 bg-white/5 rounded-[10px] relative;
 
       .badge {

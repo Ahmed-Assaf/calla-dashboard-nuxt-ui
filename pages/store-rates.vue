@@ -31,6 +31,7 @@
 // page meta
 definePageMeta({
   title: "pages.store_rates",
+  permissionId: 7,
 });
 </script>
 

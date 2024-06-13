@@ -51,9 +51,13 @@
 <script setup>
 // imports
 import { object, string, ref } from "yup";
+import { GeneralActionModal } from "#components";
 
 // i18n
 const { t } = useI18n();
+
+// modal
+const modal = useModal();
 
 // emit
 const emit = defineEmits(["changed"]);
@@ -99,9 +103,17 @@ const handleSubmit = async () => {
       _method: "patch",
     },
     body: state,
-    getSuccess: true,
     onSuccess: async () => {
       emit("changed", state.name);
+
+      modal.open(GeneralActionModal, {
+        actionData: {
+          title: t("auth.password.change_success"),
+        },
+        onClose: async () => {
+          modal.close();
+        },
+      });
     },
   });
 };

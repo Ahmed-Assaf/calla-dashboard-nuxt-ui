@@ -5,12 +5,7 @@
         <label for="receive_new_orders" class="font-bukra font-bold text-xs">
           {{ $t("order.receive_new_orders") }}
         </label>
-
-        <UToggle
-          color="primaryColor"
-          v-model="receive_new_orders"
-          id="receive_new_orders"
-        />
+        <HomeReceiveOrders />
       </div>
     </template>
   </GeneralPageHeading>
@@ -25,7 +20,7 @@
           icon-img="/images/icons/angle-down.svg"
           :data="{
             title: $t('order.received'),
-            count: resultData.order_statistics.new_orders,
+            count: homeData.order_statistics.new_orders,
           }"
         />
       </div>
@@ -37,7 +32,7 @@
           icon-img="/images/icons/sand-clock.svg"
           :data="{
             title: $t('order.active'),
-            count: resultData.order_statistics.current_orders,
+            count: homeData.order_statistics.current_orders,
           }"
         />
       </div>
@@ -49,7 +44,7 @@
           icon-img="/images/icons/check-circle.svg"
           :data="{
             title: $t('order.completed'),
-            count: resultData.order_statistics.finished_orders,
+            count: homeData.order_statistics.finished_orders,
           }"
         />
       </div>
@@ -61,7 +56,7 @@
           icon-img="/images/icons/box-filled.svg"
           :data="{
             title: $t('order.products_count'),
-            count: resultData.order_statistics.products_count,
+            count: homeData.order_statistics.products_count,
           }"
         />
       </div>
@@ -84,15 +79,19 @@
   <!-- CHARTS AND PROFITS SUMMARY STATS -->
   <section>
     <div class="grid grid-cols-12 mb-6" v-if="!loading">
-      <HomeSalesCard :options="options" :grid="gridCols" />
+      <HomeSalesCard
+        :options="options"
+        :grid="gridCols"
+        :data="homeData.sales_statistics"
+      />
 
       <HomeOrdersPercentageCard
         :options="options"
         :grid="gridCols"
-        :data="resultData.order_percent"
+        :data="homeData.order_percent"
       />
 
-      <HomeProfitsCard :grid="gridCols" :data="resultData.order_profits" />
+      <HomeProfitsCard :grid="gridCols" :data="homeData.order_profits" />
     </div>
 
     <div class="grid grid-cols-12 mb-6" v-else>
@@ -165,21 +164,27 @@ const options = reactive({
 // grid cols
 const gridCols = "col xl:col-span-4 lg:col-span-6 col-span-12";
 
-// page heading
-const receive_new_orders = ref(false);
-
 // auth store
 const { userInfo } = storeToRefs(useAuthStore());
 
 // fetch data
 const { resultData, fetchData, loading } = useFetchData();
 
+let homeData = reactive(null),
+  homeLoading = ref(true);
+
 onMounted(() => {
+  homeLoading.value = true;
+
   fetchData({
     url: "provider/home",
     headers: {
       Authorization: `Bearer ${userInfo.value.token}`,
     },
+    onSuccess: async () => {
+      homeData = resultData.value;
+    },
   });
+  homeLoading.value = false;
 });
 </script>

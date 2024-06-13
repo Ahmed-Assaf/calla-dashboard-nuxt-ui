@@ -30,6 +30,7 @@
             size="xl"
             class="rounded-xl px-4"
             :label="$t('product.confirm_create')"
+            @click="confirmCreate"
           >
             <template #trailing>
               <img
@@ -46,6 +47,7 @@
               paginateData,
               columns: defaultGroupColumns,
             }"
+            @update="fetchAttributes"
           />
         </div>
       </div>
@@ -54,6 +56,9 @@
 </template>
 
 <script setup>
+// imports
+import { GeneralActionModal } from "#components";
+
 // page meta
 definePageMeta({
   title: "product.group.plural.this",
@@ -143,11 +148,26 @@ const defaultGroupColumns = computed(() => [
 const tableLoading = ref(false);
 
 // pagination
-const paginateData = ref({});
+const paginateData = ref(null);
 provide("paginateData", paginateData);
 
 // fetch data
 const { fetchData, resultData: attributes } = useFetchData();
+
+// modal
+const modal = useModal();
+
+const confirmCreate = async () => {
+  modal.open(GeneralActionModal, {
+    actionData: {
+      title: t("product.group.choose_main.change_success"),
+    },
+    onClose: async () => {
+      modal.close();
+      await navigateTo(localeRoute({ name: "products", replace: true }));
+    },
+  });
+};
 
 // fetch products
 const fetchAttributes = (page = 1) => {

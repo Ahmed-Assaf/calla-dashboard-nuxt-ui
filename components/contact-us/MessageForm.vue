@@ -12,20 +12,17 @@
       ref="form"
     >
       <!-- message title -->
-      <UFormGroup
-        :label="$t('inputs.message_title.label')"
-        name="message_title"
-      >
+      <UFormGroup :label="$t('inputs.message_title.label')" name="subject">
         <UInput
-          v-model="state.message_title"
+          v-model="state.subject"
           :placeholder="$t('inputs.message_title.placeholder')"
         />
       </UFormGroup>
 
       <!-- message -->
-      <UFormGroup :label="$t('inputs.message.label')" name="message">
+      <UFormGroup :label="$t('inputs.message.label')" name="complaint">
         <UTextarea
-          v-model="state.message"
+          v-model="state.complaint"
           :placeholder="$t('inputs.message.placeholder')"
           :rows="4"
         />
@@ -97,6 +94,7 @@
 <script setup>
 // imports
 import { object, string } from "yup";
+import { GeneralActionModal } from "#components";
 
 // form ref
 const form = ref(null);
@@ -111,7 +109,7 @@ const route = useRoute();
 const localeRoute = useLocaleRoute();
 
 // fetch data
-const { fetchData, resultData, loading } = useFetchData();
+const { fetchData, resultData, loading, resMsg } = useFetchData();
 loading.value = false;
 
 // images upload
@@ -119,54 +117,46 @@ const { thumbnails, imgsList, uploadImages, removeImage } = useImageUpload();
 
 // state
 const state = reactive({
-  message_title: undefined,
-  message: null,
-  sub_category_id: null,
-  "title[ar]": undefined,
-  "title[en]": undefined,
-  stock: null,
+  subject: undefined,
+  complaint: undefined,
   images: imgsList.value,
-  brand_id: null,
-  "description[ar]": undefined,
-  "description[en]": undefined,
-  price: null,
-  discount_type: "ratio",
-  discount_amount: null,
 });
 
 // schema
 const schema = computed(() => {
   return object({
-    message_title: string().required(t("inputs.message_title.required")),
-    message: string().required(t("inputs.message.required")),
+    subject: string().required(t("inputs.message_title.required")),
+    complaint: string().required(t("inputs.message.required")),
   });
 });
 
 // auth store
 const { userInfo } = storeToRefs(useAuthStore());
 
+// modal
+const modal = useModal();
+
 // handle submit
 const handleSubmit = async () => {
   const formData = new FormData(document.querySelector("form"));
 
   await fetchData({
-    url: `provider/products/update/${route.params.id}`,
+    url: `provider/complaints/store`,
     method: "post",
     headers: {
       Authorization: `Bearer ${userInfo.value.token}`,
     },
-    params: { _method: "PUT" },
     body: formData,
-    getSuccess: true,
     onSuccess: () => {
-      if (state.type === "multi")
-        navigateTo(
-          localeRoute({
-            name: `products-id-attributes`,
-            params: { id: route.params.id },
-          })
-        );
-      else navigateTo(localeRoute({ name: "products", replace: true }));
+      modal.open(GeneralActionModal, {
+        actionData: {
+          image: "/images/warning.svg",
+          title: resMsg.value,
+        },
+        onClose: async () => {
+          modal.close();
+        },
+      });
     },
   });
 };

@@ -23,6 +23,7 @@
 // page meta
 definePageMeta({
   title: "pages.orders_management",
+  permissionId: 5,
 });
 
 // user table ref

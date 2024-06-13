@@ -8,6 +8,19 @@ export default <Partial<Config>>{
     },
     extend: {
       colors: {
+        java: {
+          "50": "#ebfffe",
+          "100": "#cefffe",
+          "200": "#a2feff",
+          "300": "#63fbfd",
+          "400": "#1cedf4",
+          "500": "#00c2cb",
+          "600": "#03a6b7",
+          "700": "#0a8494",
+          "800": "#126978",
+          "900": "#145765",
+          "950": "#063a46",
+        },
         primaryColor: "#00c2cb",
         primaryLightColor: "#BEF1F4",
         primaryDarkColor: "#00b1b9",
@@ -24,6 +37,7 @@ export default <Partial<Config>>{
         lightGray: "#F7F7F7",
         starActive: "#FFBA35",
         redColor: "#F0516D",
+        redLightColor: "#FFDBE2",
       },
 
       keyframes: {

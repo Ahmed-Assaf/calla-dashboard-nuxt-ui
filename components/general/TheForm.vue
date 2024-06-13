@@ -7,6 +7,7 @@
       <UButton
         type="submit"
         v-if="props.button"
+        :color="props.button.color || 'primary'"
         :size="props.button.size || 'xl'"
         :class="props.button.radius || 'rounded-lg'"
         :loading="props.button.loading"

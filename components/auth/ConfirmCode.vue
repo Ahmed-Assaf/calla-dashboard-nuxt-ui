@@ -54,7 +54,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 // imports
 import VOtpInput from "vue3-otp-input";
 // props
@@ -72,6 +72,9 @@ const props = defineProps({
     required: true,
   },
 });
+
+// auth store
+const { userInfo } = storeToRefs(useAuthStore());
 
 // otp input
 const otpInput = ref(null);
@@ -93,6 +96,9 @@ const handleSubmit = async () => {
   await fetchData({
     url: props.fetchUrl,
     method: "post",
+    headers: {
+      Authorization: `Bearer ${userInfo.value.token}`,
+    },
     body: state,
     getSuccess: true,
     onSuccess: async () => {

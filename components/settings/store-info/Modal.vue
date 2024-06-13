@@ -6,7 +6,7 @@
   >
     <AuthRegisterStoreForm
       @submitted="submitStore"
-      :confirmed-state="userInfo"
+      :confirmed-state="profile"
       edit
     />
   </GeneralTheModal>
@@ -33,8 +33,8 @@ const props = defineProps({
   },
 });
 
-// auth store
-const { userInfo } = storeToRefs(useAuthStore());
+// profile store
+const { profile } = storeToRefs(useProfileStore());
 
 // emits
 const emit = defineEmits(["update:modelValue"]);
@@ -45,25 +45,25 @@ const sentStore = ref(props.sentStore);
 let state = reactive(props.loginState);
 
 // send code method
-const sendCode = async (enteredState) => {
-  state = enteredState;
-  sentCode.value = true;
-};
+// const sendCode = async (enteredState) => {
+//   state = enteredState;
+//   sentCode.value = true;
+// };
 
-// confirm code method
-const confirmCode = async (confirmedState) => {
-  state = confirmedState;
-  sentCode.value = false;
-  sentStore.value = true;
-};
+// // confirm code method
+// const confirmCode = async (confirmedState) => {
+//   state = confirmedState;
+//   sentCode.value = false;
+//   sentStore.value = true;
+// };
 
-// reset password method
+// submit store method
 const submitStore = async (state) => {
-  await closeModal();
+  // for (const [key, value] of Object.entries(state)) {
+  //   userInfo.value[key] = value;
+  // }
 
-  for (const st of state) {
-    userInfo.value[st.key] = st.value;
-  }
+  await closeModal();
 };
 
 // close modal method

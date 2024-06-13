@@ -24,42 +24,6 @@
     "this": "المبيعات",
     "show_reports": "عرض التقارير"
   },
-  "order": {
-    "this": "الطلب",
-    "plural": "الطلبات",
-    "percentage": "نسبة الطلبات",
-    "successful": "الطلبات الناجحة",
-    "unsuccessful": "الطلبات الغير ناجحة",
-    "total": "إجمالي الطلبات",
-    "total_commission": "إجمالي العمولة",
-    "total_added": "إجمالي القيمة المضافة",
-    "due": "المستحق",
-    "new": "الطلبات الجديدة",
-    "wait_pay": "بإنتظار الدفع",
-    "preparing": "جاري التجهيز",
-    "delivering_representative": "التسليم للمندوب",
-    "delivering": "جاري التوصيل",
-    "finished": "تم الانتهاء",
-    "received": "الطلبات الواردة",
-    "active": "الطلبات النشطة",
-    "completed": "الطلبات المكتملة",
-    "products_count": "عدد المنتجات",
-    "receive_new_orders": "استقبال طلبات جديدة",
-    "details": {
-      "this": "تفاصيل الطلب",
-      "status": {
-        "new": "طلب جديد"
-      }
-    },
-    "table": {
-      "number": "رقم الطلب",
-      "total_price": "السعر الإجمالى",
-      "date": "تاريخ الطلب",
-      "address": "العنوان",
-      "payment_method": "طريقة الدفع",
-      "coupon": "كوبون الخصم"
-    }
-  },
   "profit": {
     "plural": "الارباح"
   },
@@ -111,8 +75,83 @@
       },
       "choose_main": {
         "title": "أختر منتج العرض الرئيسي",
-        "description": "يجب اختيار احد المنتجات ليكون منتج العرض الاساسي بتطبيق و موقع العميل"
+        "description": "يجب اختيار احد المنتجات ليكون منتج العرض الاساسي بتطبيق و موقع العميل",
+        "change_success": "تم ارسال بيانات المنتج بنجاح وسيتم المراجعه من الادارة"
       }
+    }
+  },
+  "order": {
+    "this": "الطلب",
+    "plural": "الطلبات",
+    "percentage": "نسبة الطلبات",
+    "successful": "الطلبات الناجحة",
+    "unsuccessful": "الطلبات الغير ناجحة",
+    "total": "إجمالي الطلبات",
+    "total_commission": "إجمالي العمولة",
+    "vat_value": "قيمة الضريبة المضافة",
+    "total_added": "إجمالي القيمة المضافة",
+    "due": "المستحق",
+    "new": "الطلبات الجديدة",
+    "wait_pay": "بإنتظار الدفع",
+    "preparing": "جاري التجهيز",
+    "prepared": "تم التجهيز",
+    "delivered_representative": "تم التسليم للمندوب",
+    "delivering_representative": "التسليم للمندوب",
+    "delivering": "جاري التوصيل",
+    "finished": "تم الانتهاء",
+    "rejected": "تم رفض الطلب",
+    "cancelled": "تم إلغاء الطلب",
+    "received": "الطلبات الواردة",
+    "active": "الطلبات النشطة",
+    "completed": "الطلبات المكتملة",
+    "products_count": "عدد المنتجات",
+    "receive_new_orders": "استقبال طلبات جديدة",
+    "products_value": "قيمة المنتجات",
+    "delivery_value": "قيمة التوصيل",
+    "discount_value": "قيمة الخصم",
+    "details": {
+      "this": "تفاصيل الطلب",
+      "status": {
+        "new": "طلب جديد"
+      },
+      "info": "بيانات الطلب",
+      "summary": "ملخص الطلب",
+      "client": {
+        "info": "بيانات العميل"
+      },
+      "actions": {
+        "accept": "قبول الطلب",
+        "reject": {
+          "this": "رفض الطلب"
+        },
+        "processed": "تم التجهيز"
+      }
+    },
+    "table": {
+      "number": "رقم الطلب",
+      "total_price": "السعر الإجمالى",
+      "date": "تاريخ الطلب",
+      "time": "وقت الطلب",
+      "address": "العنوان",
+      "payment_method": "طريقة الدفع",
+      "coupon": "كوبون الخصم",
+      "status": "حالة الطلب"
+    }
+  },
+  "refund": {
+    "this": "الإرجاع",
+    "pending_approve": "بإنتظار الموافقة",
+    "received": "تم الاستلام",
+    "on_way_provider": "في الطريق لمقدم الخدمة",
+    "table": {
+      "number": "رقم الطلب",
+      "total_price": "السعر الإجمالى",
+      "date": "تاريخ الطلب",
+      "time": "وقت الطلب",
+      "address": "العنوان",
+      "payment_method": "طريقة الدفع",
+      "coupon": "كوبون الخصم",
+      "status": "حالة الطلب"
     }
   },
   "user": {
@@ -137,7 +176,8 @@
       "add_users": "إضافة مستخدمين",
       "make_settlement": "عمل تسوية",
       "chats": "المحادثات",
-      "product_management": "ادارة المنتجات"
+      "product_management": "ادارة المنتجات",
+      "no_access": "لا توجد لديك صلاحية للوصول الى هذه الصفحة!"
     }
   },
   "finance_treatements": {
@@ -168,6 +208,14 @@
     },
     "store_data": {
       "title": "بيانات المتجر"
+    },
+    "sales_report": {
+      "title": "تقارير المبيعات",
+      "table": {
+        "quantity": "الكمية",
+        "selling_count": "عدد مرات البيع",
+        "profits": "الارباح"
+      }
     }
   },
   "inputs": {
@@ -370,6 +418,11 @@
       "placeholder": "ادخل رقم السجل التجاري",
       "required": "رقم السجل التجاري مطلوب"
     },
+    "order_reject": {
+      "label": "سبب الرفض",
+      "placeholder": "ادخل سبب الرفض",
+      "required": "سبب الرفض مطلوب"
+    },
     "required": "مطلوب",
     "optional": "اختياري"
   },
@@ -382,18 +435,22 @@
       "title": "كود التفعيل",
       "description": "يرجى ادخال كود التفعيل المرسل علي رقم الجوال"
     },
+    "register_success": "تم ارسال طلبك بنجاح وستم التواصل معك في اقرب وقت",
     "register": {
       "label": "تسجيل جديد",
       "request_as_store": "طلب الانضمام كمتجر"
     },
     "username": {
-      "change": "تغيير اسم المستخدم"
+      "change": "تغيير اسم المستخدم",
+      "change_success": "تم تغيير اسم المستخدم بنجاح"
     },
     "phone": {
-      "change": "تغيير الجوال"
+      "change": "تغيير الجوال",
+      "change_success": "تم تغيير الجوال بنجاح"
     },
     "password": {
-      "change": "تغيير كلمة المرور"
+      "change": "تغيير كلمة المرور",
+      "change_success": "تم تغيير كلمة المرور بنجاح"
     },
     "store": {
       "change": "طلب تغيير البيانات",
@@ -418,12 +475,15 @@
     "loading": "جاري التحميل...",
     "no_data": "لا يوجد بيانات",
     "cancel": "الغاء",
+    "undo": "التراجع",
     "edit": "تعديل",
     "save_changes": "حفظ التغييرات",
     "already_chose": "لقد اخترت بالفعل",
     "added": "تمت إضافة",
     "piece": "قطعة",
     "send": "ارسال",
-    "next": "التالي"
+    "next": "التالي",
+    "none": "لا يوجد",
+    "total": "الإجمالي"
   }
 }

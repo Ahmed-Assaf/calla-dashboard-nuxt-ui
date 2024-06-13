@@ -5,6 +5,7 @@
         :items="items"
         class="w-full"
         :defaultIndex="1"
+        @change="onChangeTab"
         :ui="{
           list: {
             base: '!flex items-center gap-4 border-b border-b-strokeLightGray pb-3 mb-3 overflow-x-auto',
@@ -55,31 +56,15 @@
                 wrapper: 'the-data-table',
               }"
             >
-              <template #image-data="{ row }">
-                <img
-                  :src="row.image ? row.image : '/images/product-default.svg'"
-                  alt=""
-                  class="w-12 aspect-[1] object-contain"
-                />
-              </template>
-
-              <template #avg_rate-data="{ row }">
-                <div>
-                  {{ row.avg_rate }}
-                  <UIcon
-                    name="i-heroicons-star-solid"
-                    dynamic
-                    class="text-base text-starActive"
-                  />
-                </div>
-              </template>
-
-              <template #is_available-data="{ row }">
-                <ProductTableStatus
-                  :status="row.is_available"
-                  :product-id="row.id"
-                  @updated="fetchProducts"
-                />
+              <template #status_text-data="{ row }">
+                <span
+                  :class="{
+                    'text-primaryColor': row.status === 6,
+                    'text-redColor': row.status === 8,
+                  }"
+                >
+                  {{ row.status_text }}
+                </span>
               </template>
 
               <template #actions-data="{ row }">
@@ -121,6 +106,7 @@
 // page meta
 definePageMeta({
   title: "pages.orders_management",
+  permissionId: 3,
 });
 
 // i18n
@@ -128,6 +114,41 @@ const { t } = useI18n();
 
 // locale route
 const localeRoute = useLocaleRoute();
+
+// columns
+const columns = computed(() => [
+  {
+    key: "id",
+    label: t("general.table.id"),
+  },
+  {
+    key: "order_num",
+    label: t("order.table.number"),
+    sortable: true,
+  },
+  {
+    key: "user_name",
+    label: t("general.table.client_name"),
+  },
+  {
+    key: "total_price",
+    label: t("order.table.total_price"),
+    sortable: true,
+  },
+  {
+    key: "created_at",
+    label: t("order.table.date"),
+    sortable: true,
+  },
+  {
+    key: "address_name",
+    label: t("order.table.address"),
+  },
+  {
+    key: "pay_type_text",
+    label: t("order.table.payment_method"),
+  },
+]);
 
 // tab items
 const items = ref([
@@ -138,37 +159,7 @@ const items = ref([
   {
     label: t("order.new"),
     columns: [
-      {
-        key: "id",
-        label: t("general.table.id"),
-      },
-      {
-        key: "order_num",
-        label: t("order.table.number"),
-        sortable: true,
-      },
-      {
-        key: "user_name",
-        label: t("general.table.client_name"),
-      },
-      {
-        key: "total_price",
-        label: t("order.table.total_price"),
-        sortable: true,
-      },
-      {
-        key: "created_at",
-        label: t("order.table.date"),
-        sortable: true,
-      },
-      {
-        key: "address_name",
-        label: t("order.table.address"),
-      },
-      {
-        key: "pay_type_text",
-        label: t("order.table.payment_method"),
-      },
+      ...columns.value,
       {
         key: "actions",
       },
@@ -177,18 +168,57 @@ const items = ref([
   },
   {
     label: t("order.wait_pay"),
+    columns: [
+      ...columns.value,
+      {
+        key: "actions",
+      },
+    ],
+    url: "provider/orders/wait-payment?order_by=order_num",
   },
   {
     label: t("order.preparing"),
+    columns: [
+      ...columns.value,
+      {
+        key: "actions",
+      },
+    ],
+    url: "provider/orders/in-progress?order_by=order_num",
   },
   {
     label: t("order.delivering_representative"),
+    columns: [
+      ...columns.value,
+      {
+        key: "actions",
+      },
+    ],
+    url: "provider/orders/deliver-to-delegate?order_by=order_num",
   },
   {
     label: t("order.delivering"),
+    columns: [
+      ...columns.value,
+      {
+        key: "actions",
+      },
+    ],
+    url: "provider/orders/in-way?order_by=order_num",
   },
   {
     label: t("order.finished"),
+    columns: [
+      ...columns.value,
+      {
+        key: "status_text",
+        label: t("order.table.status"),
+      },
+      {
+        key: "actions",
+      },
+    ],
+    url: "provider/orders/finished?order_by=order_num",
   },
 ]);
 
@@ -199,7 +229,7 @@ const { userInfo } = storeToRefs(useAuthStore());
 const { fetchData, loading, resultData: orders } = useFetchData();
 
 // pagination
-const paginateData = ref({});
+const paginateData = ref(null);
 provide("paginateData", paginateData);
 
 // fetch orders
@@ -210,7 +240,22 @@ const fetchOrders = async (url, _) => {
       Authorization: `Bearer ${userInfo.value.token}`,
     },
     onSuccess: () => {
-      paginateData.value = orders.value.pagination;
+      if (orders.value.pagination) paginateData.value = orders.value.pagination;
+      else paginateData.value = null;
+    },
+  });
+};
+
+// on change tab
+const onChangeTab = (tab) => {
+  fetchData({
+    url: items.value[tab].url,
+    headers: {
+      Authorization: `Bearer ${userInfo.value.token}`,
+    },
+    onSuccess: () => {
+      if (orders.value.pagination) paginateData.value = orders.value.pagination;
+      else paginateData.value = null;
     },
   });
 };

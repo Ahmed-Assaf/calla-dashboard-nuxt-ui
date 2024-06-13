@@ -4,7 +4,7 @@
       <template #header>
         <UButton
           :label="$t('sales.show_reports')"
-          to="/"
+          :to="localeRoute({ name: 'settings-sales-report' })"
           size="sm"
           :ui="{ rounded: 'rounded-xl' }"
         />
@@ -48,10 +48,38 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  data: {
+    type: Array,
+    required: true,
+  },
 });
 
+// locale route
+const localeRoute = useLocaleRoute();
+
+// months array
+const months = computed(() => {
+  const arr = [];
+  for (const item of props.data) {
+    arr.push(item.month);
+  }
+
+  return arr;
+});
+
+// order count array
+const count = computed(() => {
+  const arr = [];
+  for (const item of props.data) {
+    arr.push(item.order_count);
+  }
+
+  return arr;
+});
+
+// sales data
 const salesData = reactive({
-  labels: ["January", "February", "March", "April", "May", "June", "July"],
+  labels: months.value,
   datasets: [
     {
       // drawActiveElementsOnTop: false,
@@ -61,10 +89,8 @@ const salesData = reactive({
       pointBackgroundColor: "#fff",
       pointBorderColor: "#00c2cb",
       pointBorderWidth: "3",
-      data: [40, 39, 10, 40, 39, 80, 40],
+      data: count.value,
     },
   ],
 });
 </script>
-
-<style></style>
