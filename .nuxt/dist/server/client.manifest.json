@@ -7,12 +7,12 @@
     "module": true,
     "resourceType": "script"
   },
-  "D:/projects/nuxt-js/calla-dashboard/src-code/node_modules/nuxt/dist/app/entry.js": {
+  "F:/My files/Front end/Projects/calla-dashboard-nuxt-ui/node_modules/nuxt/dist/app/entry.js": {
     "resourceType": "script",
     "module": true,
     "prefetch": true,
     "preload": true,
     "isEntry": true,
-    "file": "D:/projects/nuxt-js/calla-dashboard/src-code/node_modules/nuxt/dist/app/entry.js"
+    "file": "F:/My files/Front end/Projects/calla-dashboard-nuxt-ui/node_modules/nuxt/dist/app/entry.js"
   }
 }

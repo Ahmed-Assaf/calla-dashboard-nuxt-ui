@@ -29,9 +29,13 @@
             },
           },
         }"
+        v-model="activeRoomIdx"
         @change="getRoomMsgs"
       >
-        <template #default="{ item, selected }" v-if="!roomsLoading">
+        <template
+          #default="{ item, selected }"
+          v-if="rooms.length && !roomsLoading"
+        >
           <div class="flex items-center justify-between gap-x-3 gap-y-2 mb-3">
             <div class="flex items-center gap-2">
               <UAvatar :src="item.avatar" :alt="item.name" size="lg" />
@@ -74,7 +78,7 @@
           </div>
         </template>
 
-        <template #item="{ item, index }" v-if="!roomsLoading">
+        <template #item="{ item, index }">
           <UCard
             class="shadow-card h-full rounded-2xl ring-0"
             :ui="{
@@ -109,6 +113,7 @@
               </div>
 
               <div
+                v-if="!messagesLoading"
                 v-for="message in allMessages"
                 :key="message"
                 class="message-wrap"
@@ -116,7 +121,6 @@
                   sender: message.is_sender,
                   receiver: !message.is_sender,
                 }"
-                v-if="!messagesLoading"
               >
                 <div>
                   <div class="message-cloud">
@@ -134,8 +138,8 @@
                   v-if="!message.is_sender"
                 />
               </div>
-
               <div
+                v-else
                 v-for="msg in allMessages"
                 :key="msg"
                 class="message-wrap"
@@ -143,7 +147,6 @@
                   sender: msg.is_sender,
                   receiver: !msg.is_sender,
                 }"
-                v-else
               >
                 <div>
                   <USkeleton class="message-cloud h-8" />
@@ -204,7 +207,8 @@ const { fetchData, resultData } = useFetchData();
 
 // rooms
 const rooms = ref([]),
-  roomId = ref(null);
+  roomId = ref(null),
+  activeRoomIdx = ref(null);
 
 const roomsLoading = ref(null),
   skelCount = ref(1);
@@ -237,9 +241,12 @@ const getRooms = async () => {
           date: room.last_message_created_dt,
         });
       }
+
       skelCount.value = rooms.value.length;
+
       setTimeout(() => {
         roomsLoading.value = false;
+        activeRoomIdx.value = 0;
       }, 1000);
     },
   });
@@ -291,18 +298,14 @@ const getRoomMsgs = async (idx = 0) => {
 
       setTimeout(() => {
         scrollBottom(idx);
-      }, 1000);
+      }, 100);
     },
   });
 };
 
 const scrollBottom = async (idx) => {
   const wrap = document.getElementById(`messageWrapper_${idx}`);
-  console.log(wrap);
-  wrap.scrollTo({
-    top: wrap.scrollHeight /*, behavior: 'smooth' */,
-  });
-
+  wrap.scrollTo(0, wrap.scrollHeight);
   messagesLoading.value = false;
 };
 

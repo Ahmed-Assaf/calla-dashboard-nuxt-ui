@@ -3,7 +3,7 @@
 // App Config
 import type { Defu } from 'defu'
 
-import type { default as appConfig0 } from "D:/projects/nuxt-js/calla-dashboard/src-code/app.config";
+import type { default as appConfig0 } from "F:/My files/Front end/Projects/calla-dashboard-nuxt-ui/app.config";
 
 type UserAppConfig = Defu<{}, [typeof appConfig0]>
 

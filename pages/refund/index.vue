@@ -75,7 +75,7 @@
                   <UButton
                     :to="
                       localeRoute({
-                        name: 'orders-id',
+                        name: 'refund-id',
                         params: { id: row.id },
                       })
                     "

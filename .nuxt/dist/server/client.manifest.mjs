@@ -1,1 +1,1 @@
-export { default } from "file:///D:/projects/nuxt-js/calla-dashboard/src-code/node_modules/@nuxt/vite-builder/dist/runtime/client.manifest.mjs"
+export { default } from "file:///F:/My%20files/Front%20end/Projects/calla-dashboard-nuxt-ui/node_modules/@nuxt/vite-builder/dist/runtime/client.manifest.mjs"

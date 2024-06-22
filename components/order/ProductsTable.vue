@@ -17,6 +17,8 @@
         td: { base: 'h-fit', padding: 'px-4 py-3.5' },
       }"
       :loading="props.loading"
+      :loadingState="{ label: $t('general.loading') }"
+      :emptyState="{ label: $t('general.no_data') }"
     >
       <template #product-data="{ row }">
         <div class="flex items-center gap-2">

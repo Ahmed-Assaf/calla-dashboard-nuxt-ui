@@ -62,23 +62,15 @@ const { t } = useI18n();
 const steps = computed(() => [
   {
     id: 0,
-    label: t("order.details.status.new"),
+    label: t("refund.pending_approve"),
   },
   {
     id: 1,
-    label: t("order.wait_pay"),
+    label: t("refund.received"),
   },
   {
     id: 2,
-    label: t("order.preparing"),
-  },
-  {
-    id: 4,
-    label: t("order.delivering_representative"),
-  },
-  {
-    id: 5,
-    label: t("order.delivering"),
+    label: t("refund.on_way_provider"),
   },
   {
     id: 6,
