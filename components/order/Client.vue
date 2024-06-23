@@ -23,7 +23,6 @@
               name="i-heroicons-star-solid"
               dynamic
               class="text-starActive text-sm"
-              :key="i"
             />)
           </div>
         </div>

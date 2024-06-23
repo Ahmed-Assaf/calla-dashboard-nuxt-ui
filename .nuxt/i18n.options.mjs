@@ -1,7 +1,7 @@
 
 // @ts-nocheck
-import locale_F_58_F_58_My_32files_Front_32end_Projects_calla_dashboard_nuxt_ui_locales_en_json from "../locales/en.json";
-import locale_F_58_F_58_My_32files_Front_32end_Projects_calla_dashboard_nuxt_ui_locales_ar_json from "../locales/ar.json";
+import locale_D_58_D_58_projects_nuxt_js_calla_dashboard_src_code_locales_en_json from "../locales/en.json";
+import locale_D_58_D_58_projects_nuxt_js_calla_dashboard_src_code_locales_ar_json from "../locales/ar.json";
 
 
 export const localeCodes =  [
@@ -10,8 +10,8 @@ export const localeCodes =  [
 ]
 
 export const localeLoaders = {
-  "en": [{ key: "../locales/en.json", load: () => Promise.resolve(locale_F_58_F_58_My_32files_Front_32end_Projects_calla_dashboard_nuxt_ui_locales_en_json), cache: false }],
-  "ar": [{ key: "../locales/ar.json", load: () => Promise.resolve(locale_F_58_F_58_My_32files_Front_32end_Projects_calla_dashboard_nuxt_ui_locales_ar_json), cache: false }]
+  "en": [{ key: "../locales/en.json", load: () => Promise.resolve(locale_D_58_D_58_projects_nuxt_js_calla_dashboard_src_code_locales_en_json), cache: false }],
+  "ar": [{ key: "../locales/ar.json", load: () => Promise.resolve(locale_D_58_D_58_projects_nuxt_js_calla_dashboard_src_code_locales_ar_json), cache: false }]
 }
 
 export const vueI18nConfigs = [
@@ -119,7 +119,7 @@ export const normalizedLocales = [
 
 export const NUXT_I18N_MODULE_ID = "@nuxtjs/i18n"
 export const parallelPlugin = false
-export const isSSG = false
+export const isSSG = true
 
 export const DEFAULT_DYNAMIC_PARAMS_KEY = "nuxtI18n"
 export const DEFAULT_COOKIE_KEY = "i18n_redirected"

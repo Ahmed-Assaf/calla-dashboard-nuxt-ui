@@ -4,7 +4,7 @@ import { defuFn } from 'defu'
 
 const inlineConfig = {
   "nuxt": {
-    "buildId": "dev"
+    "buildId": "2e31478b-e665-4113-9351-3a9d9447a655"
   },
   "ui": {
     "primary": "green",
@@ -41,6 +41,6 @@ if (import.meta.hot) {
   })
 }
 
-import cfg0 from "F:/My files/Front end/Projects/calla-dashboard-nuxt-ui/app.config.ts"
+import cfg0 from "D:/projects/nuxt-js/calla-dashboard/src-code/app.config.ts"
 
 export default /*@__PURE__*/ defuFn(cfg0, inlineConfig)

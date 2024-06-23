@@ -119,12 +119,16 @@
       "client": {
         "info": "بيانات العميل"
       },
+      "delegate": {
+        "info": "بيانات المندوب"
+      },
       "actions": {
         "accept": "قبول الطلب",
         "reject": {
           "this": "رفض الطلب"
         },
-        "processed": "تم التجهيز"
+        "processed": "تم التجهيز",
+        "chat": "محادثة"
       }
     },
     "table": {
@@ -152,7 +156,9 @@
       "payment_method": "طريقة الدفع",
       "coupon": "كوبون الخصم",
       "status": "حالة الطلب"
-    }
+    },
+    "reason": "سبب الإرجاع",
+    "confirm_receive": "تأكيد الإستلام من المندوب"
   },
   "user": {
     "this": "المستخدم",

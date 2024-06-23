@@ -8,9 +8,9 @@
         class="outline outline-offset-2 outline-1 outline-offset-[3.5px] outline-strokeLightGray"
       />
 
-      <div>
+      <div class="flex-1">
         <p class="text-textLightColor text-xs mb-1">
-          {{ $t("order.details.client.info") }}
+          {{ $t("order.details.delegate.info") }}
         </p>
         <div class="flex items-center gap-2 flex-wrap">
           <h5 class="font-bukra font-bold text-sm">
@@ -30,9 +30,9 @@
       </div>
 
       <UButton
-        :label="$t('order.details.actions.accept')"
+        :label="$t('order.details.actions.chat')"
         class="rounded-xl"
-        @click="acceptOrder"
+        @click="startChat"
         :loading
       />
     </div>

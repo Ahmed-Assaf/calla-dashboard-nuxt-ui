@@ -1,11 +1,11 @@
 
 import type { CustomAppConfig } from 'nuxt/schema'
 import type { Defu } from 'defu'
-import cfg0 from "F:/My files/Front end/Projects/calla-dashboard-nuxt-ui/app.config"
+import cfg0 from "D:/projects/nuxt-js/calla-dashboard/src-code/app.config"
 
 declare const inlineConfig = {
   "nuxt": {
-    "buildId": "dev"
+    "buildId": "2e31478b-e665-4113-9351-3a9d9447a655"
   },
   "ui": {
     "primary": "green",

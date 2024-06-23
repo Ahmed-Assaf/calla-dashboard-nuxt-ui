@@ -137,7 +137,10 @@
         "../node_modules/pinia/dist/pinia"
       ],
       "#tailwind-config": [
-        "./tailwind"
+        "./tailwind.config"
+      ],
+      "#tailwind-config/*": [
+        "./tailwind.config/*"
       ]
     }
   },

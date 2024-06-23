@@ -92,6 +92,16 @@ const props = defineProps({
     type: Number,
     required: true,
   },
+  refund: {
+    type: Boolean,
+    default: false,
+  },
+});
+
+const url = computed(() => {
+  return props.refund
+    ? `provider/retrieval-orders/refuse/${route.params.id}`
+    : `provider/orders/refuse/${route.params.id}`;
 });
 
 // modal
@@ -128,7 +138,7 @@ loading.value = false;
 // delete product
 const rejectOrder = (close) => {
   fetchData({
-    url: `provider/orders/refuse/${route.params.id}`,
+    url,
     method: "post",
     headers: {
       Authorization: `Bearer ${userInfo.value.token}`,

@@ -18,7 +18,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       GOOGLE_MAPS_API_KEY: "AIzaSyBNLoYGrbnQI_GMqHt6m0PSN9yA7Zvq7gA",
-      base_url: "https://calla-app.com/api/",
+      base_url: "https://dashboard.calla-app.com/api/",
       device_id: "1",
     },
   },

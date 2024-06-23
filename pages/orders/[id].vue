@@ -58,11 +58,11 @@
       <div class="col lg:col-span-6 col-span-12">
         <OrderSummary
           class="h-fit mb-4"
-          :data="order.order_summery"
+          :data="order.order_summary"
           v-if="!orderLoading"
         />
 
-        <OrderClient :data="order.user" v-if="!orderLoading" />
+        <OrderClient :data="order.user" v-if="!orderLoading" class="mb-4" />
 
         <OrderDelegate
           :data="order.delegate"

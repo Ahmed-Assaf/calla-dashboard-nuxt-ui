@@ -56,6 +56,12 @@
                 wrapper: 'the-data-table',
               }"
             >
+              <template #address_name-data="{ row }">
+                <span class="whitespace-normal">
+                  {{ row.address_name }}
+                </span>
+              </template>
+
               <template #status_text-data="{ row }">
                 <span
                   :class="{
